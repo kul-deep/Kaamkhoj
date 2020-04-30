@@ -4,15 +4,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 
-class MyAppPage extends StatefulWidget {
-  MyAppPage({Key key, this.title}) : super(key: key);
-  final String title;
+class RegisterPage extends StatefulWidget {
+
+  String type;
+
+  RegisterPage(String type){
+    this.type=type;
+    print("Register as "+type);
+
+  }
 
   @override
-  _MyAppPageState createState() => _MyAppPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _MyAppPageState extends State<MyAppPage> {
+class _RegisterPageState extends State<RegisterPage> {
   String phoneNo,name,email,password,city;
   final databaseReference = Firestore.instance;
 
@@ -150,7 +156,7 @@ class _MyAppPageState extends State<MyAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Phone Authentication'),
       ),
       body: Center(
         child: Column(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'PhoneAuth.dart';
+import 'Register.dart';
+import 'chooselogin.dart';
 import 'homepage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
-  runApp( MyApp(),
+  runApp( ChooseType("login"),
   );
 }
 
@@ -128,13 +129,13 @@ class MyApp1 extends StatelessWidget {
     return MaterialApp(
       title: 'Phone Authentication',
       routes: <String, WidgetBuilder>{
-        '/homepage': (BuildContext context) => MyHome(),
+        '/homepage': (BuildContext context) => HomePage(),
         '/loginpage': (BuildContext context) => MyApp(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyAppPage(title: 'Phone Authentication'),
+      home: RegisterPage('Phone Authentication'),
     );
   }
 }

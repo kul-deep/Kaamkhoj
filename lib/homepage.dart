@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class MyHome extends StatelessWidget {
+import 'chooselogin.dart';
+
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyHomePage(title: 'Flutter Demo Home Page');
@@ -36,7 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Logout'),
               onPressed: () async {
                 await _auth.signOut();
-                Navigator.of(context).pushReplacementNamed('/loginpage');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChooseType("login")),
+                );
               },
             ),
           ],
