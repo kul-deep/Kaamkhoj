@@ -11,36 +11,25 @@ class LoginPage extends StatefulWidget {
 
   LoginPage(String type){
     this.type=type;
-    print("Login as "+type);
-
   }
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState(type);
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String phoneNo,name,email,password,city;
+  String phoneNo,password,type;
   final databaseReference = Firestore.instance;
 
-  String smsOTP;
-  String verificationId;
   String errorMessage = '';
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
-
-
-  void createRecord() async {
-    await databaseReference.collection("employee")
-        .document(phoneNo)
-        .setData({
-      'Number': phoneNo,
-      'Name' : name,
-      'email' : email,
-      'password' : password,
-      'city' : city,
-    });
+  _LoginPageState(String type){
+    this.type=type;
+    print("Login as "+type);
   }
+
+
+
 
   void verify() {
 //    databaseReference
@@ -51,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
 //    });
 
     DocumentReference documentReference =
-    databaseReference.collection("employee").document(phoneNo);
+    databaseReference.collection(type).document(phoneNo);
     documentReference.get().then((datasnapshot) {
       if (datasnapshot.exists) {
         print(datasnapshot.data['password'].toString());
@@ -68,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
         print("No such user");
       }
     });
-
   }
 
 

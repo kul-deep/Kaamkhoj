@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:kaamkhoj/homepage.dart';
 
 
 class RegisterPage extends StatefulWidget {
@@ -15,17 +16,24 @@ class RegisterPage extends StatefulWidget {
   }
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _RegisterPageState createState() => _RegisterPageState(type);
 }
 
 class _RegisterPageState extends State<RegisterPage> {
   String phoneNo,name,email,password,city;
   final databaseReference = Firestore.instance;
 
-  String smsOTP;
+  String smsOTP,type;
   String verificationId;
   String errorMessage = '';
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  _RegisterPageState(String type){
+    this.type=type;
+    print("Register as "+type);
+
+  }
+
 
 
   Future<void> verifyPhone() async {
@@ -48,6 +56,16 @@ class _RegisterPageState extends State<RegisterPage> {
           timeout: const Duration(seconds: 20),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
             print(phoneAuthCredential);
+
+            _auth.signInWithCredential(phoneAuthCredential).then((AuthResult result){
+              createRecord();
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => HomePage()
+              ));
+            }).catchError((e){
+              print(e);
+            });
+
           },
           verificationFailed: (AuthException exceptio) {
             print('${exceptio.message}');
@@ -88,8 +106,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   _auth.currentUser().then((user) {
                     if (user != null) {
                       createRecord();
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed('/homepage');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage()),
+                      );
                     } else {
                       signIn();
                     }
@@ -102,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void createRecord() async {
-    await databaseReference.collection("employee")
+    await databaseReference.collection(type)
         .document(phoneNo)
         .setData({
       'Number': phoneNo,
@@ -121,11 +142,18 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       final FirebaseUser user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
       final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
-      createRecord();
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('/homepage');
+
+//      assert(user.uid == currentUser.uid);
+      if(user.uid == currentUser.uid) {
+        createRecord();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage()),
+        );
+      }
     } catch (e) {
+      print("error");
       handleError(e);
     }
   }
