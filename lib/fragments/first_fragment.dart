@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
-class FirstFragment extends StatelessWidget {
+class HomeFragment extends StatelessWidget {
   @override
   // Widget build(BuildContext context) {
   //   // TODO: implement build

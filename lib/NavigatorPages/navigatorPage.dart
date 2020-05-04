@@ -1,9 +1,17 @@
-import 'first_fragment.dart';
-import 'second_fragment.dart';
-import 'third_fragment.dart';
-import 'fourth_fragment.dart';
-import 'fifth_fragment.dart';
-import 'contact.dart';
+import 'package:kaamkhoj/fragments/live_chat.dart';
+import 'package:kaamkhoj/fragments/logout.dart';
+import 'package:kaamkhoj/fragments/partner_us.dart';
+import 'package:kaamkhoj/fragments/payment.dart';
+import 'package:kaamkhoj/fragments/rate_card.dart';
+import 'package:kaamkhoj/fragments/services.dart';
+import 'package:kaamkhoj/fragments/share_app.dart';
+
+import '../fragments/first_fragment.dart';
+import '../fragments/about_us.dart';
+import '../fragments/how_we_work.dart';
+import '../fragments/terms_employee.dart';
+import '../fragments/terms_employer.dart';
+import '../fragments/contact_us.dart';
 import 'package:flutter/material.dart';
 
 class DrawerItem {
@@ -12,23 +20,32 @@ class DrawerItem {
   DrawerItem(this.title, this.icon);
 }
 
-class HomePage extends StatefulWidget {
+class NavigatorPage extends StatefulWidget {
   final drawerItems = [
-    new DrawerItem("Fragment 1", Icons.rss_feed),
-    new DrawerItem("Fragment 2", Icons.local_pizza),
-    new DrawerItem("Fragment 3", Icons.info),
-    new DrawerItem("Fragment 4", Icons.info),
-    new DrawerItem("Fragment 5", Icons.info),
-    new DrawerItem("Contact Us", Icons.info)
+    new DrawerItem("Home", Icons.rss_feed),
+    new DrawerItem("About Us", Icons.local_pizza),
+    new DrawerItem("How We Work", Icons.info),
+    new DrawerItem("Services", Icons.info),
+    new DrawerItem("Terms For Employee", Icons.info),
+    new DrawerItem("Terms For Employer", Icons.info),
+    new DrawerItem("Rate Card", Icons.local_pizza),
+    new DrawerItem("Partner Us", Icons.local_pizza),
+    new DrawerItem("Login", Icons.local_pizza),
+    new DrawerItem("Sign Up", Icons.local_pizza),
+    new DrawerItem("Contact Us", Icons.local_pizza),
+    new DrawerItem("Please Share This App", Icons.local_pizza),
+    new DrawerItem("Online Payment", Icons.local_pizza),
+    new DrawerItem("Live Chat", Icons.local_pizza),
+    new DrawerItem("Logout", Icons.local_pizza),
   ];
 
   @override
   State<StatefulWidget> createState() {
-    return new HomePageState();
+    return new NavigatorPageState();
   }
 }
 
-class HomePageState extends State<HomePage> {
+class NavigatorPageState extends State<NavigatorPage> {
   // void _showBottom(){
   //   showModalBottomSheet<void>(
   //       context: context,
@@ -54,17 +71,36 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new FirstFragment();
+        return new HomeFragment();
       case 1:
-        return new SecondFragment();
+        return new AboutUsPage();
       case 2:
-        return new ThirdFragment();
+        return new HowWeWorkPage();
       case 3:
-        return new FourthFragment();
+        return new ServicesPage();
       case 4:
-        return new FifthFragment();
+        return new TermsEmployeePage();
       case 5:
-        return new Contact_us();
+        return new TermsEmployerPage();
+      case 6:
+        return new RateCard();
+      case 7:
+        return new PartnerUsPage();
+      case 8:
+        return new ContactUsPage();//Login
+      case 9:
+        return new ContactUsPage();//Sign UP
+      case 10:
+        return new ContactUsPage();
+      case 11:
+        return new ShareAppPage();
+      case 12:
+        return new PaymentPage();
+      case 13:
+        return new LiveChatPage();
+      case 14:
+        return new LogoutPage();
+
       default:
         return new Text("Error");
     }

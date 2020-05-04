@@ -67,11 +67,13 @@
 //     );
 //   }
 // }
-import 'fragments/home.dart';
+import 'file:///F:/Internship/Flutter%20internship/Kaamkhoj/kaamkhoj/lib/fragments/rate_card.dart';
+
+import 'NavigatorPages/navigatorPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -91,7 +93,7 @@ class MyApp extends StatelessWidget {
 
         //  )
       ),
-      home: new HomePage(),
+      home: new NavigatorPage(),
     );
   }
 }

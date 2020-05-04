@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Contact_us extends StatelessWidget{
+class ContactUsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(

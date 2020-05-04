@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ThirdFragment extends StatelessWidget {
+class HowWeWorkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
