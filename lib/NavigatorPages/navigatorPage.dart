@@ -1,3 +1,4 @@
+import 'file:///F:/Internship/Flutter%20internship/Kaamkhoj/kaamkhoj/lib/loginresgiter/choosetype.dart';
 import 'package:kaamkhoj/fragments/live_chat.dart';
 import 'package:kaamkhoj/fragments/logout.dart';
 import 'package:kaamkhoj/fragments/partner_us.dart';
@@ -87,9 +88,9 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 7:
         return new PartnerUsPage();
       case 8:
-        return new ContactUsPage();//Login
+        return new ChooseType("login");//Login
       case 9:
-        return new ContactUsPage();//Sign UP
+        return new ChooseType("register");//Sign UP
       case 10:
         return new ContactUsPage();
       case 11:
@@ -132,17 +133,17 @@ class NavigatorPageState extends State<NavigatorPage> {
         // you can instead choose to have a static title
         title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
       ),
-     
-      
-      
+
       drawer: new Drawer(
-        child: new Column(
+        child: SingleChildScrollView(
+          child: Column(
           children: <Widget>[
             new UserAccountsDrawerHeader(
                 accountName: new Text("John Doe"), accountEmail: null),
-            new Column(children: drawerOptions)
+             Column(children: drawerOptions),
           ],
         ),
+      ),
       ),
       body: _getDrawerItemWidget(_selectedDrawerIndex),
     );

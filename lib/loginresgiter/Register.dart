@@ -145,6 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 //      assert(user.uid == currentUser.uid);
       if(user.uid == currentUser.uid) {
+        print(type+"Yes");
         createRecord();
         Navigator.push(
           context,
@@ -183,9 +184,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Phone Authentication'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
