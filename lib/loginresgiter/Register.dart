@@ -4,15 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:kaamkhoj/homepage.dart';
 
-
 class RegisterPage extends StatefulWidget {
-
   String type;
-
   RegisterPage(String type){
     this.type=type;
     print("Register as "+type);
-
   }
 
   @override
@@ -31,10 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   _RegisterPageState(String type){
     this.type=type;
     print("Register as "+type);
-
   }
-
-
 
   Future<void> verifyPhone() async {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
@@ -184,6 +177,8 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
+//      resizeToAvoidBottomInset: ,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +243,7 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: EdgeInsets.all(10),
               child: TextField(
                 decoration: InputDecoration(
-                    hintText: 'Password (minimum 6 digits)'),
+                  hintText: 'Password (minimum 6 digits)'),
                 onChanged: (value) {
                   this.password = value;
                 },
@@ -263,6 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(
               height: 10,
             ),
+
             Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
@@ -285,7 +281,6 @@ class _RegisterPageState extends State<RegisterPage> {
             RaisedButton(
               onPressed: () {
                 verifyPhone();
-
               },
               child: Text('Verify'),
               textColor: Colors.white,

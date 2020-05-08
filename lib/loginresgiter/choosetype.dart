@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'file:///F:/Internship/Flutter%20internship/Kaamkhoj/kaamkhoj/lib/loginresgiter/Login.dart';
-import 'file:///F:/Internship/Flutter%20internship/Kaamkhoj/kaamkhoj/lib/loginresgiter/Register.dart';
+
+import 'Login.dart';
+import 'Register.dart';
 
 class ChooseType extends StatelessWidget {
   String type;

@@ -1,4 +1,6 @@
-import 'file:///F:/Internship/Flutter%20internship/Kaamkhoj/kaamkhoj/lib/loginresgiter/choosetype.dart';
+import 'package:kaamkhoj/afterlogin/dropdown.dart';
+import 'package:kaamkhoj/afterlogin/employee_form.dart';
+import 'package:kaamkhoj/fragments/choose_work.dart';
 import 'package:kaamkhoj/fragments/live_chat.dart';
 import 'package:kaamkhoj/fragments/logout.dart';
 import 'package:kaamkhoj/fragments/partner_us.dart';
@@ -6,6 +8,7 @@ import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/fragments/rate_card.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
+import 'package:kaamkhoj/loginresgiter/choosetype.dart';
 
 import '../fragments/first_fragment.dart';
 import '../fragments/about_us.dart';

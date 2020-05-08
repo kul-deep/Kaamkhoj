@@ -72,16 +72,19 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
              Padding(
               padding: EdgeInsets.all(10),
-              child: TextField(
+              child: TextFormField(
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                    hintText: 'Mobile No.'),
+                    labelText: 'Mobile No.',
+                    hintText: '10 Digits'
+                ),
                 onChanged: (value) {
                   this.phoneNo = "+91"+value;
                 },
