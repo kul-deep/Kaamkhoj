@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:kaamkhoj/afterlogin/dropdown.dart';
 import 'package:kaamkhoj/homepage.dart';
+import 'package:kaamkhoj/loginresgiter/forgetpassword.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -27,8 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     this.type=type;
     print("Login as "+type);
   }
-
-
 
 
   void verify() {
@@ -61,12 +61,17 @@ class _LoginPageState extends State<LoginPage> {
 
 
   void SignIn(){
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => HomePage()),
-    );
 
+    if(type=="Employer") {
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => ChooseYourWork("Employer",phoneNo)
+      ));
+    }
+    else {
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => ChooseYourWork("Employee",phoneNo)
+      ));
+    }
   }
 
   @override
@@ -74,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Center(
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -116,6 +122,30 @@ class _LoginPageState extends State<LoginPage> {
                 : Container()),
             SizedBox(
               height: 10,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.fromLTRB(16, 5, 0,5),
+              child:
+                new GestureDetector(
+
+                  onTap:(){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgetPassword(type,phoneNo),
+                      )
+                    );
+                  },
+                  child: Text("Forget Password",
+
+                    style: new TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+
             ),
             RaisedButton(
               onPressed: () {

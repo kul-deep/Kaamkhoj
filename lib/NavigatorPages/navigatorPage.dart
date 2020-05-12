@@ -1,5 +1,4 @@
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
-import 'package:kaamkhoj/afterlogin/employee_form.dart';
 import 'package:kaamkhoj/fragments/choose_work.dart';
 import 'package:kaamkhoj/fragments/live_chat.dart';
 import 'package:kaamkhoj/fragments/logout.dart';
@@ -9,6 +8,9 @@ import 'package:kaamkhoj/fragments/rate_card.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
 import 'package:kaamkhoj/loginresgiter/choosetype.dart';
+import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
+import 'package:kaamkhoj/test/employee_form1.dart';
+import 'package:kaamkhoj/test/employer_form.dart';
 
 import '../fragments/first_fragment.dart';
 import '../fragments/about_us.dart';
@@ -75,6 +77,7 @@ class NavigatorPageState extends State<NavigatorPage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
+//        return new PasswordChangePage("Employer","+919594976005");
         return new HomeFragment();
       case 1:
         return new AboutUsPage();

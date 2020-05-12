@@ -4,20 +4,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
 import 'package:kaamkhoj/homepage.dart';
+import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 
-class RegisterPage extends StatefulWidget {
-  String type;
-  RegisterPage(String type){
+class ForgetPassword extends StatefulWidget {
+  String type,phoneNo;
+  ForgetPassword(String type,String phoneNo){
     this.type=type;
+    this.phoneNo=phoneNo;
     print("Register as "+type);
   }
 
   @override
-  _RegisterPageState createState() => _RegisterPageState(type);
+  _ForgetPasswordPageState createState() => _ForgetPasswordPageState(type,phoneNo);
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ForgetPasswordPageState extends State<ForgetPassword> {
   String phoneNo,name,email,password,city;
   final databaseReference = Firestore.instance;
 
@@ -26,9 +28,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String errorMessage = '';
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  _RegisterPageState(String type){
+  _ForgetPasswordPageState(String type,String phoneNo){
     this.type=type;
-    print("Register as "+type);
+    this.phoneNo=phoneNo;
   }
 
   Future<void> verifyPhone() async {
@@ -53,15 +55,14 @@ class _RegisterPageState extends State<RegisterPage> {
             print(phoneAuthCredential);
 
             _auth.signInWithCredential(phoneAuthCredential).then((AuthResult result){
-              createRecord();
               if(type=="Employer") {
                 Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => ChooseYourWork("Employer",phoneNo)
+                    builder: (context) => PasswordChangePage("Employer",phoneNo)
                 ));
               }
-                else {
+              else {
                 Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => ChooseYourWork("Employee",phoneNo)
+                    builder: (context) => PasswordChangePage("Employee",phoneNo)
                 ));
               }
             }).catchError((e){
@@ -107,15 +108,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   _auth.currentUser().then((user) {
                     if (user != null) {
-                      createRecord();
                       if(type=="Employer") {
                         Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => ChooseYourWork("Employer",phoneNo)
+                            builder: (context) => PasswordChangePage("Employer",phoneNo)
                         ));
                       }
                       else {
                         Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => ChooseYourWork("Employee",phoneNo)
+                            builder: (context) => PasswordChangePage("Employee",phoneNo)
                         ));
                       }
 
@@ -130,17 +130,6 @@ class _RegisterPageState extends State<RegisterPage> {
         });
   }
 
-  void createRecord() async {
-    await databaseReference.collection(type)
-        .document(phoneNo)
-        .setData({
-      'Number': phoneNo,
-      'Name' : name,
-      'email' : email,
-      'password' : password,
-      'city' : city,
-    });
-  }
 
   signIn() async {
     try {
@@ -154,7 +143,6 @@ class _RegisterPageState extends State<RegisterPage> {
 //      assert(user.uid == currentUser.uid);
       if(user.uid == currentUser.uid) {
         print(type+"Yes");
-        createRecord();
         if(type=="Employer") {
           Navigator.pushReplacement(context, MaterialPageRoute(
               builder: (context) => ChooseYourWork("Employer",phoneNo)
@@ -203,44 +191,8 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Full Name'),
-                onChanged: (value) {
-                  this.name = value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Email ID'),
-                onChanged: (value) {
-                  this.email = value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ), Padding(
+//
+          Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
                 keyboardType: TextInputType.phone,
@@ -259,42 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 : Container()),
             SizedBox(
               height: 10,
-            ), Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Password (minimum 6 digits)'),
-                onChanged: (value) {
-                  this.password = value;
-                },
-              ),
             ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ),
-
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'City'),
-                onChanged: (value) {
-                  this.city = value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
             SizedBox(
               height: 10,
             ),

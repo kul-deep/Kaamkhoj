@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:kaamkhoj/test/employee_form1.dart';
+import 'package:kaamkhoj/test/employer_form.dart';
 
-import 'employee_form.dart';
+class ChooseYourWork extends StatefulWidget {
+  String type,phoneNo;
 
-class RadioWidgetDemo extends StatefulWidget {
-  RadioWidgetDemo() : super();
+  ChooseYourWork(String type,String phoneNo){
+    this.type=type;
+    this.phoneNo=phoneNo;
+    print("Choose Your Work"+phoneNo);
+  }
+//  ChooseYourWork() : super();
+
+
 
 
   @override
-  RadioWidgetDemoState createState() => RadioWidgetDemoState();
+  ChooseYourWorkState createState() => ChooseYourWorkState(type,phoneNo);
   
 }
 
@@ -57,12 +66,19 @@ class User {
     );
   }
 
-class RadioWidgetDemoState extends State<RadioWidgetDemo> {
+class ChooseYourWorkState extends State<ChooseYourWork> {
   //
   List<User> users;
   User selectedUser;
   int selectedRadio;
   int selectedRadioTile;
+
+  String type,phoneNo;
+  ChooseYourWorkState(String type,String phoneNo){
+    this.type=type;
+    this.phoneNo=phoneNo;
+
+  }
 
   @override
   void initState() {
@@ -153,11 +169,21 @@ class RadioWidgetDemoState extends State<RadioWidgetDemo> {
             child: GestureDetector(
         onTap: (){
 //          print(selectedUser.firstName);
+        if(type=="Employer") {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => EmployeeForm1(selectedUser.firstName)),
+                builder: (context) => EmployerForm(selectedUser.firstName,phoneNo)),
           );
+        }
+        else{
+          Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => EmployeeForm(selectedUser.firstName,phoneNo)),
+          );
+          }
+
 
         },
               child: Container(
