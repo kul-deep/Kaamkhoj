@@ -1,4 +1,4 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   String phoneNo,password,type;
-  // final databaseReference = Firestore.instance;
+   final databaseReference = Firestore.instance;
 
   String errorMessage = '';
 
@@ -40,28 +40,28 @@ class _LoginPageState extends State<LoginPage> {
 //      snapshot.documents.forEach((f) => print('${f.data}}'));
 //    });
 
-    // DocumentReference documentReference =
-    // databaseReference.collection(type).document(phoneNo);
-    // documentReference.get().then((datasnapshot) {
-    //   if (datasnapshot.exists) {
-    //     print(datasnapshot.data['password'].toString());
-    //     if(password==datasnapshot.data['password'].toString()){
-    //       print("Right Password");
-    //       SignIn();
-    //     }
-    //     else{
-    //       errorMessage="Wrong Credentials";
-    //       print("Wrong credentials");
-    //     }
-    //   }
-    //   else {
-    //     print("No such user");
-    //   }
-    // });
+     DocumentReference documentReference =
+     databaseReference.collection(type).document(phoneNo);
+     documentReference.get().then((datasnapshot) {
+       if (datasnapshot.exists) {
+         if(password==datasnapshot.data['password'].toString()){
+           print("Right Password");
+           SignIn();
+         }
+         else{
+           errorMessage="Wrong Credentials";
+           print("Wrong credentials");
+         }
+       }
+       else {
+         print("No such user");
+       }
+     });
   }
 
 
   void SignIn(){
+    print("Done");
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(
@@ -94,20 +94,12 @@ class _LoginPageState extends State<LoginPage> {
                     if(value.length<10){
                       return 'Mobile contains 10 digits';
                     }
-              
-                  
                 },
                 onSaved: (String value){
                          print("+91"+value);
                       },
                 ),
               ),
-              (errorMessage != ''
-                  ? Text(
-                errorMessage,
-                style: TextStyle(color: Colors.red),
-              )
-                  : Container()),
               SizedBox(
                 height: 10,
               ), Padding(
@@ -145,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                    if (formKey.currentState.validate()){
                         formKey.currentState.save();
                     }
-                  // verify();
+                   verify();
                 },
                 child: Text('Verify'),
                 textColor: Colors.white,
