@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:kaamkhoj/homepage.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 
@@ -18,6 +19,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
   String phoneNo,name,email,password,city;
   final databaseReference = Firestore.instance;
 
@@ -194,122 +196,185 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
 //      resizeToAvoidBottomInset: ,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Full Name'),
-                onChanged: (value) {
-                  this.name = value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Email ID'),
-                onChanged: (value) {
-                  this.email = value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ), Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                    hintText: 'Mobile No.'),
-                onChanged: (value) {
-                  this.phoneNo = "+91"+value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ), Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Password (minimum 6 digits)'),
-                onChanged: (value) {
-                  this.password = value;
-                },
-              ),
-            ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ),
+        child: SingleChildScrollView(
+                  child: Form(
+            key: formKey,
+                    child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        hintText: 'Full Name'),
+                    onChanged: (value) {
+                      this.name = value;
+                      valid();
+                    },
+                    validator: (name){
+                        Pattern pattern =
+                            r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+                        RegExp regex = new RegExp(pattern);
+                        if (!regex.hasMatch(name))
+                          return 'Invalid username';
+                        else
+                          return null;
 
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'City'),
-                onChanged: (value) {
-                  this.city = value;
-                },
-              ),
+                      },
+                       onSaved: (String value){
+                           print(value);
+                            },
+                  ),
+                ),
+                (errorMessage != ''
+                    ? Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container()),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        hintText: 'Email ID'),
+                    onChanged: (value) {
+                      this.email = value;
+                      valid();
+                    },
+                    validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
+                      // onSaved: (email)=> _email = email,
+                  ),
+                ),
+                (errorMessage != ''
+                    ? Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container()),
+                SizedBox(
+                  height: 10,
+                ), Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                        hintText: 'Mobile No.'),
+                    onChanged: (value) {
+                      this.phoneNo = "+91"+value;
+                      valid();
+
+                    },
+                    validator: (String value){
+                      if(value.length<10){
+                        return 'Mobile contains 10 digits';
+                      }
+                  },
+                  onSaved: (String value){
+                           print("+91"+value);
+                        },
+                  ),
+                ),
+                (errorMessage != ''
+                    ? Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container()),
+                SizedBox(
+                  height: 10,
+                ), Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Password (minimum 6 characters)'),
+                    onChanged: (value) {
+                      this.password = value;
+                      valid();
+                    },
+                    validator: (String value){
+                      if(value.length<6){
+                        return 'Password must contain atleast 6 characters';
+                      }
+                    
+                  },
+                  onSaved: (String value){
+                           print(value);
+                            },
+                  ),
+                ),
+                (errorMessage != ''
+                    ? Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container()),
+                SizedBox(
+                  height: 10,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        hintText: 'City'),
+                    onChanged: (value) {
+                      this.city = value;
+                      valid();
+
+                    },
+                    validator: (city){
+                          Pattern pattern =
+                              r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+                          RegExp regex = new RegExp(pattern);
+                          if (!regex.hasMatch(city))
+                            return 'Invalid city name';
+                          else
+                            return null;
+
+                        },
+                     onSaved: (String value){
+                           print(value);
+                            },    
+                  ),
+                ),
+                (errorMessage != ''
+                    ? Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
+                )
+                    : Container()),
+                SizedBox(
+                  height: 10,
+                ),
+                RaisedButton(
+                  onPressed: () {
+                     if (formKey.currentState.validate()){
+                          print('yes');
+                          // formKey.currentState.();
+                    // verifyPhone();
+                  }
+  },
+
+                  child: Text('Verify'),
+                  textColor: Colors.white,
+                  elevation: 7,
+                  color: Colors.blue,
+                )
+              ],
             ),
-            (errorMessage != ''
-                ? Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ),
-            RaisedButton(
-              onPressed: () {
-                verifyPhone();
-              },
-              child: Text('Verify'),
-              textColor: Colors.white,
-              elevation: 7,
-              color: Colors.blue,
-            )
-          ],
+          ),
         ),
       ),
     );
-  }
+ 
+}
 }

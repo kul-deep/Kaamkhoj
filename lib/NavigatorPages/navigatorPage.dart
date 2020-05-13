@@ -7,6 +7,7 @@ import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/fragments/rate_card.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
+import 'package:kaamkhoj/loginresgiter/Register.dart';
 import 'package:kaamkhoj/loginresgiter/choosetype.dart';
 import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
 import 'package:kaamkhoj/test/employee_form1.dart';
@@ -96,7 +97,7 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 8:
         return new ChooseType("login");//Login
       case 9:
-        return new ChooseType("register");//Sign UP
+        return new RegisterPage("register");//ChooseType("register");//Sign UP
       case 10:
         return new ContactUsPage();
       case 11:
