@@ -1,7 +1,8 @@
- import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:toast/toast.dart';
 // import 'package:kaamkhoj/homepage.dart';
 
 
@@ -19,8 +20,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  String phoneNo,password,type;
-   final databaseReference = Firestore.instance;
+  String phoneNo="",password="";
+  String errorMobile='';
+  String errorPass='';
+  String type;
+  // final databaseReference = Firestore.instance;
 
   String errorMessage = '';
 
@@ -31,6 +35,41 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
+  void valid(){
+    if ((phoneNo=="") || (password=="")){
+                         String errorblank="Please fill this field";
+                       
+                       if (phoneNo==""){
+                         setState((){
+                           errorMobile=errorblank;
+                         });
+                       }
+                       if (password==""){
+                         setState((){
+                           errorPass=errorblank;
+                         });
+                       }
+                       
+                       Toast.show("Please fill all the fields", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+
+                     
+                     }
+                     else 
+                     {
+                         if (errorMobile=="" && errorPass==""){
+                          
+                       }
+                       else {
+                          Toast.show("Please fill all the fields correctly", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+
+                       }
+                     
+
+                     
+                  }
+
+  }
+  
 
   void verify() {
 //    databaseReference
@@ -40,28 +79,28 @@ class _LoginPageState extends State<LoginPage> {
 //      snapshot.documents.forEach((f) => print('${f.data}}'));
 //    });
 
-     DocumentReference documentReference =
-     databaseReference.collection(type).document(phoneNo);
-     documentReference.get().then((datasnapshot) {
-       if (datasnapshot.exists) {
-         if(password==datasnapshot.data['password'].toString()){
-           print("Right Password");
-           SignIn();
-         }
-         else{
-           errorMessage="Wrong Credentials";
-           print("Wrong credentials");
-         }
-       }
-       else {
-         print("No such user");
-       }
-     });
+    // DocumentReference documentReference =
+    // databaseReference.collection(type).document(phoneNo);
+    // documentReference.get().then((datasnapshot) {
+    //   if (datasnapshot.exists) {
+    //     print(datasnapshot.data['password'].toString());
+    //     if(password==datasnapshot.data['password'].toString()){
+    //       print("Right Password");
+    //       SignIn();
+    //     }
+    //     else{
+    //       errorMessage="Wrong Credentials";
+    //       print("Wrong credentials");
+    //     }
+    //   }
+    //   else {
+    //     print("No such user");
+    //   }
+    // });
   }
 
 
   void SignIn(){
-    print("Done");
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(
@@ -88,18 +127,30 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: 'Mobile Number',
                       hintText: 'Enter 10 digit number'),
                   onChanged: (value) {
-                    this.phoneNo = "+91"+value;
-                  },
-                   validator: (String value){
-                    if(value.length<10){
-                      return 'Mobile contains 10 digits';
-                    }
-                },
-                onSaved: (String value){
-                         print("+91"+value);
-                      },
+
+                      this.phoneNo = "+91"+value;
+                      // valid();
+                      if(value.length<10){
+                        setState(() {
+                          errorMobile = "Mobile number contains 10 digits";
+                        });
+                      }
+                      else{
+                        setState(() {
+                          errorMobile = "";
+                        });
+
+                      }
+                    },
+                  
                 ),
               ),
+              (errorMobile != ''
+                  ? Text(
+                errorMobile,
+                style: TextStyle(color: Colors.red),
+              )
+                  : Container()),
               SizedBox(
                 height: 10,
               ), Padding(
@@ -109,23 +160,29 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                       labelText: 'Password',
                       hintText: 'minimum 6 digits'),
-                  onChanged: (value) {
-                    this.password = value;
-                  },
-                  validator: (String value){
-                    if(value.length<6){
-                      return 'Password must contain atleast 6 characters';
-                    }
-                  
-                },
-                onSaved: (String value){
-                         print(value);
-                          },
+                 onChanged: (value) {
+                      this.password = value;
+                      // valid();
+                      if(value.length<6){
+                         setState(() {
+                          errorPass = "Password must contain atleast 6 characters";
+                        });
+                      }
+                      else{
+                        setState(() {
+                          errorPass = "";
+                        });
+
+                      }
+
+                      
+                    },
+                 
                 ),
               ),
-              (errorMessage != ''
+              (errorPass != ''
                   ? Text(
-                errorMessage,
+                errorPass,
                 style: TextStyle(color: Colors.red),
               )
                   : Container()),
@@ -134,10 +191,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               RaisedButton(
                 onPressed: () {
-                   if (formKey.currentState.validate()){
-                        formKey.currentState.save();
-                    }
-                   verify();
+                   valid();
+                  // verify();
                 },
                 child: Text('Verify'),
                 textColor: Colors.white,

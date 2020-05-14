@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:toast/toast.dart';
+
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:kaamkhoj/afterlogin/dropdown.dart';
+//import 'package:kaamkhoj/afterlogin/dropdown.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:kaamkhoj/homepage.dart';
-import 'package:kaamkhoj/test/employer_form.dart';
+// import 'package:kaamkhoj/homepage.dart';
+// import 'package:kaamkhoj/test/employer_form.dart';
 
 class RegisterPage extends StatefulWidget {
   String type;
@@ -20,183 +22,72 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
-  String phoneNo,name,email,password,city;
-  final databaseReference = Firestore.instance;
-
+  String phoneNo="",name="",email="",password="",city="";
+  // final databaseReference = Firestore.instance;
+  String errorName='';
+  String errorEmail='';
+  String errorMobile='';
+  String errorPass='';
+  String errorCity='';
   String smsOTP,type;
   String verificationId;
   String errorMessage = '';
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  // FirebaseAuth _auth = FirebaseAuth.instance;
 
   _RegisterPageState(String type){
     this.type=type;
     print("Register as "+type);
   }
+  void valid(){
+    if ((name=="" ) || (email=="") || (phoneNo=="") || (password=="") || (city=="")){
+                         String errorblank="Please fill this field";
+                       if (name==""){
+                         setState((){
+                           errorName=errorblank;
+                         });
+                       }
+                       if (email==""){
+                         setState((){
+                           errorEmail=errorblank;
+                         });
+                       }
+                       if (phoneNo==""){
+                         setState((){
+                           errorMobile=errorblank;
+                         });
+                       }
+                       if (password==""){
+                         setState((){
+                           errorPass=errorblank;
+                         });
+                       }
+                       if (city==""){
+                         setState((){
+                           errorCity=errorblank;
+                         });
+                       }
+                       Toast.show("Please fill all the fields", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
 
-  Future<void> verifyPhone() async {
-    final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
-      this.verificationId = verId;
-      smsOTPDialog(context).then((value) {
-        print('sign in');
-      });
-    };
-    try {
-      await _auth.verifyPhoneNumber(
-          phoneNumber: this.phoneNo, // PHONE NUMBER TO SEND OTP
-          codeAutoRetrievalTimeout: (String verId) {
-            //Starts the phone number verification process for the given phone number.
-            //Either sends an SMS with a 6 digit code to the phone number specified, or sign's the user in and [verificationCompleted] is called.
-            this.verificationId = verId;
-          },
-          codeSent:
-          smsOTPSent, // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
-          timeout: const Duration(seconds: 20),
-          verificationCompleted: (AuthCredential phoneAuthCredential) {
-            print(phoneAuthCredential);
+                     
+                     }
+                     else 
+                     {
+                         if (errorName=="" && errorEmail=="" && errorMobile=="" && errorPass=="" && errorCity==""){
+                          
+                       }
+                       else {
+                          Toast.show("Please fill all the fields correctly", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
 
-            _auth.signInWithCredential(phoneAuthCredential).then((AuthResult result){
-              createRecord();
-              if(type=="Employer") {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => ChooseYourWork("Employer",phoneNo)
-                ));
-              }
-                else {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => ChooseYourWork("Employee",phoneNo)
-                ));
-              }
-            }).catchError((e){
-              print(e);
-            });
+                       }
+                     
 
-          },
-          verificationFailed: (AuthException exceptio) {
-            print('${exceptio.message}');
-          });
-    } catch (e) {
-      handleError(e);
-    }
+                     
+                  }
+
   }
+  
 
-  Future<bool> smsOTPDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-            title: Text('Enter SMS Code'),
-            content: Container(
-              height: 85,
-              child: Column(children: [
-                TextField(
-                  onChanged: (value) {
-                    this.smsOTP = value;
-                  },
-                ),
-                (errorMessage != ''
-                    ? Text(
-                  errorMessage,
-                  style: TextStyle(color: Colors.red),
-                )
-                    : Container())
-              ]),
-            ),
-            contentPadding: EdgeInsets.all(10),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Done'),
-                onPressed: () {
-                  _auth.currentUser().then((user) {
-                    if (user != null) {
-                      createRecord();
-                      if(type=="Employer") {
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => ChooseYourWork("Employer",phoneNo)
-                        ));
-                      }
-                      else {
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => ChooseYourWork("Employee",phoneNo)
-                        ));
-                      }
-
-                    } else {
-                      signIn();
-                    }
-                  });
-                },
-              )
-            ],
-          );
-        });
-  }
-
-  void createRecord() async {
-    await databaseReference.collection(type)
-        .document(phoneNo)
-        .setData({
-      'Number': phoneNo,
-      'Name' : name,
-      'email' : email,
-      'password' : password,
-      'city' : city,
-    });
-  }
-
-  signIn() async {
-    try {
-      final AuthCredential credential = PhoneAuthProvider.getCredential(
-        verificationId: verificationId,
-        smsCode: smsOTP,
-      );
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
-      final FirebaseUser currentUser = await _auth.currentUser();
-
-//      assert(user.uid == currentUser.uid);
-      if(user.uid == currentUser.uid) {
-        print(type+"Yes");
-        createRecord();
-        if(type=="Employer") {
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => ChooseYourWork("Employer",phoneNo)
-          ));
-        }
-        else {
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => ChooseYourWork("Employee",phoneNo)
-          ));
-        }
-      }
-    } catch (e) {
-      print("error");
-      handleError(e);
-    }
-  }
-
-  handleError(PlatformException error) {
-    print(error);
-    switch (error.code) {
-      case 'ERROR_INVALID_VERIFICATION_CODE':
-        FocusScope.of(context).requestFocus(new FocusNode());
-        setState(() {
-          errorMessage = 'Invalid Code';
-        });
-        Navigator.of(context).pop();
-        smsOTPDialog(context).then((value) {
-          print('sign in');
-        });
-        break;
-      default:
-        setState(() {
-          errorMessage = error.message;
-        });
-
-        break;
-    }
-  }
-
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -215,26 +106,41 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: 'Full Name'),
                     onChanged: (value) {
                       this.name = value;
-                      valid();
-                    },
-                    validator: (name){
-                        Pattern pattern =
+                      // valid();
+                      Pattern pattern =
                             r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
                         RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(name))
-                          return 'Invalid username';
-                        else
-                          return null;
+                        if (!regex.hasMatch(name)){
+                            setState(() {
+                          errorName = "Invalid Username";
+                        });
+                      }
+                      else{
+                        setState(() {
+                          errorName = "";
+                        });
 
-                      },
-                       onSaved: (String value){
-                           print(value);
-                            },
+                      }
+                       
+                    },
+                    // validator: (name){
+                    //     Pattern pattern =
+                    //         r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+                    //     RegExp regex = new RegExp(pattern);
+                    //     if (!regex.hasMatch(name))
+                    //       return 'Invalid username';
+                    //     else
+                    //       return null;
+
+                    //   },
+                    //    onSaved: (String value){
+                    //        print(value);
+                    //         },
                   ),
                 ),
-                (errorMessage != ''
+                (errorName != ''
                     ? Text(
-                  errorMessage,
+                  errorName,
                   style: TextStyle(color: Colors.red),
                 )
                     : Container()),
@@ -248,15 +154,25 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: 'Email ID'),
                     onChanged: (value) {
                       this.email = value;
-                      valid();
+                      // valid();
+                      if(EmailValidator.validate(value)){
+                         setState(() {
+                          errorEmail = "";
+                        });
+                      }
+                      else{
+                         setState(() {
+                          errorEmail = "Invalid Email Address";
+                        });
+                      }
                     },
-                    validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
+                    // validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
                       // onSaved: (email)=> _email = email,
                   ),
                 ),
-                (errorMessage != ''
+                (errorEmail != ''
                     ? Text(
-                  errorMessage,
+                  errorEmail,
                   style: TextStyle(color: Colors.red),
                 )
                     : Container()),
@@ -265,27 +181,39 @@ class _RegisterPageState extends State<RegisterPage> {
                 ), Padding(
                   padding: EdgeInsets.all(10),
                   child: TextFormField(
+                    maxLength: 10,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                         hintText: 'Mobile No.'),
                     onChanged: (value) {
-                      this.phoneNo = "+91"+value;
-                      valid();
 
-                    },
-                    validator: (String value){
+                      this.phoneNo = "+91"+value;
+                      // valid();
                       if(value.length<10){
-                        return 'Mobile contains 10 digits';
+                        setState(() {
+                          errorMobile = "Mobile number contains 10 digits";
+                        });
                       }
-                  },
-                  onSaved: (String value){
-                           print("+91"+value);
-                        },
+                      else{
+                        setState(() {
+                          errorMobile = "";
+                        });
+
+                      }
+                    },
+                  //   validator: (String value){
+                  //     if(value.length<10){
+                  //       return 'Mobile contains 10 digits';
+                  //     }
+                  // },
+                  // onSaved: (String value){
+                  //          print("+91"+value);
+                  //       },
                   ),
                 ),
-                (errorMessage != ''
+                (errorMobile != ''
                     ? Text(
-                  errorMessage,
+                  errorMobile,
                   style: TextStyle(color: Colors.red),
                 )
                     : Container()),
@@ -298,22 +226,27 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Password (minimum 6 characters)'),
                     onChanged: (value) {
                       this.password = value;
-                      valid();
-                    },
-                    validator: (String value){
+                      // valid();
                       if(value.length<6){
-                        return 'Password must contain atleast 6 characters';
+                         setState(() {
+                          errorPass = "Password must contain atleast 6 characters";
+                        });
                       }
-                    
-                  },
-                  onSaved: (String value){
-                           print(value);
-                            },
+                      else{
+                        setState(() {
+                          errorPass = "";
+                        });
+
+                      }
+
+                      
+                    },
+                  
                   ),
                 ),
-                (errorMessage != ''
+                (errorPass != ''
                     ? Text(
-                  errorMessage,
+                  errorPass,
                   style: TextStyle(color: Colors.red),
                 )
                     : Container()),
@@ -328,27 +261,40 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: 'City'),
                     onChanged: (value) {
                       this.city = value;
-                      valid();
-
-                    },
-                    validator: (city){
-                          Pattern pattern =
+                      // valid();
+                      Pattern pattern =
                               r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
                           RegExp regex = new RegExp(pattern);
-                          if (!regex.hasMatch(city))
-                            return 'Invalid city name';
-                          else
-                            return null;
+                          if (!regex.hasMatch(city)){
+                         setState(() {
+                          errorCity = "Invalid city name";
+                        });
+                      }
+                      else{
+                        setState(() {
+                          errorCity = "";
+                        });
 
-                        },
-                     onSaved: (String value){
-                           print(value);
-                            },    
+                      }
+                    },
+                    // validator: (city){
+                    //       Pattern pattern =
+                    //           r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+                    //       RegExp regex = new RegExp(pattern);
+                    //       if (!regex.hasMatch(city))
+                    //         return 'Invalid city name';
+                    //       else
+                    //         return null;
+
+                    //     },
+                    //  onSaved: (String value){
+                    //        print(value);
+                    //         },    
                   ),
                 ),
-                (errorMessage != ''
+                (errorCity != ''
                     ? Text(
-                  errorMessage,
+                  errorCity,
                   style: TextStyle(color: Colors.red),
                 )
                     : Container()),
@@ -357,12 +303,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 RaisedButton(
                   onPressed: () {
-                     if (formKey.currentState.validate()){
-                          print('yes');
-                          // formKey.currentState.();
+                     valid();
+                          // sformKey.currentState.();
                     // verifyPhone();
-                  }
-  },
+                  },
 
                   child: Text('Verify'),
                   textColor: Colors.white,
@@ -375,6 +319,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
- 
+  
 }
 }
