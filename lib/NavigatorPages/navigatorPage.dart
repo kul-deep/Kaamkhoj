@@ -1,3 +1,6 @@
+
+import 'package:flutter/material.dart';
+
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
 import 'package:kaamkhoj/fragments/choose_work.dart';
 import 'package:kaamkhoj/fragments/live_chat.dart';
@@ -7,11 +10,13 @@ import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/fragments/rate_card.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
+import 'package:kaamkhoj/loginresgiter/Login.dart';
 import 'package:kaamkhoj/loginresgiter/Register.dart';
 import 'package:kaamkhoj/loginresgiter/choosetype.dart';
 import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
 import 'package:kaamkhoj/test/employee_form1.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fragments/first_fragment.dart';
 import '../fragments/about_us.dart';
@@ -19,7 +24,6 @@ import '../fragments/how_we_work.dart';
 import '../fragments/terms_employee.dart';
 import '../fragments/terms_employer.dart';
 import '../fragments/contact_us.dart';
-import 'package:flutter/material.dart';
 
 class DrawerItem {
   String title;
@@ -28,6 +32,10 @@ class DrawerItem {
 }
 
 class NavigatorPage extends StatefulWidget {
+
+
+
+
   final drawerItems = [
     new DrawerItem("Home", Icons.rss_feed),
     new DrawerItem("About Us", Icons.local_pizza),

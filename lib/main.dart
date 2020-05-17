@@ -565,12 +565,25 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaamkhoj/loginresgiter/choosetype.dart';
+import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'NavigatorPages/navigatorPage.dart';
 
-void main() => runApp(new MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.getString('Login');
+  print(token);
+
+  runApp(MaterialApp(
+
+  home: token == null ? LoginPage("Employer") : MyApp()),
+  );
+}
+
+//void main() => runApp(new MyApp());
 
 class MyApp extends StatefulWidget {
   @override
@@ -578,19 +591,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _debugLabelString = "";
+
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
   }
-
-  void gotoNextPage(){
- Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => ChooseType("login")
-          ));
-  }
+//
+//  void gotoNextPage(){
+// Navigator.pushReplacement(context, MaterialPageRoute(
+//              builder: (context) => ChooseType("login")
+//          ));
+//  }
 
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -606,18 +619,10 @@ class _MyAppState extends State<MyApp> {
 
     OneSignal.shared
         .setNotificationReceivedHandler((OSNotification notification) {
-      this.setState(() {
-        _debugLabelString =
-        "Received notification: \n${notification.jsonRepresentation().replaceAll("\\n", "\n")}";
-      });
     });
 
     OneSignal.shared
         .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-      this.setState(() {
-        _debugLabelString =
-        "Opened notification: \n${result.notification.jsonRepresentation().replaceAll("\\n", "\n")}";
-      });
     });
 
     // NOTE: Replace with your own app ID from https://www.onesignal.com
@@ -631,6 +636,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      home: NavigatorPage(),
       title: 'NavigationDrawer Demo',
       theme: new ThemeData(
         fontFamily:'OpenSans',
@@ -644,7 +650,6 @@ class _MyAppState extends State<MyApp> {
 
         //  )
       ),
-      home: new NavigatorPage(),
     );
   }
 }
