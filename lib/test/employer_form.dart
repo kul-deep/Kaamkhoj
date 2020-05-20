@@ -1,6 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 
 class EmployerForm extends StatelessWidget{
 
@@ -65,17 +66,17 @@ class RadioButtonWidget extends State {
      final databaseReference = Firestore.instance;
 
      final snapShot = await Firestore.instance
-         .collection("Employer")
-         .document(phoneNo)
          .collection("data")
+         .document(phoneNo)
+         .collection("Employer")
          .document("0")
          .get();
 
      if (snapShot == null || !snapShot.exists) {
        print("Collection Not exisit");
 
-       await databaseReference.collection("Employer").document(phoneNo)
-           .collection("data").document("0")
+       await databaseReference.collection("data").document(phoneNo)
+           .collection("Employer").document("0")
            .setData({
          'Gender': radioItemGender,
          'Hrs': radioItemHrs,
@@ -87,13 +88,13 @@ class RadioButtonWidget extends State {
      }
      else {
 
-         QuerySnapshot querySnapshot = await Firestore.instance.collection("Employer").document(phoneNo).collection("data").getDocuments();
+         QuerySnapshot querySnapshot = await Firestore.instance.collection("data").document(phoneNo).collection("Employer").getDocuments();
      var list = querySnapshot.documents;
      print(list.length);
 
 
 
-     await databaseReference.collection("Employer").document(phoneNo).collection("data").document(list.length.toString())
+     await databaseReference.collection("data").document(phoneNo).collection("Employer").document(list.length.toString())
          .setData({
        'Gender': radioItemGender,
        'Hrs': radioItemHrs,
@@ -103,6 +104,13 @@ class RadioButtonWidget extends State {
        'City':city,
      });
      }
+
+     Navigator.push(
+       context,
+       MaterialPageRoute(
+           builder: (context) => NavigatorPage(),
+     ));
+
    }
 
 

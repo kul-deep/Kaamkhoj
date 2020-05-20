@@ -565,7 +565,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/fragments/choose_work.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/test1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -578,8 +580,9 @@ Future<void> main() async {
   print(token);
 
   runApp(MaterialApp(
+      home: token == null ? LoginPage() : NavigatorPage()),
 
-  home: token == null ? LoginPage("Employer") : MyApp()),
+//  home: token == null ? LoginPage("Employer") : MyApp()),
   );
 }
 
@@ -639,12 +642,12 @@ class _MyAppState extends State<MyApp> {
       home: NavigatorPage(),
       title: 'NavigationDrawer Demo',
       theme: new ThemeData(
-        fontFamily:'OpenSans',
-        primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.latoTextTheme(
-          Theme.of(context).textTheme,
-        ),
-        // textTheme: TextTheme(
+//        fontFamily:'OpenSans',
+////        primarySwatch: Colors.blue,
+////        textTheme: GoogleFonts.openSansTextTheme(
+////          Theme.of(context).textTheme,
+////        ),
+//        // textTheme: TextTheme(
 
         //   body1: TextStyle(fontStyle: FontStyle.italic),
 

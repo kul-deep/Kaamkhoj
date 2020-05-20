@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:kaamkhoj/test/employee_form1.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChooseYourWork extends StatefulWidget {
-  String type,phoneNo;
+  String type, phoneNo;
 
-  ChooseYourWork(String type,String phoneNo){
-    this.type=type;
-    this.phoneNo=phoneNo;
-    print("Choose Your Work"+phoneNo);
+  ChooseYourWork(String type) {
+    this.type = type;
+//    this.phoneNo="+919594976005";
+//    print("Choose Your Work"+phoneNo);
   }
+
 //  ChooseYourWork() : super();
 
-
-
-
   @override
-  ChooseYourWorkState createState() => ChooseYourWorkState(type,phoneNo);
-  
+  ChooseYourWorkState createState() => ChooseYourWorkState(type);
 }
 
 class User {
   int userId;
   String firstName;
-  
 
   User({this.userId, this.firstName});
 
@@ -56,15 +53,17 @@ class User {
       User(userId: 25, firstName: "Plumber/नलसाज"),
       User(userId: 26, firstName: "Salesman/विक्रेता"),
       User(userId: 27, firstName: "Security Guard/सुरक्षा कर्मी"),
-      
     ];
   }
 }
- Widget _buildTitle(){
-    return Container(margin: EdgeInsets.only(top:10),
-    child: Text('Do you need any job? \nSelect of one of the box',style: TextStyle(color :Colors.red,fontSize: 25)),
-    );
-  }
+
+Widget _buildTitle() {
+  return Container(
+    margin: EdgeInsets.only(top: 10),
+    child: Text('Do you need any job? \nSelect of one of the box',
+        style: TextStyle(color: Colors.red, fontSize: 25)),
+  );
+}
 
 class ChooseYourWorkState extends State<ChooseYourWork> {
   //
@@ -73,19 +72,25 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   int selectedRadio;
   int selectedRadioTile;
 
-  String type,phoneNo;
-  ChooseYourWorkState(String type,String phoneNo){
-    this.type=type;
-    this.phoneNo=phoneNo;
+  String type, phoneNo;
 
+  ChooseYourWorkState(String type) {
+    this.type = type;
   }
 
   @override
   void initState() {
     super.initState();
+    getStringValuesSF();
     selectedRadio = 0;
     selectedRadioTile = 0;
     users = User.getUsers();
+  }
+
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    phoneNo = prefs.getString('Login');
   }
 
   setSelectedRadio(int val) {
@@ -129,76 +134,75 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:SingleChildScrollView(     
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[_buildTitle(),
-          Container(
-            padding: EdgeInsets.all(20.0),
-            child: Text("USERS"),
-                      ),
-          Column(
-            children: createRadioListUsers(),
-                      ),
-          
-        ],
-      ),
-    ),
-    bottomNavigationBar: Container(
-      height: 40,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-      child: Row(
-        children: <Widget>[
-          // Container(
-          //   width: 66,
-          //   color: Colors.green,
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: <Widget>[Icon(Icons.chat, color: Colors.white), Text("CHAT", style: TextStyle(color: Colors.white))],
-          //   ),
-          // ),
-          // Container(
-          //   width: 66,
-          //   color: Colors.green,
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: <Widget>[Icon(Icons.notifications_active, color: Colors.white), Text("NOTIF", style: TextStyle(color: Colors.white))],
-          //   ),
-          // ),
-          Expanded(
-            child: GestureDetector(
-        onTap: (){
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _buildTitle(),
+              Container(
+                padding: EdgeInsets.all(20.0),
+                child: Text("USERS"),
+              ),
+              Column(
+                children: createRadioListUsers(),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: Container(
+            height: 40,
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            child: Row(children: <Widget>[
+              // Container(
+              //   width: 66,
+              //   color: Colors.green,
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[Icon(Icons.chat, color: Colors.white), Text("CHAT", style: TextStyle(color: Colors.white))],
+              //   ),
+              // ),
+              // Container(
+              //   width: 66,
+              //   color: Colors.green,
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[Icon(Icons.notifications_active, color: Colors.white), Text("NOTIF", style: TextStyle(color: Colors.white))],
+              //   ),
+              // ),
+              Expanded(
+                  child: GestureDetector(
+                onTap: () {
 //          print(selectedUser.firstName);
-        if(type=="Employer") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EmployerForm(selectedUser.firstName,phoneNo)),
-          );
-        }
-        else{
-          Navigator.push(
-          context,
-          MaterialPageRoute(
-          builder: (context) => EmployeeForm(selectedUser.firstName,phoneNo)),
-          );
-          }
-
-
-        },
-              child: Container(
-              
-              alignment: Alignment.center,
-              color: Colors.blue[300],
-              child: Text("Submit", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 18)),
-            
-            ),
-          )),]
-    )));
+                  print(phoneNo);
+                  if (type == "Employer") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EmployerForm(selectedUser.firstName, phoneNo)),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EmployeeForm(selectedUser.firstName, phoneNo)),
+                    );
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.blue[300],
+                  child: Text("Submit",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                ),
+              )),
+            ])));
   }
 }
-
-
 
 //class RadioButtonWidget extends State {
 //

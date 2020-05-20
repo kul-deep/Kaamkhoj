@@ -68,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
           },
           codeSent:
           smsOTPSent, // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
-          timeout: const Duration(seconds: 20),
+          timeout: const Duration(seconds: 30),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
             print(phoneAuthCredential);
 
@@ -118,18 +118,20 @@ class _RegisterPageState extends State<RegisterPage> {
               FlatButton(
                 child: Text('Done'),
                 onPressed: () {
-                  _auth.currentUser().then((user) {
-                    if (user != null) {
-                      createRecord();
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                            builder: (context) => NavigatorPage()),
-//                      );
-                    } else {
-                      signIn();
-                    }
-                  });
+                  signIn();
+//                  _auth.currentUser().then((user) {
+//                    if (user != null) {
+//                      createRecord();
+//
+////                      Navigator.push(
+////                        context,
+////                        MaterialPageRoute(
+////                            builder: (context) => NavigatorPage()),
+////                      );
+//                    } else {
+//                      signIn();
+//                    }
+//                  });
                 },
               )
             ],
@@ -154,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   addStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('Login', "Yes");
+    prefs.setString('Login', phoneNo);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -164,23 +166,23 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
 
+
   signIn() async {
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId,
         smsCode: smsOTP,
       );
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
+
+      print("inside");
+      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
       final FirebaseUser currentUser = await _auth.currentUser();
 
-//      assert(user.uid == currentUser.uid);
-      if(user.uid == currentUser.uid) {
-        print(type+"Yes");
+      assert(user.uid == currentUser.uid);
+        print("Yes");
         createRecord();
-
-      }
     } catch (e) {
-      print("error");
+      print("error"+e.toString());
 //      handleError(e);
     }
   }
@@ -226,6 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
           errorMobile == "" &&
           errorPass == "" &&
           errorCity == "") {
+        verifyPhone();
       } else {
         Toast.show("Please fill all the fields correctly", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -236,7 +239,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
 //      resizeToAvoidBottomInset: ,
       body: Center(
         child: SingleChildScrollView(
@@ -256,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       RegExp regex = new RegExp(pattern);
                       if (!regex.hasMatch(name)) {
                         setState(() {
-                          errorName = "Invalid Username";
+                          errorName = "Invalid Name";
                         });
                       } else {
                         setState(() {
@@ -420,7 +422,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     valid();
                     // sformKey.currentState.();
-                     verifyPhone();
                   },
                   child: Text('Verify'),
                   textColor: Colors.white,
@@ -432,7 +433,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LoginPage("employer")),
+                          builder: (context) => LoginPage()),
                     );
                   },
                   child: new Text("Login"),

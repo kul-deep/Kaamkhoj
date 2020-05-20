@@ -3,20 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
-import 'package:kaamkhoj/homepage.dart';
 import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 
 class ForgetPassword extends StatefulWidget {
-  String type,phoneNo;
-  ForgetPassword(String type,String phoneNo){
-    this.type=type;
-    this.phoneNo=phoneNo;
-    print("Register as "+type);
-  }
 
   @override
-  _ForgetPasswordPageState createState() => _ForgetPasswordPageState(type,phoneNo);
+  _ForgetPasswordPageState createState() => _ForgetPasswordPageState();
 }
 
 class _ForgetPasswordPageState extends State<ForgetPassword> {
@@ -28,10 +21,6 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
   String errorMessage = '';
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  _ForgetPasswordPageState(String type,String phoneNo){
-    this.type=type;
-    this.phoneNo=phoneNo;
-  }
 
   Future<void> verifyPhone() async {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
@@ -50,21 +39,24 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
           },
           codeSent:
           smsOTPSent, // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
-          timeout: const Duration(seconds: 20),
+          timeout: const Duration(seconds: 30),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
             print(phoneAuthCredential);
 
             _auth.signInWithCredential(phoneAuthCredential).then((AuthResult result){
-              if(type=="Employer") {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => PasswordChangePage("Employer",phoneNo)
-                ));
-              }
-              else {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => PasswordChangePage("Employee",phoneNo)
-                ));
-              }
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => PasswordChangePage(phoneNo)
+              ));
+//              if(type=="Employer") {
+//                Navigator.pushReplacement(context, MaterialPageRoute(
+//                    builder: (context) => PasswordChangePage(phoneNo)
+//                ));
+//              }
+//              else {
+//                Navigator.pushReplacement(context, MaterialPageRoute(
+//                    builder: (context) => PasswordChangePage(phoneNo)
+//                ));
+//              }
             }).catchError((e){
               print(e);
             });
@@ -106,23 +98,7 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
               FlatButton(
                 child: Text('Done'),
                 onPressed: () {
-                  _auth.currentUser().then((user) {
-                    if (user != null) {
-                      if(type=="Employer") {
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => PasswordChangePage("Employer",phoneNo)
-                        ));
-                      }
-                      else {
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => PasswordChangePage("Employee",phoneNo)
-                        ));
-                      }
-
-                    } else {
-                      signIn();
-                    }
-                  });
+                 signIn();
                 },
               )
             ],
@@ -130,33 +106,25 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
         });
   }
 
-
   signIn() async {
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId,
         smsCode: smsOTP,
       );
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
+
+      print("inside");
+      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
       final FirebaseUser currentUser = await _auth.currentUser();
 
-//      assert(user.uid == currentUser.uid);
-      if(user.uid == currentUser.uid) {
-        print(type+"Yes");
-        if(type=="Employer") {
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => ChooseYourWork("Employer",phoneNo)
-          ));
-        }
-        else {
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => ChooseYourWork("Employee",phoneNo)
-          ));
-        }
-      }
-    } catch (e) {
-      print("error");
-      handleError(e);
+      assert(user.uid == currentUser.uid);
+      print("Yes");
+
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => PasswordChangePage(phoneNo)
+      ));    } catch (e) {
+      print("error"+e.toString());
+//      handleError(e);
     }
   }
 

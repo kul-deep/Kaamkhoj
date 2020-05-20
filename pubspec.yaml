@@ -37,7 +37,7 @@ dependencies:
 
 
 
-  firebase_auth: ^0.14.0+5
+  firebase_auth:
   firebase_database: ^3.0.7
   cloud_firestore:
   share: ^0.6.4+1

@@ -63,8 +63,8 @@ class RadioButtonWidget extends State {
  //    print(list.length);
 
 
-     await databaseReference.collection("Employee").document(phoneNo)
-         .updateData({
+     await databaseReference.collection("data").document(phoneNo).collection("Employee").document("data")
+         .setData({
        'Gender': radioItemGender,
        'Hrs': radioItemHrs,
        'Religion': radioItemReligion,

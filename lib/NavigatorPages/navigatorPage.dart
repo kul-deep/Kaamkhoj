@@ -1,10 +1,8 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
-import 'package:kaamkhoj/fragments/choose_work.dart';
 import 'package:kaamkhoj/fragments/live_chat.dart';
-import 'package:kaamkhoj/fragments/logout.dart';
 import 'package:kaamkhoj/fragments/partner_us.dart';
 import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/fragments/rate_card.dart';
@@ -12,10 +10,6 @@ import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
 import 'package:kaamkhoj/loginresgiter/Register.dart';
-import 'package:kaamkhoj/loginresgiter/choosetype.dart';
-import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
-import 'package:kaamkhoj/test/employee_form1.dart';
-import 'package:kaamkhoj/test/employer_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fragments/first_fragment.dart';
@@ -45,8 +39,8 @@ class NavigatorPage extends StatefulWidget {
     new DrawerItem("Terms For Employer", Icons.info),
     new DrawerItem("Rate Card", Icons.local_pizza),
     new DrawerItem("Partner Us", Icons.local_pizza),
-    new DrawerItem("Login", Icons.local_pizza),
-    new DrawerItem("Sign Up", Icons.local_pizza),
+    new DrawerItem("Want A Employee?", Icons.local_pizza),
+    new DrawerItem("Want A Job?", Icons.local_pizza),
     new DrawerItem("Contact Us", Icons.local_pizza),
     new DrawerItem("Please Share This App", Icons.local_pizza),
     new DrawerItem("Online Payment", Icons.local_pizza),
@@ -103,9 +97,9 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 7:
         return new PartnerUsPage();
       case 8:
-        return new ChooseType("login");//Login
+        return new ChooseYourWork("Employer");
       case 9:
-        return new RegisterPage("register");//ChooseType("register");//Sign UP
+        return new ChooseYourWork("Employee");          //ChooseType("register");//Sign UP
       case 10:
         return new ContactUsPage();
       case 11:
@@ -115,10 +109,13 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 13:
         return new LiveChatPage();
       case 14:
-        return new LogoutPage();
+//        return new LogoutPage();
+        logout();
+        return LoginPage();
 
       default:
-        return new Text("Error");
+        return new Text("Error",style: GoogleFonts.ptSans(),
+        );
     }
   }
   
@@ -162,5 +159,11 @@ class NavigatorPageState extends State<NavigatorPage> {
       ),
       body: _getDrawerItemWidget(_selectedDrawerIndex),
     );
+  }
+
+  Future<void> logout() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      //Remove String
+      prefs.remove("Login");
   }
 }
