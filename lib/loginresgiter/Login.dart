@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,10 +26,11 @@ class _LoginPageState extends State<LoginPage> {
   String phoneNo = "", password = "";
   String errorMobile = '';
   String errorPass = '';
+  String errorMsg = '';
+
   String type;
   final databaseReference = Firestore.instance;
 
-  String errorMessage = '';
 
 //  _LoginPageState(String type) {
 //    this.type = type;
@@ -76,10 +78,20 @@ class _LoginPageState extends State<LoginPage> {
           print("Right Password");
           addStringToSF();
         } else {
-          errorMessage = "Wrong Credentials";
+          setState(() {
+            errorMsg = "Wrong Credentials";
+          });
+          Toast.show("Wrong Credentials", context,
+              duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
           print("Wrong credentials");
         }
       } else {
+        setState(() {
+          errorMsg = "User does not exist";
+        });
+
+        Toast.show("User does not exist", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
         print("No such user");
       }
     });
@@ -109,28 +121,33 @@ class _LoginPageState extends State<LoginPage> {
               height: 300,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage("assets/images/union.png")
-                ),
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/union.png")),
               ),
             ),
             Center(
-              child: Text('Login',
+              child: Text(
+                'Login',
                 // style: TextStyle(color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),fontSize: 25,fontFamily: GoogleFonts.robotoTextTheme(),
-                style: GoogleFonts.ptSans(color:Color.fromARGB(0xff, 0x88, 0x02, 0x0b),fontSize:26,fontWeight: FontWeight.bold ),
+                style: GoogleFonts.ptSans(
+                    color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left:35,top:20,right: 35,bottom: 10),
+              padding:
+                  EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
               child: Center(
                 child: Container(
                   // color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
                   height: 55,
-                  padding: EdgeInsets.only(top:5),
                   child: TextField(
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      hintStyle: GoogleFonts.poppins(color:Color.fromARGB(0xff, 0x1d, 0x22, 0x26),fontSize:14),
+                      hintStyle: GoogleFonts.poppins(
+                          color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                          fontSize: 14),
                       focusedBorder: new OutlineInputBorder(
                           borderRadius: const BorderRadius.all(
                             const Radius.circular(10.0),
@@ -138,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide: BorderSide(
                             color: Colors.white70,
                           )),
-                      enabledBorder:  new OutlineInputBorder(
+                      enabledBorder: new OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
                           const Radius.circular(10.0),
                         ),
@@ -153,54 +170,46 @@ class _LoginPageState extends State<LoginPage> {
                       // labelText: 'Mobile Number',
                       hintText: 'Mobile Number',
                     ),
-
                     onChanged: (value) {
-
-                      this.phoneNo = "+91"+value;
+                      this.phoneNo = "+91" + value;
                       // valid();
-                      if(value.length<10){
+                      if (value.length < 10) {
                         setState(() {
                           errorMobile = "Mobile number contains 10 digits";
                         });
-                      }
-                      else{
+                      } else {
                         setState(() {
                           errorMobile = "";
                         });
-
                       }
                     },
-
                   ),
                 ),
               ),
             ),
             (errorMobile != ''
                 ? Padding(
-              padding: const EdgeInsets.fromLTRB(85,0, 0, 0),
-
-              child: Text(
-                errorMobile,
-
-                style: TextStyle(color: Colors.red),
-              ),
-            )
+                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                    child: Text(
+                      errorMobile,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
                 : Container()),
-            SizedBox(
-              height: 10,
-            ), Padding(
-              padding: EdgeInsets.only(left:35,top:20,right: 35,bottom: 10),
+
+            Padding(
+              padding:
+                  EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
               child: Center(
                 child: Container(
                   height: 55,
                   // color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                  padding: EdgeInsets.only(top:5),
-
-
                   child: TextField(
                     obscureText: true,
                     decoration: InputDecoration(
-                        hintStyle: GoogleFonts.poppins(color:Color.fromARGB(0xff, 0x1d, 0x22, 0x26),fontSize:14),
+                        hintStyle: GoogleFonts.poppins(
+                            color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                            fontSize: 14),
                         focusedBorder: new OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
                               const Radius.circular(10.0),
@@ -208,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderSide: BorderSide(
                               color: Colors.white70,
                             )),
-                        enabledBorder:  new OutlineInputBorder(
+                        enabledBorder: new OutlineInputBorder(
                           borderRadius: const BorderRadius.all(
                             const Radius.circular(10.0),
                           ),
@@ -225,16 +234,15 @@ class _LoginPageState extends State<LoginPage> {
                     onChanged: (value) {
                       this.password = value;
                       // valid();
-                      if(value.length<6){
+                      if (value.length < 6) {
                         setState(() {
-                          errorPass = "Password must contain atleast 6 characters";
+                          errorPass =
+                              "Password must contain atleast 6 characters";
                         });
-                      }
-                      else{
+                      } else {
                         setState(() {
                           errorPass = "";
                         });
-
                       }
                     },
                   ),
@@ -243,66 +251,109 @@ class _LoginPageState extends State<LoginPage> {
             ),
             (errorPass != ''
                 ? Padding(
-              padding: const EdgeInsets.only(left:85.0),
+                    padding: const EdgeInsets.only(left: 85.0),
+                    child: Text(
+                      errorPass,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
+                : Container()),
+            (errorMsg != ''
+                ? Align(
+              alignment: Alignment.center,
               child: Text(
-                errorPass,
-                style: TextStyle(color: Colors.red),
+                errorMsg,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.red,fontSize: 13),
               ),
             )
                 : Container()),
-            SizedBox(
-              height: 10,
-            ),
-            Align(
-                alignment: Alignment.center,
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: 300,
+
+            Padding(
+              padding: const EdgeInsets.only(top:20),
+              child: ButtonTheme(
+                height: 40,
+                minWidth: 290,
+                child: Align(
+                  alignment: Alignment.center,
                   child: RaisedButton(
                       onPressed: () {
                         valid();
-                        // verify();
+                        // sformKey.currentState.();
+                        // verifyPhone();
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Text('Login',style: GoogleFonts.karla(color:Color.fromARGB(0xff, 0xff, 0xff, 0xff),fontSize:16,fontWeight: FontWeight.bold ),),
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Text(
+                        'Login',
+                        style: GoogleFonts.karla(
+                            color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      textColor: Colors.white,
                       elevation: 7,
-                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)
-
-                  ),
-                )
+                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                ),
+              ),
             ),
             Center(
-              // padding: EdgeInsets.only(left:45,top:20,right: 35),
-              child: new GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ForgetPassword()),
-                  );
-                },
-                  child: Text('Forgot Password',
-                    style: GoogleFonts.sourceSansPro(color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),fontSize:15),
-                  )              ),
-                ),
-            Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child:
-                  new GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage("employer")),
-                      );
-                    },
-                    child: new Text('Create an account',
-                      style: GoogleFonts.sourceSansPro(color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),fontSize:15),
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 0),
+                child: RichText(
+                  text: TextSpan(
+                    text: '',
+                    style: GoogleFonts.sourceSansPro(
+                        color: Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
+                        fontSize: 15),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Forgot Password',
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ForgetPassword()),
+                                )
+                              },
+                        style: GoogleFonts.sourceSansPro(
+                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                            fontSize: 15),
+                      ),
+                    ],
                   ),
                 ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Create an Account? ',
+                    style: GoogleFonts.sourceSansPro(
+                        color: Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
+                        fontSize: 15),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Register',
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterPage()),
+                                )
+                              },
+                        style: GoogleFonts.sourceSansPro(
+                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                            fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -310,7 +361,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
 //  @override
 //  Widget build(BuildContext context) {
@@ -424,4 +474,3 @@ class _LoginPageState extends State<LoginPage> {
 //      ),
 //    );
 //  }
-

@@ -580,6 +580,9 @@ Future<void> main() async {
   print(token);
 
   runApp(MaterialApp(
+    theme: new ThemeData(
+        primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+    ),
       home: token == null ? LoginPage() : NavigatorPage()),
 
 //  home: token == null ? LoginPage("Employer") : MyApp()),
@@ -600,6 +603,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    FocusScope.of(context).requestFocus(new FocusNode());
   }
 //
 //  void gotoNextPage(){
@@ -636,14 +640,18 @@ class _MyAppState extends State<MyApp> {
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: NavigatorPage(),
       title: 'NavigationDrawer Demo',
       theme: new ThemeData(
+          primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+
+
 //        fontFamily:'OpenSans',
-////        primarySwatch: Colors.blue,
 ////        textTheme: GoogleFonts.openSansTextTheme(
 ////          Theme.of(context).textTheme,
 ////        ),
