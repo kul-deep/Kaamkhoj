@@ -374,7 +374,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                    height: 300,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.fill,
