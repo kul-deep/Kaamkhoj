@@ -202,7 +202,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                 height: 40,
                 minWidth: 290,
                 child: Align(
-                  alignment: Alignment.center,
+                    alignment: Alignment.center,
                   child: RaisedButton(
                       onPressed: () {
                         valid();
