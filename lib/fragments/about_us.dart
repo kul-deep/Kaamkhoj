@@ -10,25 +10,48 @@
 //   }
 
 // }
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsPage extends StatelessWidget{
+  var font1 = GoogleFonts.openSans(
+                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold);
+  var font2 = GoogleFonts.sourceSansPro(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal);
   @override
   Widget build(BuildContext context){
     return Scaffold(
       body: Container(
-        child: Column(
-           children: <Widget>[_buildTitle(),_column()]
-        ))
+        width:MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+      image: AssetImage("assets/images/Background.png"),
+      fit: BoxFit.cover
+            )
+          ),
+          child: SingleChildScrollView(
+                      child: Column(
+               children: <Widget>[_column()]
+            ),
+          ))
       );
       
   }
-  Widget _buildTitle(){
-    return Container(margin: EdgeInsets.only(top:10),
-    child: Center(
-      child: Text('About Us',style: TextStyle(color :Colors.red,fontSize: 25)),
-    ),);
-  }
+  // Widget _buildTitle(){
+  //   return Container(margin: EdgeInsets.only(top:10),
+  //   child: Center(
+  //     child: Text('About Us',
+  //     style: GoogleFonts.openSans(
+  //                     color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+  //                     fontSize: 38,
+  //                     fontWeight: FontWeight.bold)),
+  //   ),);
+  // }
 
   Widget _column(){
     return Container(
@@ -37,26 +60,36 @@ class AboutUsPage extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.start,
   mainAxisSize: MainAxisSize.min,
       children : <Widget>[
-        Text('Misson',style: TextStyle(color :Colors.red,fontSize: 25),),
+        Text('Misson',
+                  style: font1,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('Our mission is to provide you with a service experience unmatched by any other organisation.'),
+        Text('Our mission is to provide you with a service experience unmatched by any other organisation.',
+        style: font2,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(top:10),),
-        Text('Vision',style: TextStyle(color :Colors.red,fontSize: 25),textAlign: TextAlign.left,),
+        Text('Vision',
+                  style: font1,textAlign: TextAlign.justify ),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('Our vision is to be the most competent and innovative organization by making the difference through our people, that consists of a team of dedicated professionals who value their customers, deliver on their promises and contribute to sustainable development.'),
+        Text('Our vision is to be the most competent and innovative organization by making the difference through our people, that consists of a team of dedicated professionals who value their customers, deliver on their promises and contribute to sustainable development.',
+        style: font2,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('Our Endeavour',style: TextStyle(color :Colors.red,fontSize: 25),textAlign: TextAlign.left,),
+        Text('Our Endeavour',
+                  style: font1,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('• Complete solution under one roof.'),
+        Text('• Complete solution under one roof.',
+        style: font2,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('• Creating value for our clients.'),
+        Text('• Creating value for our clients.',
+        style: font2,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('• Well trained and experienced Customer Care Staff.'),
+        Text('• Well trained and experienced Customer Care Staff.',
+        style: font2,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('• Professional approach.'),
+        Text('• Professional approach.',
+        style: font2,textAlign: TextAlign.justify),
         Container(margin: EdgeInsets.only(bottom: 10) ),
-        Text('• Using technology to create proximity between the Employer\'s and Employee\'s work place.'),
-      ]
+        Text('• Using technology to create proximity between the Employer\'s and Employee\'s work place.',
+        style: font2,textAlign: TextAlign.justify),
+                                                 ]
     )
     );
   }

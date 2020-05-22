@@ -570,6 +570,7 @@ import 'package:kaamkhoj/loginresgiter/Login.dart';
 import 'package:kaamkhoj/test1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:kaamkhoj/fragments/about_us.dart';
 
 import 'NavigatorPages/navigatorPage.dart';
 

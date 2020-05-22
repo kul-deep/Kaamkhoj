@@ -143,7 +143,11 @@ class NavigatorPageState extends State<NavigatorPage> {
       appBar: new AppBar(
         // here we display the title corresponding to the fragment
         // you can instead choose to have a static title
-        title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
+        title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
+        style: GoogleFonts.ptSans(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold)),
       ),
 
       drawer: new Drawer(
