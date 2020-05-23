@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,13 +23,13 @@ class HomeFragment extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
          decoration: BoxDecoration(
             image: DecorationImage(
-      image: AssetImage("assets/images/Background.png"),
+      image: AssetImage("assets/images/background.png"),
       fit: BoxFit.cover
             )
           ),
         child: SingleChildScrollView(
                   child: Column(
-             children: <Widget>[_carousel(),_column()]
+             children: <Widget>[_carousel(context),_column()]
           ),
         ))
       );
@@ -56,23 +57,26 @@ class HomeFragment extends StatelessWidget {
     );
   }
 
-  Widget _carousel(){
+  Widget _carousel(BuildContext context){
     return SizedBox(
-      height: 200.0,
-    width: 350.0,
+      height: 300.0,
+    width: MediaQuery.of(context).size.width,
     child: Carousel(
       images: [
-        ExactAssetImage("assets/images/a1.jpg"),
-        ExactAssetImage("assets/images/a2.jpg"),        
+        ExactAssetImage("assets/images/housemaid.jpg"),
+        ExactAssetImage("assets/images/patientcare.jpg"),
+        ExactAssetImage("assets/images/cook.jpg"),
+        ExactAssetImage("assets/images/babysitter.jpg"),
       ],
       dotSize: 4.0,
       dotSpacing: 15.0,
       dotColor: Colors.lightGreenAccent,
       indicatorBgPadding: 5.0,
-      dotBgColor: Colors.purple.withOpacity(0.5),
-      borderRadius: true,
+      boxFit: BoxFit.fill,
+//      dotBgColor: Colors.transparent.withOpacity(0),
+//      borderRadius: true,
       moveIndicatorFromBottom: 180.0,
-      noRadiusForIndicator: true,    
+//      noRadiusForIndicator: true,
       
 
     ));

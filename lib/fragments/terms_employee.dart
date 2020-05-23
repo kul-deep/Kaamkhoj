@@ -14,7 +14,7 @@ class TermsEmployeePage extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
             image: DecorationImage(
-      image: AssetImage("assets/images/Background.png"),
+      image: AssetImage("assets/images/background.png"),
       fit: BoxFit.cover
             )
           ),
