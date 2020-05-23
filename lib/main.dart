@@ -581,6 +581,7 @@ Future<void> main() async {
   print(token);
 
   runApp(MaterialApp(
+
     theme: new ThemeData(
         primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
     ),
@@ -640,8 +641,6 @@ class _MyAppState extends State<MyApp> {
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
   }
-
-
 
   @override
   Widget build(BuildContext context) {

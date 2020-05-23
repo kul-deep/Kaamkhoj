@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/test/employee_form1.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -151,7 +152,7 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
         ),
         bottomNavigationBar: Container(
             height: 40,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             child: Row(children: <Widget>[
               // Container(
               //   width: 66,
@@ -169,10 +170,15 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
               //     children: <Widget>[Icon(Icons.notifications_active, color: Colors.white), Text("NOTIF", style: TextStyle(color: Colors.white))],
               //   ),
               // ),
-              Expanded(
-                  child: GestureDetector(
-                onTap: () {
-//          print(selectedUser.firstName);
+              ButtonTheme(
+                  height: 40,
+                  minWidth: MediaQuery.of(context).size.width-10,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: RaisedButton(
+                        onPressed: () {
+
+                          print(selectedUser.firstName);
                   print(phoneNo);
                   if (type == "Employer") {
                     Navigator.push(
@@ -189,17 +195,51 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
                               EmployeeForm(selectedUser.firstName, phoneNo)),
                     );
                   }
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  color: Colors.blue[300],
-                  child: Text("Submit",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18)),
-                ),
-              )),
+
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Text(
+                          'Submit',
+                          style: GoogleFonts.karla(
+                              color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        elevation: 7,
+                        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                  )),
+//              Expanded(
+//                  child: GestureDetector(
+//                onTap: () {
+////          print(selectedUser.firstName);
+//                  print(phoneNo);
+//                  if (type == "Employer") {
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) =>
+//                              EmployerForm(selectedUser.firstName, phoneNo)),
+//                    );
+//                  } else {
+//                    Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) =>
+//                              EmployeeForm(selectedUser.firstName, phoneNo)),
+//                    );
+//                  }
+//                },
+//                child: Container(
+//                  alignment: Alignment.center,
+//                  color: Colors.blue[300],
+//                  child: Text("Submit",
+//                      style: TextStyle(
+//                          color: Colors.white,
+//                          fontWeight: FontWeight.bold,
+//                          fontSize: 18)),
+//                ),
+//              )),
             ])));
   }
 }

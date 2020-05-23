@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class RateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,11 +8,9 @@ class RateCard extends StatelessWidget {
             child: ListView.builder(
       itemBuilder: (context, i) {
         if (i >= data.length) return null;
-        return ExpansionTile(
-            title: Text('name: ${data[i].title}'),
-            children: [
+        return ExpansionTile(title: Text('${data[i].title}'), children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(30.0,3.0,20.0,3.0),
+            padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -31,55 +27,51 @@ class RateCard extends StatelessWidget {
                       text: '${data[i].children[1].title}',
                       style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
                 ])),
-
               ],
             ),
           ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30.0,3.0,20.0,3.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: '${data[i].children[0].title}',
-                                style: TextStyle(fontSize: 18.0, color: Colors.grey))
-                          ])),
-                    ),
-                    RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: '${data[i].children[1].title}',
-                              style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
-                        ])),
-
-                  ],
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: '${data[i].children[2].title}',
+                        style: TextStyle(fontSize: 18.0, color: Colors.grey))
+                  ])),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30.0,3.0,20.0,3.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: '${data[i].children[0].title}',
-                                style: TextStyle(fontSize: 18.0, color: Colors.grey))
-                          ])),
-                    ),
-                    RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: '${data[i].children[1].title}',
-                              style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
-                        ])),
-
-                  ],
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: '${data[i].children[3].title}',
+                      style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+                ])),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                        text: '${data[i].children[4].title}',
+                        style: TextStyle(fontSize: 18.0, color: Colors.grey))
+                  ])),
                 ),
-              ),
-
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: '${data[i].children[5].title}',
+                      style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+                ])),
+              ],
+            ),
+          ),
 
 //              RichText(
 //                text: TextSpan(
@@ -99,9 +91,9 @@ class RateCard extends StatelessWidget {
   }
 }
 
-
 class Entry {
   const Entry(this.title, [this.children = const <Entry>[]]);
+
   final String title;
   final List<Entry> children;
 }
@@ -128,41 +120,63 @@ class ExpansionTileDemo extends StatelessWidget {
 // This is the entire multi-level list displayed by this app
 final List<Entry> data = <Entry>[
   Entry(
-    'Chapter A',
+    'HouseMaid',
     <Entry>[
-      Entry(
-        'Section A0',
-        <Entry>[
-          Entry('Item A0.1'),
-          Entry('Item A0.2'),
-          Entry('Item A0.3'),
-        ],
-      ),
-      Entry('Section A1'),
-      Entry('Section A2'),
+      Entry('8 Hours'),
+      Entry('₹ 10000'),
+      Entry('10 Hours'),
+      Entry('₹ 12000'),
+      Entry('24 Hours'),
+      Entry('₹ 15000'),
     ],
   ),
-  // Second Row
-  Entry('Chapter B', <Entry>[
-    Entry('Section B0'),
-    Entry('Section B1'),
+  Entry(
+    'Babysitting',
+    <Entry>[
+      Entry('8 Hours'),
+      Entry('₹ 10000'),
+      Entry('10 Hours'),
+      Entry('₹ 12000'),
+      Entry('24 Hours'),
+      Entry('₹ 15000'),
+    ],
+  ),
+  Entry('Cooking', <Entry>[
+    Entry('8 Hours'),
+    Entry('₹ 10000'),
+    Entry('10 Hours'),
+    Entry('₹ 12000'),
+    Entry('24 Hours'),
+    Entry('₹ 15000'),
+  ]),
+  Entry('Elder Care', <Entry>[
+    Entry('8 Hours'),
+    Entry('₹ 12000'),
+    Entry('10 Hours'),
+    Entry('₹ 14000'),
+    Entry('24 Hours'),
+    Entry('₹ 18000'),
   ]),
   Entry(
-    'Chapter C',
+    'Driving',
     <Entry>[
-      Entry('Section C0'),
-      Entry('Section C1'),
-      Entry(
-        'Section C2',
-        <Entry>[
-          Entry('Item C2.0'),
-          Entry('Item C2.1'),
-          Entry('Item C2.2'),
-          Entry('Item C2.3'),
-        ],
-      )
+      Entry('8 Hours'),
+      Entry('₹ 14000'),
+      Entry('10 Hours'),
+      Entry('₹ 16000'),
+      Entry('24 Hours'),
+      Entry('₹ 18000'),
     ],
   ),
+  Entry('Patient Care', <Entry>[
+    Entry('8 Hours'),
+    Entry('₹ 14000'),
+    Entry('10 Hours'),
+    Entry('₹ 16000'),
+    Entry('24 Hours'),
+    Entry('₹ 18000'),
+  ]),
+
 ];
 
 // Create the Widget for the row
