@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:kaamkhoj/test/thankyouform.dart';
 
 class EmployeeForm extends StatelessWidget{
 
@@ -68,7 +69,7 @@ class RadioButtonWidget extends State {
      Navigator.push(
          context,
          MaterialPageRoute(
-           builder: (context) => NavigatorPage(),
+           builder: (context) => ThankyouPage(),
          ));
    }
 
