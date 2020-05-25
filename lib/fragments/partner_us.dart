@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
@@ -35,7 +36,16 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
       'Name': name,
       'email': email,
       'city': city,
-    });  }
+    });
+
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ThankyouPage()),
+    );
+
+  }
 
 
 

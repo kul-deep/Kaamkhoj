@@ -364,508 +364,512 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return otp == "0"
-        ? Scaffold(
-            backgroundColor: Color(0xfff7e9e9),
-            body: SingleChildScrollView(
-              child: Form(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage("assets/images/union.png")),
+        ? SafeArea(
+          child: Scaffold(
+              backgroundColor: Color(0xfff7e9e9),
+              body: SingleChildScrollView(
+                child: Form(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage("assets/images/kaamkhoj_logo.png")),
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      'Registration Form',
-                      style: GoogleFonts.ptSans(
-                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold),
+                    Center(
+                      child: Text(
+                        'Registration Form',
+                        style: GoogleFonts.ptSans(
+                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 35, top: 15, right: 35, bottom: 10),
-                    child: Center(
-                      child: Container(
-                        height: 55,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintStyle: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 14),
-                              focusedBorder: new OutlineInputBorder(
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 35, top: 15, right: 35, bottom: 10),
+                      child: Center(
+                        child: Container(
+                          height: 55,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(10.0),
                                   ),
                                   borderSide: BorderSide(
                                     color: Colors.white70,
-                                  )),
-                              enabledBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white70,
-                              prefixIcon: Icon(Icons.person),
-                              hintText: 'Full Name'),
-                          onChanged: (value) {
-                            this.name = value;
-                            // valid();
-                            Pattern pattern =
-                                r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-                            RegExp regex = new RegExp(pattern);
-                            if (!regex.hasMatch(name)) {
-                              setState(() {
-                                errorName = "Invalid Username";
-                              });
-                            } else {
-                              setState(() {
-                                errorName = "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  (errorName != ''
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                          child: Text(
-                            errorName,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : Container()),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 35, top: 15, right: 35, bottom: 10),
-                    child: Center(
-                      child: Container(
-                        height: 55,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintStyle: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 14),
-                              focusedBorder: new OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0),
                                   ),
-                                  borderSide: BorderSide(
-                                    color: Colors.white70,
-                                  )),
-                              enabledBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
                                 ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white70,
-                              prefixIcon: Icon(Icons.email),
-                              hintText: 'Email ID'),
-                          onChanged: (value) {
-                            this.email = value;
-                            // valid();
-                            if (EmailValidator.validate(value)) {
-                              setState(() {
-                                errorEmail = "";
-                              });
-                            } else {
-                              setState(() {
-                                errorEmail = "Invalid Email Address";
-                              });
-                            }
-                          },
-                          // validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
-                          // onSaved: (email)=> _email = email,
-                        ),
-                      ),
-                    ),
-                  ),
-                  (errorEmail != ''
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 85.0),
-                          child: Text(
-                            errorEmail,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : Container()),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 35, top: 15, right: 35, bottom: 10),
-                    child: Center(
-                      child: Container(
-                        height: 55,
-                        child: TextField(
-                          maxLength: 10,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                              hintStyle: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 14),
-                              counterText: "",
-                              focusedBorder: new OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0),
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.white70,
-                                  )),
-                              enabledBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white70,
-                              prefixIcon: Icon(Icons.phone),
-                              hintText: 'Mobile No.'),
-                          onChanged: (value) {
-                            this.phoneNo = "+91" + value;
-                            // valid();
-                            if (value.length < 10) {
-                              setState(() {
-                                errorMobile =
-                                    "Mobile number contains 10 digits";
-                              });
-                            } else {
-                              setState(() {
-                                errorMobile = "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  (errorMobile != ''
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 85.0),
-                          child: Text(
-                            errorMobile,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : Container()),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 35, top: 15, right: 35, bottom: 10),
-                    child: Center(
-                      child: Container(
-                        height: 55,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintStyle: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 14),
-                              focusedBorder: new OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0),
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.white70,
-                                  )),
-                              enabledBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white70,
-                              prefixIcon: Icon(Icons.lock),
-                              hintText: 'Password (minimum 6 characters)'),
-                          onChanged: (value) {
-                            this.password = value;
-                            // valid();
-                            if (value.length < 6) {
-                              setState(() {
-                                errorPass =
-                                    "Password must contain atleast 6 characters";
-                              });
-                            } else {
-                              setState(() {
-                                errorPass = "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  (errorPass != ''
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                          child: Text(
-                            errorPass,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : Container()),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 35, top: 15, right: 35, bottom: 10),
-                    child: Center(
-                      child: Container(
-                        height: 55,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              hintStyle: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 14),
-                              focusedBorder: new OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0),
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.white70,
-                                  )),
-                              enabledBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white70,
-                              prefixIcon: Icon(Icons.home),
-                              hintText: 'City'),
-                          onChanged: (value) {
-                            this.city = value;
-                            // valid();
-                            Pattern pattern =
-                                r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-                            RegExp regex = new RegExp(pattern);
-                            if (!regex.hasMatch(city)) {
-                              setState(() {
-                                errorCity = "Invalid city name";
-                              });
-                            } else {
-                              setState(() {
-                                errorCity = "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  (errorCity != ''
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                          child: Text(
-                            errorCity,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : Container()),
-                  Center(
-                      child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'By signing up, you agree with our ',
-                        style: GoogleFonts.sourceSansPro(
-                            color: Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
-                            fontSize: 12),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Terms and conditions',
-                            style: GoogleFonts.sourceSansPro(
-                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                                fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                      // padding: EdgeInsets.only(left:45,top:20,right: 35),
-
-                      ),
-                  (errorMsg != ''
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            errorMsg,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.red, fontSize: 13),
-                          ),
-                        )
-                      : Container()),
-                  ButtonTheme(
-                    height: 40,
-                    minWidth: 290,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: RaisedButton(
-                          onPressed: () {
-                            valid();
-                            // sformKey.currentState.();
-                            // verifyPhone();
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Text(
-                            'Register',
-                            style: GoogleFonts.karla(
-                                color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          textColor: Colors.white,
-                          elevation: 7,
-                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                    ),
-                  ),
-                  Center(
-                      child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Already a user? ',
-                        style: GoogleFonts.sourceSansPro(
-                            color: Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
-                            fontSize: 15),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Login',
-                            recognizer: new TapGestureRecognizer()
-                              ..onTap = () => {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginPage()),
-                                    )
-                                  },
-                            style: GoogleFonts.sourceSansPro(
-                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                      // padding: EdgeInsets.only(left:45,top:20,right: 35),
-                      ),
-                ],
-              )),
-            ),
-          )
-        : Scaffold(
-            backgroundColor: Color(0xfff7e9e9),
-            resizeToAvoidBottomPadding: false,
-            body: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    'Enter OTP',
-                    style: GoogleFonts.ptSans(
-                        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  textfields,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            '00:$_counter',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: new GestureDetector(
-                            onTap: () {
-                              if(resendotp==1) {
-                                  resendotp=0;
-                                verifyPhone();
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.person),
+                                hintText: 'Full Name'),
+                            onChanged: (value) {
+                              this.name = value;
+                              // valid();
+                              Pattern pattern =
+                                  r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+                              RegExp regex = new RegExp(pattern);
+                              if (!regex.hasMatch(name)) {
+                                setState(() {
+                                  errorName = "Invalid Username";
+                                });
+                              } else {
+                                setState(() {
+                                  errorName = "";
+                                });
                               }
                             },
-                            child: new Text(
-                              'Resend OTP',
-                              style: GoogleFonts.ptSans(
-                                  color: c,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ButtonTheme(
+                    (errorName != ''
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                            child: Text(
+                              errorName,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 35, top: 15, right: 35, bottom: 10),
+                      child: Center(
+                        child: Container(
+                          height: 55,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.email),
+                                hintText: 'Email ID'),
+                            onChanged: (value) {
+                              this.email = value;
+                              // valid();
+                              if (EmailValidator.validate(value)) {
+                                setState(() {
+                                  errorEmail = "";
+                                });
+                              } else {
+                                setState(() {
+                                  errorEmail = "Invalid Email Address";
+                                });
+                              }
+                            },
+                            // validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
+                            // onSaved: (email)=> _email = email,
+                          ),
+                        ),
+                      ),
+                    ),
+                    (errorEmail != ''
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 85.0),
+                            child: Text(
+                              errorEmail,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 35, top: 15, right: 35, bottom: 10),
+                      child: Center(
+                        child: Container(
+                          height: 55,
+                          child: TextField(
+                            maxLength: 10,
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                counterText: "",
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.phone),
+                                hintText: 'Mobile No.'),
+                            onChanged: (value) {
+                              this.phoneNo = "+91" + value;
+                              // valid();
+                              if (value.length < 10) {
+                                setState(() {
+                                  errorMobile =
+                                      "Mobile number contains 10 digits";
+                                });
+                              } else {
+                                setState(() {
+                                  errorMobile = "";
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    (errorMobile != ''
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 85.0),
+                            child: Text(
+                              errorMobile,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 35, top: 15, right: 35, bottom: 10),
+                      child: Center(
+                        child: Container(
+                          height: 55,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.lock),
+                                hintText: 'Password (minimum 6 characters)'),
+                            onChanged: (value) {
+                              this.password = value;
+                              // valid();
+                              if (value.length < 6) {
+                                setState(() {
+                                  errorPass =
+                                      "Password must contain atleast 6 characters";
+                                });
+                              } else {
+                                setState(() {
+                                  errorPass = "";
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    (errorPass != ''
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                            child: Text(
+                              errorPass,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 35, top: 15, right: 35, bottom: 10),
+                      child: Center(
+                        child: Container(
+                          height: 55,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.home),
+                                hintText: 'City'),
+                            onChanged: (value) {
+                              this.city = value;
+                              // valid();
+                              Pattern pattern =
+                                  r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+                              RegExp regex = new RegExp(pattern);
+                              if (!regex.hasMatch(city)) {
+                                setState(() {
+                                  errorCity = "Invalid city name";
+                                });
+                              } else {
+                                setState(() {
+                                  errorCity = "";
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    (errorCity != ''
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                            child: Text(
+                              errorCity,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
+                    Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'By signing up, you agree with our ',
+                          style: GoogleFonts.sourceSansPro(
+                              color: Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
+                              fontSize: 12),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Terms and conditions',
+                              style: GoogleFonts.sourceSansPro(
+                                  color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                  fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                        // padding: EdgeInsets.only(left:45,top:20,right: 35),
+
+                        ),
+                    (errorMsg != ''
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              errorMsg,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red, fontSize: 13),
+                            ),
+                          )
+                        : Container()),
+                    ButtonTheme(
                       height: 40,
                       minWidth: 290,
                       child: Align(
                         alignment: Alignment.center,
                         child: RaisedButton(
                             onPressed: () {
-                              var concatenate = StringBuffer();
-
-                              _pin.forEach((item) {
-                                concatenate.write(item);
-                              });
-
-                              print(concatenate);
-
-                              signIn(concatenate.toString());
-
+                              valid();
                               // sformKey.currentState.();
-//                           verifyPhone();
+                              // verifyPhone();
                             },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50)),
                             child: Text(
-                              'verify',
+                              'Register',
                               style: GoogleFonts.karla(
                                   color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),
+                            textColor: Colors.white,
                             elevation: 7,
                             color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                      )),
-                ],
+                      ),
+                    ),
+                    Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Already a user? ',
+                          style: GoogleFonts.sourceSansPro(
+                              color: Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
+                              fontSize: 15),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Login',
+                              recognizer: new TapGestureRecognizer()
+                                ..onTap = () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginPage()),
+                                      )
+                                    },
+                              style: GoogleFonts.sourceSansPro(
+                                  color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                        // padding: EdgeInsets.only(left:45,top:20,right: 35),
+                        ),
+                  ],
+                )),
               ),
             ),
-          );
+        )
+        : SafeArea(
+          child: Scaffold(
+              backgroundColor: Color(0xfff7e9e9),
+              resizeToAvoidBottomPadding: false,
+              body: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'Enter OTP',
+                      style: GoogleFonts.ptSans(
+                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    textfields,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              '00:$_counter',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: new GestureDetector(
+                              onTap: () {
+                                if(resendotp==1) {
+                                    resendotp=0;
+                                  verifyPhone();
+                                }
+                              },
+                              child: new Text(
+                                'Resend OTP',
+                                style: GoogleFonts.ptSans(
+                                    color: c,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ButtonTheme(
+                        height: 40,
+                        minWidth: 290,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: RaisedButton(
+                              onPressed: () {
+                                var concatenate = StringBuffer();
+
+                                _pin.forEach((item) {
+                                  concatenate.write(item);
+                                });
+
+                                print(concatenate);
+
+                                signIn(concatenate.toString());
+
+                                // sformKey.currentState.();
+//                           verifyPhone();
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Text(
+                                'verify',
+                                style: GoogleFonts.karla(
+                                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              elevation: 7,
+                              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                        )),
+                  ],
+                ),
+              ),
+            ),
+        );
   }
 //
 //  @override
