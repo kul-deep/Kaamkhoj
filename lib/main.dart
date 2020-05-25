@@ -680,7 +680,8 @@ class _MyAppState extends State<MyApp1> {
           decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage("assets/images/splashscreen.png")),
+                image: AssetImage("assets/images/splashscreen.png")
+            ),
           ),
         ),
       ),

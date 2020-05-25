@@ -116,17 +116,25 @@ class RadioButtonWidget extends State {
   }
 
   Widget build(BuildContext context) {
+     var font1 = GoogleFonts.openSans(
+                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold);
+  var font2 = GoogleFonts.sourceSansPro(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal);
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        // height: MediaQuery.of(context).size.height,
         color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         child: Padding(
           padding: EdgeInsets.only(top: 60, bottom: 60, right: 23, left: 23),
           child: Container(
             padding: EdgeInsets.only(top: 40, bottom: 20, right: 10, left: 10),
-            height: MediaQuery.of(context).size.height - 50,
+            // height: MediaQuery.of(context).size.height - 50,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 image: DecorationImage(
@@ -136,10 +144,10 @@ class RadioButtonWidget extends State {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
                     Widget>[
               Container(
-                padding: EdgeInsets.only(left: 30),
+                padding: EdgeInsets.only(left: 10),
                 child: Text(
                   'Gender',
-                  style: TextStyle(fontSize: 20),
+                  style: font1,
                 ),
               ),
               new Container(
@@ -158,7 +166,7 @@ class RadioButtonWidget extends State {
                     new Container(
                       margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                       constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                      child: new Text("Male"),
+                      child: new Text("Male",style: font2),
                     ),
                     new Radio(
                       groupValue: radioItemGender,
@@ -169,13 +177,16 @@ class RadioButtonWidget extends State {
                         });
                       },
                     ),
-                    new Text("Female"),
+                    new Text("Female",style: font2),
                   ],
                 ),
               ),
-              Text(
-                'Select Hours',
-                style: TextStyle(fontSize: 20),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Select Hours',
+                  style: font1,
+                ),
               ),
               new Container(
                 margin: EdgeInsets.only(left: 10),
@@ -193,7 +204,7 @@ class RadioButtonWidget extends State {
                     new Container(
                       margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                       constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                      child: new Text("4 Hours"),
+                      child: new Text("4 Hours",style: font2),
                     ),
                     new Radio(
                       groupValue: radioItemHrs,
@@ -204,7 +215,7 @@ class RadioButtonWidget extends State {
                         });
                       },
                     ),
-                    new Text("8 Hours"),
+                    new Text("8 Hours",style: font2),
                   ],
                 ),
               ),
@@ -224,7 +235,7 @@ class RadioButtonWidget extends State {
                     new Container(
                       margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                       constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                      child: new Text("12 Hours"),
+                      child: new Text("12 Hours",style: font2),
                     ),
                     new Radio(
                       groupValue: radioItemHrs,
@@ -235,13 +246,16 @@ class RadioButtonWidget extends State {
                         });
                       },
                     ),
-                    new Text("24 Hours"),
+                    new Text("24 Hours",style: font2),
                   ],
                 ),
               ),
-              Text(
-                'Select Religion',
-                style: TextStyle(fontSize: 20),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Select Religion',
+                  style: font1,
+                ),
               ),
               new Container(
                 margin: EdgeInsets.only(left: 10),
@@ -259,7 +273,7 @@ class RadioButtonWidget extends State {
                     new Container(
                       margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                       constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                      child: new Text("Hindu"),
+                      child: new Text("Hindu",style: font2),
                     ),
                     new Radio(
                       groupValue: radioItemReligion,
@@ -270,7 +284,7 @@ class RadioButtonWidget extends State {
                         });
                       },
                     ),
-                    new Text("Christian"),
+                    new Text("Christian",style: font2),
                   ],
                 ),
               ),
@@ -290,24 +304,27 @@ class RadioButtonWidget extends State {
                     new Container(
                       margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                       constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                      child: new Text("Muslim"),
+                      child: new Text("Muslim",style: font2),
                     ),
                     new Radio(
                       groupValue: radioItemReligion,
-                      value: 'All',
+                      value: 'Any',
                       onChanged: (val) {
                         setState(() {
                           radioItemReligion = val;
                         });
                       },
                     ),
-                    new Text("All"),
+                    new Text("Any",style: font2),
                   ],
                 ),
               ),
-              Text(
-                'Employee Age',
-                style: TextStyle(fontSize: 20),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Employee Age',
+                  style: font1,
+                ),
               ),
               new Container(
                 margin: EdgeInsets.only(left: 10),
@@ -325,7 +342,7 @@ class RadioButtonWidget extends State {
                     new Container(
                       margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                       constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                      child: new Text("18-30"),
+                      child: new Text("18-30",style: font2),
                     ),
                     new Radio(
                       groupValue: radioItemAge,
@@ -336,7 +353,7 @@ class RadioButtonWidget extends State {
                         });
                       },
                     ),
-                    new Text("31-40"),
+                    new Text("31-40",style: font2),
                   ],
                 ),
               ),
@@ -356,19 +373,19 @@ class RadioButtonWidget extends State {
                         new Container(
                           margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
                           constraints: BoxConstraints(minWidth: 100, maxWidth: 100),
-                          child: new Text("40 & above"),
+                          child: new Text("40 & above",style: font2),
                         ),
 
                          new Radio(
                            groupValue: radioItemAge,
-                           value: 'All',
+                           value: 'Any',
                            onChanged: (val) {
                              setState(() {
                                radioItemAge = val;
                              });
                            },
                          ),
-                         new Text("All"),
+                         new Text("Any",style: font2),
                       ],
                     ),
                   ),
