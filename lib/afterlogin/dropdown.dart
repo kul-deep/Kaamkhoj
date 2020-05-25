@@ -125,7 +125,7 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
             setSelectedUser(currentUser);
           },
           selected: selectedUser == user,
-          activeColor: Colors.green,
+          activeColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
       );
     }
@@ -179,7 +179,7 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
                         onPressed: () {
 
                           print(selectedUser.firstName);
-                  print(phoneNo);
+                  print(type);
                   if (type == "Employer") {
                     Navigator.push(
                       context,

@@ -3,74 +3,73 @@ import 'package:flutter/material.dart';
 class RateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Material(
-            child: ListView.builder(
+    return Scaffold(
+        body: ListView.builder(
       itemBuilder: (context, i) {
         if (i >= data.length) return null;
         return ExpansionTile(title: Text('${data[i].title}'), children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: '${data[i].children[0].title}',
-                        style: TextStyle(fontSize: 18.0, color: Colors.grey))
-                  ])),
-                ),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: '${data[i].children[1].title}',
-                      style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
-                ])),
-              ],
+        padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${data[i].children[0].title}',
+                    style: TextStyle(fontSize: 18.0, color: Colors.grey))
+              ])),
             ),
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: '${data[i].children[1].title}',
+                  style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+            ])),
+          ],
+        ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: '${data[i].children[2].title}',
-                        style: TextStyle(fontSize: 18.0, color: Colors.grey))
-                  ])),
-                ),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: '${data[i].children[3].title}',
-                      style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
-                ])),
-              ],
+        padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${data[i].children[2].title}',
+                    style: TextStyle(fontSize: 18.0, color: Colors.grey))
+              ])),
             ),
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: '${data[i].children[3].title}',
+                  style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+            ])),
+          ],
+        ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: '${data[i].children[4].title}',
-                        style: TextStyle(fontSize: 18.0, color: Colors.grey))
-                  ])),
-                ),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: '${data[i].children[5].title}',
-                      style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
-                ])),
-              ],
+        padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: RichText(
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${data[i].children[4].title}',
+                    style: TextStyle(fontSize: 18.0, color: Colors.grey))
+              ])),
             ),
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: '${data[i].children[5].title}',
+                  style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+            ])),
+          ],
+        ),
           ),
 
 //              RichText(
@@ -87,7 +86,8 @@ class RateCard extends StatelessWidget {
         ]);
       },
       itemCount: data.length,
-    )));
+    )
+    );
   }
 }
 
@@ -101,8 +101,7 @@ class Entry {
 class ExpansionTileDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Expansion List'),
         ),
@@ -112,7 +111,7 @@ class ExpansionTileDemo extends StatelessWidget {
             data[index],
           ),
         ),
-      ),
+      
     );
   }
 }

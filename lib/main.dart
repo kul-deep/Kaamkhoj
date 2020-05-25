@@ -581,6 +581,7 @@ Future<void> main() async {
   print(token);
 
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
 
     theme: new ThemeData(
         primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
@@ -644,7 +645,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return new MaterialApp(      
       home: NavigatorPage(),
       title: 'NavigationDrawer Demo',
       theme: new ThemeData(
