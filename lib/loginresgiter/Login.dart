@@ -144,8 +144,10 @@ class _LoginPageState extends State<LoginPage> {
                     // color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
                     height: 55,
                     child: TextField(
+                      maxLength: 10,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
+                        counterText: "",
                         hintStyle: GoogleFonts.poppins(
                             color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                             fontSize: 14),

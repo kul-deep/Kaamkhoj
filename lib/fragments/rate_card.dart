@@ -12,7 +12,7 @@ class RateCard extends StatelessWidget {
     return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
+//                  borderRadius: BorderRadius.circular(50),
                   image: DecorationImage(
                       image: AssetImage("assets/images/background.png"),
                       fit: BoxFit.cover)),

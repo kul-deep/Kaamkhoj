@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsPage extends StatelessWidget {
   var font1 = GoogleFonts.openSans(
@@ -8,6 +9,7 @@ class ContactUsPage extends StatelessWidget {
       fontWeight: FontWeight.bold);
   var font2 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,97 +70,144 @@ class ContactUsPage extends StatelessWidget {
             ]));
   }
 
+  _launchURL(String urltype) async {
+    String url;
+    print("Done");
+    if (urltype == "facebook")
+      url = 'http://facebook.com/kaamkhoj';
+    else if (urltype == "twitter")
+      url = 'http://twitter.com/kaamkhoj'; //working
+    else if (urltype == "insta")
+      url = 'http://www.instagram.com/kaamkhoj/'; //Working
+    else if (urltype == "youtube")
+      url =
+          'https://www.youtube.com/channel/UCrDumaP5bEcs4keGj_hvaXg'; //Working
+    else if (urltype == "linkedin")
+      url = 'https://www.linkedin.com/in/kaamkhoj/'; //working
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   Widget _buildTitle2() {
     return Column(
       children: <Widget>[
         Row(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 16),
-              //  alignment: Alignment.topLeft,
-              // padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              width: 40,
-              height: 40,
-              child: Image(
-                image: AssetImage("assets/images/Facebook.png"),
+            GestureDetector(
+              onTap: () => _launchURL("facebook"),
+              child: Container(
+                margin: EdgeInsets.only(left: 16),
+                //  alignment: Alignment.topLeft,
+                // padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                width: 40,
+                height: 40,
+                child: Image(
+                  image: AssetImage("assets/images/Facebook.png"),
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Facebook',style: font2),
+              child: GestureDetector(
+                  onTap: () => _launchURL("facebook"),
+                  child: Text('Facebook', style: font2)),
             ),
           ],
         ),
         Row(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top:10,left: 16),
-              //  alignment: Alignment.topLeft,
-              // padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              width: 40,
-              height: 40,
-              child: Image(
-                image: AssetImage("assets/images/Instagram.png"),
+            GestureDetector(
+              onTap: () => _launchURL("insta"),
+              child: Container(
+                margin: EdgeInsets.only(top: 10, left: 16),
+                //  alignment: Alignment.topLeft,
+                // padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                width: 40,
+                height: 40,
+                child: Image(
+                  image: AssetImage("assets/images/Instagram.png"),
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Instagram',style: font2),
+              child: GestureDetector(
+                  onTap: () => _launchURL("insta"),
+                  child: Text('Instagram', style: font2)),
             ),
           ],
         ),
         Row(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top:10,left:16),
-              //  alignment: Alignment.topLeft,
-              // padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              width: 40,
-              height: 40,
-              child: Image(
-                image: AssetImage("assets/images/Linkedin.png"),
+            GestureDetector(
+              onTap: () => _launchURL("linkedin"),
+              child: Container(
+                margin: EdgeInsets.only(top: 10, left: 16),
+                //  alignment: Alignment.topLeft,
+                // padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                width: 40,
+                height: 40,
+                child: Image(
+                  image: AssetImage("assets/images/Linkedin.png"),
+                ),
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: GestureDetector(
+                  onTap: () => _launchURL("linkedin"),
+                  child: Text('LinkedIn', style: font2),
+                )),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () => _launchURL("youtube"),
+              child: Container(
+                margin: EdgeInsets.only(top: 10, left: 16),
+                //  alignment: Alignment.topLeft,
+                // padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                width: 40,
+                height: 40,
+                child: Image(
+                  image: AssetImage("assets/images/Youtube.png"),
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: Text('LinkedIn',style: font2),
+              child: GestureDetector(
+                  onTap: () => _launchURL("youtube"),
+                  child: Text('Youtube', style: font2)),
             ),
           ],
         ),
         Row(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top:10,left:16),
-              //  alignment: Alignment.topLeft,
-              // padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              width: 40,
-              height: 40,
-              child: Image(
-                image: AssetImage("assets/images/Youtube.png"),
+            GestureDetector(
+              onTap: () => _launchURL("twitter"),
+              child: Container(
+                margin: EdgeInsets.only(top: 10, left: 16),
+                //  alignment: Alignment.topLeft,
+                // padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                width: 40,
+                height: 40,
+                child: Image(
+                  image: AssetImage("assets/images/Twitter.png"),
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Youtube',style: font2),
-            ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top:10,left:16),
-              //  alignment: Alignment.topLeft,
-              // padding: const EdgeInsets.symmetric(horizontal: 2.0),
-              width: 40,
-              height: 40,
-              child: Image(
-                image: AssetImage("assets/images/Twitter.png"),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Twitter',style: font2),
-            ),
+                padding: const EdgeInsets.only(left: 20.0),
+                child: GestureDetector(
+                  onTap: () => _launchURL("twitter"),
+                  child: Text('Twitter', style: font2),
+                )),
           ],
         ),
       ],
