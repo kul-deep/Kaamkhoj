@@ -59,10 +59,14 @@ class User {
 }
 
 Widget _buildTitle() {
+  var font1 = GoogleFonts.openSans(
+      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+      fontSize: 18,
+      fontWeight: FontWeight.bold);
   return Container(
     margin: EdgeInsets.only(top: 10),
     child: Text('Do you need any job? \nSelect of one of the box',
-        style: TextStyle(color: Colors.red, fontSize: 25)),
+        style:font1),
   );
 }
 
@@ -113,13 +117,15 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   }
 
   List<Widget> createRadioListUsers() {
+   var font2 = GoogleFonts.sourceSansPro(
+      color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
     List<Widget> widgets = [];
     for (User user in users) {
       widgets.add(
         RadioListTile(
           value: user,
           groupValue: selectedUser,
-          title: Text(user.firstName),
+          title: Text(user.firstName,style:font2),
           onChanged: (currentUser) {
             print("Current User ${currentUser.firstName}");
             setSelectedUser(currentUser);
@@ -134,50 +140,45 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              _buildTitle(),
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: Text("USERS"),
-              ),
-              Column(
-                children: createRadioListUsers(),
-              ),
-            ],
+    var font1 = GoogleFonts.openSans(
+      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+      fontSize: 18,
+      fontWeight: FontWeight.bold);
+  var font2 = GoogleFonts.sourceSansPro(
+      color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+  return Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/background.png"),
+                      fit: BoxFit.cover)),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                _buildTitle(),
+                Container(
+                  padding: EdgeInsets.all(20.0),                
+                ),
+                Column(
+                  children: createRadioListUsers(),
+                ),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: Container(
             height: 40,
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             child: Row(children: <Widget>[
-              // Container(
-              //   width: 66,
-              //   color: Colors.green,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: <Widget>[Icon(Icons.chat, color: Colors.white), Text("CHAT", style: TextStyle(color: Colors.white))],
-              //   ),
-              // ),
-              // Container(
-              //   width: 66,
-              //   color: Colors.green,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: <Widget>[Icon(Icons.notifications_active, color: Colors.white), Text("NOTIF", style: TextStyle(color: Colors.white))],
-              //   ),
-              // ),
-              ButtonTheme(
-                  height: 40,
+                  ButtonTheme(
+                  height: 40,              
                   minWidth: MediaQuery.of(context).size.width-10,
                   child: Align(
                     alignment: Alignment.center,
                     child: RaisedButton(
                         onPressed: () {
-
                           print(selectedUser.firstName);
                   print(type);
                   if (type == "Employer") {
@@ -209,74 +210,7 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
                         elevation: 7,
                         color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
                   )),
-//              Expanded(
-//                  child: GestureDetector(
-//                onTap: () {
-////          print(selectedUser.firstName);
-//                  print(phoneNo);
-//                  if (type == "Employer") {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                          builder: (context) =>
-//                              EmployerForm(selectedUser.firstName, phoneNo)),
-//                    );
-//                  } else {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                          builder: (context) =>
-//                              EmployeeForm(selectedUser.firstName, phoneNo)),
-//                    );
-//                  }
-//                },
-//                child: Container(
-//                  alignment: Alignment.center,
-//                  color: Colors.blue[300],
-//                  child: Text("Submit",
-//                      style: TextStyle(
-//                          color: Colors.white,
-//                          fontWeight: FontWeight.bold,
-//                          fontSize: 18)),
-//                ),
-//              )),
             ])));
   }
 }
 
-//class RadioButtonWidget extends State {
-//
-//  String radioItem = '';
-//
-//  Widget build(BuildContext context) {
-//    return Column(
-//        children: <Widget>[
-//
-//          RadioListTile(
-//              groupValue: radioItem,
-//              title: Text('Radio Button Item 1'),
-//              value: 'Item 1',
-//              onChanged: (val) {
-//                setState(() {
-//                  radioItem = val;
-//                });
-//              },
-//            ),
-//
-//           RadioListTile(
-//              groupValue: radioItem,
-//              title: Text('Radio Button Item 2'),
-//              value: 'Item 2',
-//              onChanged: (val) {
-//                setState(() {
-//                  radioItem = val;
-//                });
-//              },
-//            ),
-//
-//           Text('$radioItem', style: TextStyle(fontSize: 23),)
-//
-//        ],
-//    );
-//  }
-//}

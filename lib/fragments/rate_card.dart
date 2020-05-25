@@ -1,30 +1,42 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 class RateCard extends StatelessWidget {
-  @override
+  var font1 = GoogleFonts.openSans(
+      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+      fontSize: 18,
+      fontWeight: FontWeight.bold);
+  var font2 = GoogleFonts.sourceSansPro(
+      color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView.builder(
+              body: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/background.png"),
+                      fit: BoxFit.cover)),
+                child: ListView.builder(
       itemBuilder: (context, i) {
         if (i >= data.length) return null;
-        return ExpansionTile(title: Text('${data[i].title}'), children: [
+        return ExpansionTile(title: Text('${data[i].title}',style: font1,), children: [
           Padding(
         padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
         child: Row(
           children: <Widget>[
             Expanded(
-              child: RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                    text: '${data[i].children[0].title}',
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey))
-              ])),
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: '${data[i].children[0].title}',
+                      style: font2)
+                ])),
             ),
             RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: '${data[i].children[1].title}',
-                  style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${data[i].children[1].title}',
+                    style: font2)
             ])),
           ],
         ),
@@ -34,18 +46,18 @@ class RateCard extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                    text: '${data[i].children[2].title}',
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey))
-              ])),
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: '${data[i].children[2].title}',
+                      style: font2)
+                ])),
             ),
             RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: '${data[i].children[3].title}',
-                  style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${data[i].children[3].title}',
+                    style: font2)
             ])),
           ],
         ),
@@ -55,18 +67,18 @@ class RateCard extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                    text: '${data[i].children[4].title}',
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey))
-              ])),
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: '${data[i].children[4].title}',
+                      style: font2)
+                ])),
             ),
             RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                  text: '${data[i].children[5].title}',
-                  style: TextStyle(fontSize: 18.0, color: Colors.redAccent))
+                  text: TextSpan(children: [
+                TextSpan(
+                    text: '${data[i].children[5].title}',
+                    style: font2)
             ])),
           ],
         ),
@@ -86,7 +98,8 @@ class RateCard extends StatelessWidget {
         ]);
       },
       itemCount: data.length,
-    )
+    ),
+              )
     );
   }
 }
@@ -102,9 +115,9 @@ class ExpansionTileDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Expansion List'),
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Expansion List'),
+        // ),
         body: ListView.builder(
           itemCount: data.length,
           itemBuilder: (BuildContext context, int index) => EntryItem(
