@@ -147,6 +147,7 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   var font2 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
   return Scaffold(
+    backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
         body: Container(
           decoration: BoxDecoration(
 //                  borderRadius: BorderRadius.circular(50),

@@ -85,16 +85,15 @@ class RadioButtonWidget extends State {
                       fontSize: 16,
                       fontWeight: FontWeight.normal);
     return Scaffold(
+      backgroundColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         body: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
             color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
             child: Padding(
               padding: EdgeInsets.only(top: 60, bottom: 60, right: 23, left: 23),
               child: Container(
                 padding: EdgeInsets.only(top: 40, bottom: 20, right: 10, left: 10),
-                // height: MediaQuery.of(context).size.height - 50,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
                     image: DecorationImage(

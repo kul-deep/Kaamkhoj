@@ -13,10 +13,10 @@ class ContactUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         body: SingleChildScrollView(
       child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
           color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
           child: Padding(
             padding: EdgeInsets.only(top: 60, bottom: 60, right: 23, left: 23),
