@@ -9,9 +9,7 @@ import 'package:kaamkhoj/fragments/rate_card.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
-import 'package:kaamkhoj/loginresgiter/Register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../fragments/first_fragment.dart';
 import '../fragments/about_us.dart';
 import '../fragments/how_we_work.dart';
@@ -55,26 +53,7 @@ class NavigatorPage extends StatefulWidget {
 }
 
 class NavigatorPageState extends State<NavigatorPage> {
-  // void _showBottom(){
-  //   showModalBottomSheet<void>(
-  //       context: context,
-  //       /*bottom sheet is like a drawer that pops off where you can put any
-  //     controls you want, it is used typically for user notifications*/
-  //       //builder lets your code generate the code
-  //       builder: (BuildContext context){
-  //         return new Container(
-  //           padding: new EdgeInsets.all(15.0),
-  //           child: new Row(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: <Widget>[
-  //               new Text('Some info here', style: new TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
-  //               new RaisedButton(onPressed: () => Navigator.pop(context), child: new Text('Close'),)
-  //             ],
-  //           ),
-  //         );
-  //       }
-  //   );
-  // }
+
   int _selectedDrawerIndex = 0;
 
   _getDrawerItemWidget(int pos) {
@@ -129,39 +108,137 @@ class NavigatorPageState extends State<NavigatorPage> {
     var drawerOptions = <Widget>[];
     for (var i = 0; i < widget.drawerItems.length; i++) {
       var d = widget.drawerItems[i];
-      drawerOptions.add(
-        new ListTile(
-          leading: new Icon(d.icon),
-          title: new Text(d.title),
-          selected: i == _selectedDrawerIndex,
-          onTap: () => _onSelectItem(i),
-        )
-      );
+
+      if (i==7) {
+        drawerOptions.add(
+             Column(
+               children: [
+                 ListTile(
+                  leading: new Icon(d.icon),
+                  title: new Text(d.title),
+                  selected: i == _selectedDrawerIndex,
+                  onTap: () => _onSelectItem(i),
+            ),
+                 Divider(),
+                 Align(
+                   alignment: Alignment.centerLeft,
+                   child: Padding(
+                     padding: const EdgeInsets.only(left:20.0),
+                     child: Text("Label",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
+                         color: Colors.black,
+                         fontSize: 20,
+                         fontWeight: FontWeight.bold) ),
+                   ),
+                 ),
+               ],
+             )
+        );
+    }
+      else if(i==9){
+        drawerOptions.add(
+            Column(
+              children: [
+                ListTile(
+                  leading: new Icon(d.icon),
+                  title: new Text(d.title),
+                  selected: i == _selectedDrawerIndex,
+                  onTap: () => _onSelectItem(i),
+                ),
+                Divider(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:20.0),
+                    child: Text("Label",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold) ),
+                  ),
+                ),
+              ],
+            )
+        );
+      }
+      else if(i==13){
+        drawerOptions.add(
+            Column(
+              children: [
+                ListTile(
+                  leading: new Icon(d.icon),
+                  title: new Text(d.title),
+                  selected: i == _selectedDrawerIndex,
+                  onTap: () => _onSelectItem(i),
+                ),
+                Divider(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:20.0),
+                    child: Text("Logout",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold) ),
+                  ),
+                ),
+              ],
+            )
+        );
+      }
+      else{
+        drawerOptions.add(
+            new ListTile(
+              leading: new Icon(d.icon),
+              title: new Text(d.title),
+              selected: i == _selectedDrawerIndex,
+              onTap: () => _onSelectItem(i),
+            )
+        );
+
+      }
     }
 
-    return new Scaffold(
-      appBar: new AppBar(
-        // here we display the title corresponding to the fragment
-        // you can instead choose to have a static title
-        title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
-        style: GoogleFonts.ptSans(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold)),
-      ),
-
-      drawer: new Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-          children: <Widget>[
-            new UserAccountsDrawerHeader(
-                accountName: new Text("John Doe"), accountEmail: null),
-             Column(children: drawerOptions),
-          ],
+    return SafeArea(
+      child: new Scaffold(
+        appBar: new AppBar(
+          // here we display the title corresponding to the fragment
+          // you can instead choose to have a static title
+          title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
+          style: GoogleFonts.ptSans(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold)),
         ),
+
+        drawer: new Drawer(
+          child: SingleChildScrollView(
+            child: Column(
+            children: <Widget>[
+              Container(
+              height: 250,
+              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+                  ),
+                  Center(child: Text('John Doe',
+                    style: GoogleFonts.openSans(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),)),
+                ],
+              ),
+            ),
+               Column(children: drawerOptions),
+            ],
+          ),
+        ),
+        ),
+        body: _getDrawerItemWidget(_selectedDrawerIndex),
       ),
-      ),
-      body: _getDrawerItemWidget(_selectedDrawerIndex),
     );
   }
 

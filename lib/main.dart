@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp1> {
   }
 
   _startTimer() {
-    _counter = 5;
+    _counter = 03;
     if (_timer != null) {
       _timer.cancel();
     }

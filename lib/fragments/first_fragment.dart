@@ -10,12 +10,6 @@ class HomeFragment extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.normal);
   @override
-  // Widget build(BuildContext context) {
-  //   // TODO: implement build
-  //   return new Center(
-  //     child: new Text("Hello Fragment 1"),
-  //   );
-  // }
   Widget build(BuildContext context){
     return Scaffold(
       body: Container(
