@@ -7,6 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:kaamkhoj/loginresgiter/data.dart';
 
 class PartnerUsPage extends StatefulWidget {
   @override
@@ -25,7 +27,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
   String smsOTP, type;
   String verificationId;
   String errorMessage = '';
-
+  final TextEditingController _typeAheadController = TextEditingController();
+  String _selectedCity;
 
   Future<String> getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -138,7 +141,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                           prefixIcon: Icon(Icons.person),
                           hintText: 'Name of Individual/Agency'),
                       onChanged: (value) {
-                        this.name = value;
+                        this.name = value.trim();
                         // valid();
                         Pattern pattern =
                             r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
@@ -199,9 +202,9 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                           prefixIcon: Icon(Icons.email),
                           hintText: 'Agency Email ID'),
                       onChanged: (value) {
-                        this.email = value;
+                        this.email = value.trim();
                         // valid();
-                        if (EmailValidator.validate(value)) {
+                        if (EmailValidator.validate(this.email)) {
                           setState(() {
                             errorEmail = "";
                           });
@@ -291,63 +294,62 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                 height: 10,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 35, top: 20, right: 35),
-                child: Center(
-                  child: Container(
-                    height: 55,
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintStyle: GoogleFonts.poppins(
-                              color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                              fontSize: 14),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.white70,
-                              )),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(10.0),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.white70,
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white70,
-                          prefixIcon: Icon(Icons.home),
-                          hintText: 'City'),
-                      onChanged: (value) {
-                        this.city = value;
-                        // valid();
-                        Pattern pattern =
-                            r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-                        RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(city)) {
-                          setState(() {
-                            errorCity = "Invalid city name";
-                          });
-                        } else {
-                          setState(() {
-                            errorCity = "";
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              (errorCity != ''
-                  ? Padding(
-                      padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                      child: Text(
-                        errorCity,
-                        style: TextStyle(color: Colors.red),
+                      padding: EdgeInsets.only(
+                          left: 35, top: 15, right: 35, bottom: 10),
+                      child: TypeAheadFormField(
+                        textFieldConfiguration: TextFieldConfiguration(
+                            controller: this._typeAheadController,
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.home),
+                                hintText: 'City'),
+                        ),
+                        suggestionsCallback: (pattern) {
+                          return CitiesService.getSuggestions(pattern);
+                        },
+                        itemBuilder: (context, suggestion) {
+                          return ListTile(
+                            title: Text(suggestion),
+                          );
+                        },
+                        transitionBuilder: (context, suggestionsBox,
+                            controller) {
+                          return suggestionsBox;
+                        },
+                        onSuggestionSelected: (suggestion) {
+                          this._typeAheadController.text = suggestion;
+                        },
+                        onSaved: (value) => this.city = value,
                       ),
-                    )
-                  : Container()),
+                    ),
+                    (errorCity != ''
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                            child: Text(
+                              errorCity,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
               SizedBox(
                 height: 10,
               ),
