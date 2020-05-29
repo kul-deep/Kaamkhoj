@@ -28,21 +28,22 @@ class NavigatorPage extends StatefulWidget {
 
 
 
+
   final drawerItems = [
-    new DrawerItem("Home", Icons.rss_feed),
-    new DrawerItem("About Us", Icons.local_pizza),
+    new DrawerItem("Home", Icons.home),
+    new DrawerItem("About Us", Icons.info),
     new DrawerItem("How We Work", Icons.info),
     new DrawerItem("Services", Icons.info),
     new DrawerItem("Terms For Employee", Icons.info),
     new DrawerItem("Terms For Employer", Icons.info),
-    new DrawerItem("Rate Card", Icons.local_pizza),
-    new DrawerItem("Partner Us", Icons.local_pizza),
-    new DrawerItem("Want A Employee?", Icons.local_pizza),
-    new DrawerItem("Want A Job?", Icons.local_pizza),
-    new DrawerItem("Contact Us", Icons.local_pizza),
-    new DrawerItem("Please Share This App", Icons.local_pizza),
-    new DrawerItem("Online Payment", Icons.local_pizza),
-    new DrawerItem("Live Chat", Icons.local_pizza),
+    new DrawerItem("Rate Card", Icons.library_books),
+    new DrawerItem("Partner Us", Icons.directions_walk),
+    new DrawerItem("Want an Employee?", Icons.announcement),
+    new DrawerItem("Want A Job?", Icons.announcement),
+    new DrawerItem("Contact Us", Icons.call),
+    new DrawerItem("Please Share This App", Icons.share),
+    new DrawerItem("Online Payment", Icons.payment),
+    new DrawerItem("Live Chat", Icons.chat),
     new DrawerItem("Logout", Icons.local_pizza),
   ];
 
@@ -53,6 +54,23 @@ class NavigatorPage extends StatefulWidget {
 }
 
 class NavigatorPageState extends State<NavigatorPage> {
+  String name="";
+  @override
+  void initState() {
+    super.initState();
+//        FocusScope.of(context).requestFocus(new FocusNode());
+        getStringValuesSF();
+
+  }
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String stringValue = prefs.getString('Name');
+   setState(() {
+     name=stringValue;
+   });
+  }
+
 
   int _selectedDrawerIndex = 0;
 
@@ -109,7 +127,33 @@ class NavigatorPageState extends State<NavigatorPage> {
     for (var i = 0; i < widget.drawerItems.length; i++) {
       var d = widget.drawerItems[i];
 
-      if (i==7) {
+      if (i==6) {
+        drawerOptions.add(
+            Column(
+              children: [
+                ListTile(
+                  leading: new Icon(d.icon),
+                  title: new Text(d.title),
+                  selected: i == _selectedDrawerIndex,
+                  onTap: () => _onSelectItem(i),
+                ),
+                Divider(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:20.0),
+                    child: Text("Partner With Us",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold) ),
+                  ),
+                ),
+              ],
+            )
+        );
+      }
+
+      else if (i==7) {
         drawerOptions.add(
              Column(
                children: [
@@ -124,7 +168,7 @@ class NavigatorPageState extends State<NavigatorPage> {
                    alignment: Alignment.centerLeft,
                    child: Padding(
                      padding: const EdgeInsets.only(left:20.0),
-                     child: Text("Label",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
+                     child: Text("Job Related",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
                          color: Colors.black,
                          fontSize: 20,
                          fontWeight: FontWeight.bold) ),
@@ -149,7 +193,7 @@ class NavigatorPageState extends State<NavigatorPage> {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left:20.0),
-                    child: Text("Label",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
+                    child: Text("Communicate",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold) ),
@@ -224,7 +268,7 @@ class NavigatorPageState extends State<NavigatorPage> {
                     padding: const EdgeInsets.only(top: 20),
                     child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
                   ),
-                  Center(child: Text('John Doe',
+                  Center(child: Text(name,
                     style: GoogleFonts.openSans(
                         color: Colors.white,
                         fontSize: 18,

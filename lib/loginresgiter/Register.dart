@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -12,6 +11,7 @@ import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:validators/validators.dart';
 import 'data.dart';
 
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -54,9 +54,11 @@ class _RegisterPageState extends State<RegisterPage> {
       password = "",
       city = "",
       otp = "0";
-  int resendotp=0;
+  int resendotp = 0;
   final TextEditingController _typeAheadController = TextEditingController();
   String _selectedCity;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   final databaseReference = Firestore.instance;
   String errorName = '';
@@ -87,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
           _counter--;
         } else {
           _timer.cancel();
-          resendotp=1;
+          resendotp = 1;
           setState(() {
             c = Color.fromARGB(0xff, 0x88, 0x02, 0x0b);
           });
@@ -319,6 +321,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void valid() {
+    this._formKey.currentState.save();
+    print(city);
     if ((name == "") ||
         (email == "") ||
         (phoneNo == "") ||
@@ -370,7 +374,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return otp == "0"
         ? SafeArea(
-          child: Scaffold(
+            child: Scaffold(
               backgroundColor: Color(0xfff7e9e9),
               body: SingleChildScrollView(
                 child: Form(
@@ -384,7 +388,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage("assets/images/kaamkhoj_logo.png")),
+                            image:
+                                AssetImage("assets/images/kaamkhoj_logo.png")),
                       ),
                     ),
                     Center(
@@ -405,7 +410,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: TextField(
                             decoration: InputDecoration(
                                 hintStyle: GoogleFonts.poppins(
-                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    color:
+                                        Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                     fontSize: 14),
                                 focusedBorder: new OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
@@ -428,14 +434,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 hintText: 'Full Name'),
                             onChanged: (value) {
                               this.name = value.trim();
-                              print(this.name+"name");
                               // valid();
                               Pattern pattern =
                                   r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
                               RegExp regex = new RegExp(pattern);
                               if (!regex.hasMatch(name)) {
                                 setState(() {
-                                  errorName = "Invalid Username";
+                                  errorName = "Invalid Name";
                                 });
                               } else {
                                 setState(() {
@@ -465,7 +470,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: TextField(
                             decoration: InputDecoration(
                                 hintStyle: GoogleFonts.poppins(
-                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    color:
+                                        Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                     fontSize: 14),
                                 focusedBorder: new OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
@@ -488,7 +494,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 hintText: 'Email ID'),
                             onChanged: (value) {
                               this.email = value.trim();
-                              print(this.email+"email");
                               // valid();
                               if (EmailValidator.validate(this.email)) {
                                 setState(() {
@@ -526,7 +531,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
                                 hintStyle: GoogleFonts.poppins(
-                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    color:
+                                        Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                     fontSize: 14),
                                 counterText: "",
                                 focusedBorder: new OutlineInputBorder(
@@ -551,16 +557,24 @@ class _RegisterPageState extends State<RegisterPage> {
                             onChanged: (value) {
                               this.phoneNo = "+91" + value;
                               // valid();
-                              if (value.length < 10) {
+                              if(!isNumeric(value)){
                                 setState(() {
-                                  errorMobile =
-                                      "Mobile number contains 10 digits";
+                                  errorMobile = "Should Contain Only Digits";
                                 });
-                              } else {
+                              }
+                              else {
+
                                 setState(() {
                                   errorMobile = "";
                                 });
+
+                                if (value.length < 10) {
+                                  setState(() {
+                                    errorMobile = "Mobile number contains 10 digits";
+                                  });
+                                }
                               }
+
                             },
                           ),
                         ),
@@ -585,7 +599,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             obscureText: true,
                             decoration: InputDecoration(
                                 hintStyle: GoogleFonts.poppins(
-                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    color:
+                                        Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                     fontSize: 14),
                                 focusedBorder: new OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
@@ -633,62 +648,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           )
                         : Container()),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //       left: 35, top: 15, right: 35, bottom: 10),
-                    //   child: Center(
-                    //     child: Container(
-                    //       height: 55,
-                    //       child: TextField(
-                    //         decoration: InputDecoration(
-                    //             hintStyle: GoogleFonts.poppins(
-                    //                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                    //                 fontSize: 14),
-                    //             focusedBorder: new OutlineInputBorder(
-                    //                 borderRadius: const BorderRadius.all(
-                    //                   const Radius.circular(10.0),
-                    //                 ),
-                    //                 borderSide: BorderSide(
-                    //                   color: Colors.white70,
-                    //                 )),
-                    //             enabledBorder: new OutlineInputBorder(
-                    //               borderRadius: const BorderRadius.all(
-                    //                 const Radius.circular(10.0),
-                    //               ),
-                    //               borderSide: BorderSide(
-                    //                 color: Colors.white70,
-                    //               ),
-                    //             ),
-                    //             filled: true,
-                    //             fillColor: Colors.white70,
-                    //             prefixIcon: Icon(Icons.home),
-                    //             hintText: 'City'),
-                    //         onChanged: (value) {
-                    //           this.city = value;
-                    //           // valid();
-                    //           Pattern pattern =
-                    //               r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-                    //           RegExp regex = new RegExp(pattern);
-                    //           if (!regex.hasMatch(city)) {
-                    //             setState(() {
-                    //               errorCity = "Invalid city name";
-                    //             });
-                    //           } else {
-                    //             setState(() {
-                    //               errorCity = "";
-                    //             });
-                    //           }
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    
-                        Padding(
+
+
+                    Padding(
                       padding: EdgeInsets.only(
                           left: 35, top: 15, right: 35, bottom: 10),
-                      child: TypeAheadFormField(
-                        textFieldConfiguration: TextFieldConfiguration(
+                      child: Form(
+                        key: this._formKey,
+                        child: TypeAheadFormField(
+
+                          textFieldConfiguration: TextFieldConfiguration(
                             controller: this._typeAheadController,
                             decoration: InputDecoration(
                                 hintStyle: GoogleFonts.poppins(
@@ -713,23 +682,34 @@ class _RegisterPageState extends State<RegisterPage> {
                                 fillColor: Colors.white70,
                                 prefixIcon: Icon(Icons.home),
                                 hintText: 'City'),
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return CitiesService.getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              title: Text(suggestion),
+                            );
+                          },
+                          transitionBuilder:
+                              (context, suggestionsBox, controller) {
+                            return suggestionsBox;
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            this._typeAheadController.text = suggestion;
+                          },
+                          onSaved: (value) {
+                            this.city = value;
+                          },
+//                          validator: (value) {
+//                            if (value.isEmpty) {
+//                              setState(() {
+//                                errorCity="Fill this field";
+//                              });
+//                            }
+//                            return "";
+//                          },
                         ),
-                        suggestionsCallback: (pattern) {
-                          return CitiesService.getSuggestions(pattern);
-                        },
-                        itemBuilder: (context, suggestion) {
-                          return ListTile(
-                            title: Text(suggestion),
-                          );
-                        },
-                        transitionBuilder: (context, suggestionsBox,
-                            controller) {
-                          return suggestionsBox;
-                        },
-                        onSuggestionSelected: (suggestion) {
-                          this._typeAheadController.text = suggestion;
-                        },
-                        onSaved: (value) => this.city = value,
                       ),
                     ),
                     (errorCity != ''
@@ -781,6 +761,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         alignment: Alignment.center,
                         child: RaisedButton(
                             onPressed: () {
+
                               valid();
                               // sformKey.currentState.();
                               // verifyPhone();
@@ -833,9 +814,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 )),
               ),
             ),
-        )
+          )
         : SafeArea(
-          child: Scaffold(
+            child: Scaffold(
               backgroundColor: Color(0xfff7e9e9),
               resizeToAvoidBottomPadding: false,
               body: Center(
@@ -870,8 +851,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             padding: const EdgeInsets.only(right: 10.0),
                             child: new GestureDetector(
                               onTap: () {
-                                if(resendotp==1) {
-                                    resendotp=0;
+                                if (resendotp == 1) {
+                                  resendotp = 0;
                                   verifyPhone();
                                 }
                               },
@@ -915,7 +896,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Text(
                                 'verify',
                                 style: GoogleFonts.karla(
-                                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                                    color:
+                                        Color.fromARGB(0xff, 0xff, 0xff, 0xff),
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -926,7 +908,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-        );
+          );
   }
-
 }

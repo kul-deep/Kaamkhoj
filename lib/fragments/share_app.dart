@@ -35,8 +35,14 @@ class ShareAppState extends State<ShareAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
         decoration: BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.fill,
@@ -46,7 +52,10 @@ class ShareAppState extends State<ShareAppPage> {
           padding: const EdgeInsets.all(15),
           child: ButtonTheme(
             height: 40,
-            minWidth: MediaQuery.of(context).size.width,
+            minWidth: MediaQuery
+                .of(context)
+                .size
+                .width,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: RaisedButton(
@@ -70,39 +79,6 @@ class ShareAppState extends State<ShareAppPage> {
           ),
         ),
       ),
-//            child: new RaisedButton(
-//              onPressed:() {
-//                Share.share('Check out this app KaamKhoj https://play.google.com/store/apps/details?id=com.saishvilas.final3hd');
-//              },
-////          onPressed: () async => await launch(
-////
-//////               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
-////              "https://wa.me/+917977763205?text=Hello"),
-////        onPressed:() => _launchURL(),
-//              child: Text("Share More"),
-//            ),
-//          )
     );
   }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    // TODO: implement build
-//    return new Center(
-//      child: new RaisedButton(
-//        onPressed:() {
-//          Share.share('Check out this app KaamKhoj https://play.google.com/store/apps/details?id=com.saishvilas.final3hd');
-//        },
-////          onPressed: () async => await launch(
-////
-//////               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
-////              "https://wa.me/+917977763205?text=Hello"),
-////        onPressed:() => _launchURL(),
-//        child: Text("Aditya"),
-//
-//    )
-//
-//    );
-//  }
-
 }

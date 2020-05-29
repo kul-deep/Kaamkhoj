@@ -7,6 +7,7 @@ import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/loginresgiter/forgetpassword.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
+import 'package:validators/validators.dart';
 
 import 'Register.dart';
 // import 'package:kaamkhoj/homepage.dart';
@@ -40,7 +41,18 @@ class _LoginPageState extends State<LoginPage> {
   addStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('Login', phoneNo);
-    SignIn();
+    getName();
+  }
+
+  getName()  {
+    DocumentReference documentReference =
+    databaseReference.collection("data").document(phoneNo);
+    documentReference.get().then((datasnapshot) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('Name', datasnapshot['Name'] );
+      SignIn();
+    });
+
   }
 
   void valid() {
@@ -177,14 +189,22 @@ class _LoginPageState extends State<LoginPage> {
                         onChanged: (value) {
                           this.phoneNo = "+91" + value;
                           // valid();
-                          if (value.length < 10) {
+                          if(!isNumeric(value)){
                             setState(() {
-                              errorMobile = "Mobile number contains 10 digits";
+                              errorMobile = "Should Contain Only Digits";
                             });
-                          } else {
+                          }
+                          else {
+
                             setState(() {
                               errorMobile = "";
                             });
+
+                            if (value.length < 10) {
+                              setState(() {
+                                errorMobile = "Mobile number contains 10 digits";
+                              });
+                            }
                           }
                         },
                       ),

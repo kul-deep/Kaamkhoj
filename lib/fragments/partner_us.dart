@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
+import 'package:validators/validators.dart';
 
 class PartnerUsPage extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
   String phoneNo, name = "", email = "", city = "";
   final databaseReference = Firestore.instance;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   String errorName = '';
   String errorEmail = '';
@@ -55,6 +58,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
 
   void valid() {
+    this._formKey.currentState.save();
     if ((name == "") || (email == "") || (phoneNo == "") || (city == "")) {
       String errorblank = "Please fill this field";
       if (name == "") {
@@ -266,15 +270,22 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                           hintText: 'Agency Mobile No.'),
                       onChanged: (value) {
                         this.phoneNo = "+91" + value;
-                        // valid();
-                        if (value.length < 10) {
+                        if(!isNumeric(value)){
                           setState(() {
-                            errorMobile = "Mobile number contains 10 digits";
+                            errorMobile = "Should Contain Only Digits";
                           });
-                        } else {
+                        }
+                        else {
+
                           setState(() {
                             errorMobile = "";
                           });
+
+                          if (value.length < 10) {
+                            setState(() {
+                              errorMobile = "Mobile number contains 10 digits";
+                            });
+                          }
                         }
                       },
                     ),
@@ -296,49 +307,52 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
               Padding(
                       padding: EdgeInsets.only(
                           left: 35, top: 15, right: 35, bottom: 10),
-                      child: TypeAheadFormField(
-                        textFieldConfiguration: TextFieldConfiguration(
-                            controller: this._typeAheadController,
-                            decoration: InputDecoration(
-                                hintStyle: GoogleFonts.poppins(
-                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                    fontSize: 14),
-                                focusedBorder: new OutlineInputBorder(
+                      child: Form(
+                        key: _formKey,
+                        child: TypeAheadFormField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                              controller: this._typeAheadController,
+                              decoration: InputDecoration(
+                                  hintStyle: GoogleFonts.poppins(
+                                      color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                      fontSize: 14),
+                                  focusedBorder: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white70,
+                                      )),
+                                  enabledBorder: new OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(
                                       const Radius.circular(10.0),
                                     ),
                                     borderSide: BorderSide(
                                       color: Colors.white70,
-                                    )),
-                                enabledBorder: new OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(10.0),
+                                    ),
                                   ),
-                                  borderSide: BorderSide(
-                                    color: Colors.white70,
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white70,
-                                prefixIcon: Icon(Icons.home),
-                                hintText: 'City'),
+                                  filled: true,
+                                  fillColor: Colors.white70,
+                                  prefixIcon: Icon(Icons.home),
+                                  hintText: 'City'),
+                          ),
+                          suggestionsCallback: (pattern) {
+                            return CitiesService.getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              title: Text(suggestion),
+                            );
+                          },
+                          transitionBuilder: (context, suggestionsBox,
+                              controller) {
+                            return suggestionsBox;
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            this._typeAheadController.text = suggestion;
+                          },
+                          onSaved: (value) => this.city = value,
                         ),
-                        suggestionsCallback: (pattern) {
-                          return CitiesService.getSuggestions(pattern);
-                        },
-                        itemBuilder: (context, suggestion) {
-                          return ListTile(
-                            title: Text(suggestion),
-                          );
-                        },
-                        transitionBuilder: (context, suggestionsBox,
-                            controller) {
-                          return suggestionsBox;
-                        },
-                        onSuggestionSelected: (suggestion) {
-                          this._typeAheadController.text = suggestion;
-                        },
-                        onSaved: (value) => this.city = value,
                       ),
                     ),
                     (errorCity != ''
