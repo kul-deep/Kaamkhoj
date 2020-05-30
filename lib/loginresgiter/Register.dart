@@ -701,14 +701,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           onSaved: (value) {
                             this.city = value;
                           },
-//                          validator: (value) {
-//                            if (value.isEmpty) {
-//                              setState(() {
-//                                errorCity="Fill this field";
-//                              });
-//                            }
-//                            return "";
-//                          },
                         ),
                       ),
                     ),
