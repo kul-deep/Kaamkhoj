@@ -811,93 +811,102 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Scaffold(
               backgroundColor: Color(0xfff7e9e9),
               resizeToAvoidBottomPadding: false,
-              body: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                width: MediaQuery.of(context).size.width,
+                height: 300,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/images/kaamkhoj_logo.png")),
+                ),
+              ),
+                  Center(
+                    child: Text(
                       'Enter OTP',
                       style: GoogleFonts.ptSans(
                           color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    textfields,
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
-                            child: Text(
-                              '00:$_counter',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
-                              ),
+                  ),
+                  textfields,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            '00:$_counter',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10.0),
-                            child: new GestureDetector(
-                              onTap: () {
-                                if (resendotp == 1) {
-                                  resendotp = 0;
-                                  verifyPhone();
-                                }
-                              },
-                              child: new Text(
-                                'Resend OTP',
-                                style: GoogleFonts.ptSans(
-                                    color: c,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: new GestureDetector(
+                            onTap: () {
+                              if (resendotp == 1) {
+                                resendotp = 0;
+                                verifyPhone();
+                              }
+                            },
+                            child: new Text(
+                              'Resend OTP',
+                              style: GoogleFonts.ptSans(
+                                  color: c,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    ButtonTheme(
-                        height: 40,
-                        minWidth: 290,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: RaisedButton(
-                              onPressed: () {
-                                var concatenate = StringBuffer();
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ButtonTheme(
+                      height: 40,
+                      minWidth: 290,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: RaisedButton(
+                            onPressed: () {
+                              var concatenate = StringBuffer();
 
-                                _pin.forEach((item) {
-                                  concatenate.write(item);
-                                });
+                              _pin.forEach((item) {
+                                concatenate.write(item);
+                              });
 
-                                print(concatenate);
+                              print(concatenate);
 
-                                signIn(concatenate.toString());
+                              signIn(concatenate.toString());
 
-                                // sformKey.currentState.();
+                              // sformKey.currentState.();
 //                           verifyPhone();
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: Text(
-                                'verify',
-                                style: GoogleFonts.karla(
-                                    color:
-                                        Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              elevation: 7,
-                              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                        )),
-                  ],
-                ),
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            child: Text(
+                              'Verify',
+                              style: GoogleFonts.karla(
+                                  color:
+                                      Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            elevation: 7,
+                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                      )),
+                ],
               ),
             ),
           );
