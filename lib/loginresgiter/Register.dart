@@ -78,6 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
   Color c = Colors.grey[700];
   Timer _timer;
 
+  bool circularProgress=false;
+
+  String errorOtp="";
+
+  bool circularProgressReg=false;
+
   void _startTimer() {
     _counter = 30;
     if (_timer != null) {
@@ -258,6 +264,10 @@ class _RegisterPageState extends State<RegisterPage> {
           });
     } catch (e) {
       print(e.toString());
+      setState(() {
+        circularProgressReg=false;
+        errorMsg=e.code;
+      });
     }
   }
 
@@ -281,6 +291,8 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+
+
   signIn(smsotp) async {
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
@@ -297,8 +309,22 @@ class _RegisterPageState extends State<RegisterPage> {
       print("Yes");
       createRecord();
     } catch (e) {
+      String error1="";
       print("error" + e.toString());
-//      handleError(e);
+      switch(e.code){
+        case "ERROR_INVALID_VERIFICATION_CODE":
+          error1="Invalid Otp";
+          break;
+        case "ERROR_SESSION_EXPIRED":
+          error1="Time Limit Exceeded. Resend Otp";
+          break;
+        default:
+          error1="Something Has Gone Worong";
+      }
+      setState(() {
+        circularProgress=false;
+        errorOtp=error1;
+      });
     }
   }
 
@@ -314,6 +340,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
       setState(() {
         errorMsg = "User Already Exist";
+        circularProgressReg=false;
       });
       Toast.show("User Already Exist", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -328,6 +355,9 @@ class _RegisterPageState extends State<RegisterPage> {
         (phoneNo == "") ||
         (password == "") ||
         (city == "")) {
+      setState(() {
+        circularProgressReg=false;
+      });
       String errorblank = "Please fill this field";
       if (name == "") {
         setState(() {
@@ -364,6 +394,9 @@ class _RegisterPageState extends State<RegisterPage> {
           errorCity == "") {
         verify();
       } else {
+        setState(() {
+          circularProgressReg=false;
+        });
         Toast.show("Please fill all the fields correctly", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       }
@@ -746,32 +779,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           )
                         : Container()),
-                    ButtonTheme(
-                      height: 40,
-                      minWidth: 290,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: RaisedButton(
-                            onPressed: () {
+                    (circularProgressReg ?
+                    Padding(
+                      padding: EdgeInsets.only(top:20),
+                      child: Center(child: CircularProgressIndicator()),
+                    ):
+                    _buttonReg()),
 
-                              valid();
-                              // sformKey.currentState.();
-                              // verifyPhone();
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Text(
-                              'Register',
-                              style: GoogleFonts.karla(
-                                  color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            textColor: Colors.white,
-                            elevation: 7,
-                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                      ),
-                    ),
                     Center(
                         child: Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
@@ -871,44 +885,113 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(
+                    height: 20,
+                  ),
+                  (errorOtp != ''
+                      ? Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      errorOtp,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.red,fontSize: 13),
+                    ),
+                  )
+                      : Container()),
+                  SizedBox(
                     height: 10,
                   ),
-                  ButtonTheme(
-                      height: 40,
-                      minWidth: 290,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: RaisedButton(
-                            onPressed: () {
-                              var concatenate = StringBuffer();
+                  (circularProgress ?
+                  Padding(
+                    padding: EdgeInsets.only(top:20),
+                    child: Center(child: CircularProgressIndicator()),
+                  ):
+                  _button()),
 
-                              _pin.forEach((item) {
-                                concatenate.write(item);
-                              });
-
-                              print(concatenate);
-
-                              signIn(concatenate.toString());
-
-                              // sformKey.currentState.();
-//                           verifyPhone();
-                            },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Text(
-                              'Verify',
-                              style: GoogleFonts.karla(
-                                  color:
-                                      Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            elevation: 7,
-                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                      )),
                 ],
               ),
             ),
           );
+  }
+
+  _button()
+  {
+    return  ButtonTheme(
+        height: 40,
+        minWidth: 290,
+        child: Align(
+          alignment: Alignment.center,
+          child: RaisedButton(
+              onPressed: () {
+                setState(() {
+                  circularProgress=true;
+                });
+                var concatenate = StringBuffer();
+
+                _pin.forEach((item) {
+                  concatenate.write(item);
+                });
+
+                print(concatenate);
+
+                if(concatenate.length ==6){
+                  signIn(concatenate.toString());
+                  setState(() {
+                    errorOtp="";
+                  });
+
+                }
+                else{
+                  setState(() {
+                    circularProgress=false;
+                    errorOtp="Please Fill OTP";
+
+                  });
+                }
+
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              child: Text(
+                'Verify',
+                style: GoogleFonts.karla(
+                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+              elevation: 7,
+              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+        ));
+  }
+
+  _buttonReg() {
+    return  ButtonTheme(
+      height: 40,
+      minWidth: 290,
+      child: Align(
+        alignment: Alignment.center,
+        child: RaisedButton(
+            onPressed: () {
+              setState(() {
+                circularProgressReg=true;
+              });
+
+              valid();
+              // sformKey.currentState.();
+              // verifyPhone();
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50)),
+            child: Text(
+              'Register',
+              style: GoogleFonts.karla(
+                  color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            elevation: 7,
+            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+      ),
+    );
   }
 }

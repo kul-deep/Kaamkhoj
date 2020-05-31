@@ -29,6 +29,8 @@ class _LoginPageState extends State<LoginPage> {
   String errorPass = '';
   String errorMsg = '';
 
+  bool circularProgress=false;
+
   String type;
   final databaseReference = Firestore.instance;
 
@@ -72,6 +74,9 @@ class _LoginPageState extends State<LoginPage> {
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
       if (errorMobile == "" && errorPass == "") {
+        setState(() {
+          circularProgress=true;
+        });
         verify();
       } else {
         Toast.show("Please fill all the fields correctly", context,
@@ -91,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
           addStringToSF();
         } else {
           setState(() {
+            circularProgress=false;
             errorMsg = "Wrong Credentials";
           });
           Toast.show("Wrong Credentials", context,
@@ -99,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       } else {
         setState(() {
+          circularProgress=false;
           errorMsg = "User does not exist";
         });
 
@@ -113,6 +120,39 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => NavigatorPage()),
+    );
+  }
+
+
+
+  _button(){
+    return Padding(
+      padding: const EdgeInsets.only(top:20),
+      child: ButtonTheme(
+        height: 40,
+        minWidth: 290,
+        child: Align(
+          alignment: Alignment.center,
+          child: RaisedButton(
+              onPressed: () {
+                valid();
+                // sformKey.currentState.();
+                // verifyPhone();
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              child: Text(
+                'Login',
+                style: GoogleFonts.karla(
+                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+              textColor: Colors.white,
+              elevation: 7,
+              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+        ),
+      ),
     );
   }
 
@@ -292,35 +332,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 )
                     : Container()),
+                (circularProgress ?
+                    Padding(
+                      padding: EdgeInsets.only(top:20),
+                      child: Center(child: CircularProgressIndicator()),
+                    ): _button()),
 
-                Padding(
-                  padding: const EdgeInsets.only(top:20),
-                  child: ButtonTheme(
-                    height: 40,
-                    minWidth: 290,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: RaisedButton(
-                          onPressed: () {
-                            valid();
-                            // sformKey.currentState.();
-                            // verifyPhone();
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Text(
-                            'Login',
-                            style: GoogleFonts.karla(
-                                color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          textColor: Colors.white,
-                          elevation: 7,
-                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                    ),
-                  ),
-                ),
+
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 0),

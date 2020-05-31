@@ -23,7 +23,7 @@ class User {
   int userId;
   String firstName;
 
-  User({this.userId, this.firstName});
+  User({this.userId, this.firstName=""});
 
   static List<User> getUsers() {
     return <User>[
@@ -65,8 +65,8 @@ Widget _buildTitle() {
       fontWeight: FontWeight.bold);
   return Container(
     margin: EdgeInsets.only(top: 10),
-    child: Text('Do you need any job? \nSelect of one of the box',
-        style:font1),
+    child:
+        Text('Do you need any job? \nSelect of one of the box', style: font1),
   );
 }
 
@@ -78,6 +78,10 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   int selectedRadioTile;
 
   String type, phoneNo;
+
+  bool circularProgress = false;
+
+  String errorMsg="";
 
   ChooseYourWorkState(String type) {
     this.type = type;
@@ -117,15 +121,15 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   }
 
   List<Widget> createRadioListUsers() {
-   var font2 = GoogleFonts.sourceSansPro(
-      color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+    var font2 = GoogleFonts.sourceSansPro(
+        color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
     List<Widget> widgets = [];
     for (User user in users) {
       widgets.add(
         RadioListTile(
           value: user,
           groupValue: selectedUser,
-          title: Text(user.firstName,style:font2),
+          title: Text(user.firstName, style: font2),
           onChanged: (currentUser) {
             print("Current User ${currentUser.firstName}");
             setSelectedUser(currentUser);
@@ -141,47 +145,66 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
   @override
   Widget build(BuildContext context) {
     var font1 = GoogleFonts.openSans(
-      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-      fontSize: 18,
-      fontWeight: FontWeight.bold);
-  var font2 = GoogleFonts.sourceSansPro(
-      color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
-  return Scaffold(
-    backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
-        body: Container(
-          decoration: BoxDecoration(
+        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+        fontSize: 18,
+        fontWeight: FontWeight.bold);
+    var font2 = GoogleFonts.sourceSansPro(
+        color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
+          body: Container(
+            decoration: BoxDecoration(
 //                  borderRadius: BorderRadius.circular(50),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/background.png"),
-                      fit: BoxFit.cover)),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildTitle(),
-                Container(
-                  padding: EdgeInsets.all(20.0),                
-                ),
-                Column(
-                  children: createRadioListUsers(),
-                ),
-              ],
+                image: DecorationImage(
+                    image: AssetImage("assets/images/background.png"),
+                    fit: BoxFit.cover)),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _buildTitle(),
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                  ),
+                  Column(
+                    children: createRadioListUsers(),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        bottomNavigationBar: Container(
-            height: 40,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            child: Row(children: <Widget>[
-                  ButtonTheme(
-                  height: 40,              
-                  minWidth: MediaQuery.of(context).size.width-10,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: RaisedButton(
-                        onPressed: () {
-                          print(selectedUser.firstName);
-                  print(type);
+          bottomNavigationBar: Container(
+              height: 40,
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              child: Row(children: <Widget>[
+                (errorMsg != ''
+                    ? Padding(
+                  padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                  child: Text(
+                    errorMsg,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ) : Container()),
+                (circularProgress
+                    ? Center(child: CircularProgressIndicator())
+                    : _button()),
+              ]))),
+    );
+  }
+
+  _button() {
+    return ButtonTheme(
+        height: 40,
+        minWidth: MediaQuery.of(context).size.width - 10,
+        child: Align(
+          alignment: Alignment.center,
+          child: RaisedButton(
+              onPressed: () {
+                setState(() {
+                  circularProgress=true;
+                });
                   if (type == "Employer") {
                     Navigator.push(
                       context,
@@ -197,21 +220,19 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
                               EmployeeForm(selectedUser.firstName, phoneNo)),
                     );
                   }
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              child: Text(
+                'Submit',
+                style: GoogleFonts.karla(
+                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+              elevation: 7,
+              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+        ));
 
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Text(
-                          'Submit',
-                          style: GoogleFonts.karla(
-                              color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        elevation: 7,
-                        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                  )),
-            ])));
   }
 }
-

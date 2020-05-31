@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
 
@@ -51,6 +50,8 @@ class RadioButtonWidget extends State {
   String work, phoneNo;
   String city = '';
   String errorCity = '';
+
+  bool circularProgress=false;
 
   RadioButtonWidget(String work, String phoneNo) {
     this.work = work;
@@ -450,47 +451,59 @@ class RadioButtonWidget extends State {
               SizedBox(
                 height: 10,
               ),
-              ButtonTheme(
-                  height: 40,
-                  minWidth: 290,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: RaisedButton(
-                        onPressed: () {
-                          print(city);
-                          if (city!=''){
-                          print(radioItemGender);
-                          print(radioItemHrs);
-                          print(radioItemReligion);
-                          print(radioItemAge);
-                          createRecord();}
-                          else{
-                            setState(() {
-                              errorCity="Please fill this field";
-                            });
-                            Toast.show("Please fill all the fields", context,
-                                duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                          }
-                          //  valid();
-                          // sformKey.currentState.();
-                          // verifyPhone();
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Text(
-                          'Submit',
-                          style: GoogleFonts.karla(
-                              color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        elevation: 7,
-                        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                  )),
+                  (circularProgress ?
+                  Padding(
+                    padding: EdgeInsets.only(top:20),
+                    child: Center(child: CircularProgressIndicator()),
+                  ):
+                  _button()),
             ]),
           ),
         ),
       ),
     ));
+  }
+  _button(){
+    return ButtonTheme(
+        height: 40,
+        minWidth: 290,
+        child: Align(
+          alignment: Alignment.center,
+          child: RaisedButton(
+              onPressed: () {
+                print(city);
+                setState(() {
+                  circularProgress=true;
+                });
+                if (city!=''){
+                  print(radioItemGender);
+                  print(radioItemHrs);
+                  print(radioItemReligion);
+                  print(radioItemAge);
+                  createRecord();}
+                else{
+                  setState(() {
+                    errorCity="Please fill this field";
+                    circularProgress=false;
+                  });
+                  Toast.show("Please fill all the fields", context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }
+                //  valid();
+                // sformKey.currentState.();
+                // verifyPhone();
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              child: Text(
+                'Submit',
+                style: GoogleFonts.karla(
+                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+              elevation: 7,
+              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+        ));
   }
 }
