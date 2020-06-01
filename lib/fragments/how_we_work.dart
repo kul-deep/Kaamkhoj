@@ -12,19 +12,21 @@ class HowWeWorkPage extends StatelessWidget {
                       fontWeight: FontWeight.normal);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width:MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-      image: AssetImage("assets/images/background.png"),
-      fit: BoxFit.cover
-            )
-          ),
-        child: SingleChildScrollView(
-                  child: Column(
-            children: <Widget>[_buildTitle(),_column()]
+    return SafeArea(
+          child: Scaffold(
+        body: Container(
+          width:MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+        image: AssetImage("assets/images/background.png"),
+        fit: BoxFit.cover
+              )
+            ),
+          child: SingleChildScrollView(
+                    child: Column(
+              children: <Widget>[_buildTitle(),_column()]
+            ),
           ),
         ),
       ),

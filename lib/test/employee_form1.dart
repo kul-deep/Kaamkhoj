@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
+import 'package:toast/toast.dart';
 
 class EmployeeForm extends StatelessWidget {
   String work;
@@ -374,6 +375,12 @@ class RadioButtonWidget extends State {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
+                if(radioItemGender == '' || radioItemHrs == '' || radioItemReligion == '' || radioItemAge == ''){
+                  Toast.show("Please fill all the fields", context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+
+                }
+                else{
                 print(radioItemGender);
                 print(radioItemHrs);
                 print(radioItemReligion);
@@ -382,6 +389,7 @@ class RadioButtonWidget extends State {
                 setState(() {
                   circularProgress=true;
                 });
+                }
                 //  valid();
                 // sformKey.currentState.();
                 // verifyPhone();

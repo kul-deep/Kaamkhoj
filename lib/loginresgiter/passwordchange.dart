@@ -63,15 +63,24 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xfff7e9e9),
-      resizeToAvoidBottomPadding: false,
+    return SafeArea(
+          child: Scaffold(
+        backgroundColor: Color(0xfff7e9e9),
+        resizeToAvoidBottomPadding: false,
 //      resizeToAvoidBottomInset: ,
-      body: Center(
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/kaamkhoj_logo.png")),
+              ),
+              ),
             Padding(
               padding: EdgeInsets.only(left: 35, top: 20, right: 35, bottom: 5),
               child: Center(

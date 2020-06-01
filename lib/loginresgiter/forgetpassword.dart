@@ -380,82 +380,89 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
           child: Scaffold(
               backgroundColor: Color(0xfff7e9e9),
               resizeToAvoidBottomPadding: false,
-              body: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 35, top: 20, right: 35, bottom: 5),
-                      child: Center(
-                        child: Container(
-                          height: 55,
-                          child: TextField(
-                            maxLength: 10,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                hintStyle: GoogleFonts.poppins(
-                                    color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                    fontSize: 14),
-                                counterText: "",
-                                focusedBorder: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(10.0),
-                                    ),
-                                    borderSide: BorderSide(
-                                      color: Colors.white70,
-                                    )),
-                                enabledBorder: new OutlineInputBorder(
+              body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/kaamkhoj_logo.png")),
+              ),
+              ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 35, top: 20, right: 35, bottom: 5),
+                    child: Center(
+                      child: Container(
+                        height: 55,
+                        child: TextField(
+                          maxLength: 10,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                              hintStyle: GoogleFonts.poppins(
+                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                  fontSize: 14),
+                              counterText: "",
+                              focusedBorder: new OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(10.0),
                                   ),
                                   borderSide: BorderSide(
                                     color: Colors.white70,
-                                  ),
+                                  )),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(10.0),
                                 ),
-                                filled: true,
-                                fillColor: Colors.white70,
-                                prefixIcon: Icon(Icons.phone),
-                                hintText: 'Mobile No.'),
-                            onChanged: (value) {
-                              this.phoneNo = "+91" + value;
-                              if (value.length < 10) {
-                                setState(() {
-                                  errorMobile =
-                                      "Mobile number contains 10 digits";
-                                });
-                              } else {
-                                setState(() {
-                                  errorMobile = "";
-                                });
-                              }
-                            },
-                          ),
+                                borderSide: BorderSide(
+                                  color: Colors.white70,
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white70,
+                              prefixIcon: Icon(Icons.phone),
+                              hintText: 'Mobile No.'),
+                          onChanged: (value) {
+                            this.phoneNo = "+91" + value;
+                            if (value.length < 10) {
+                              setState(() {
+                                errorMobile =
+                                    "Mobile number contains 10 digits";
+                              });
+                            } else {
+                              setState(() {
+                                errorMobile = "";
+                              });
+                            }
+                          },
                         ),
                       ),
                     ),
-                    (errorMobile != ''
-                        ? Padding(
-                            padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                            child: Text(
-                              errorMobile,
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          )
-                        : Container()),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    (circularProgressValid ?
-                    Padding(
-                      padding: EdgeInsets.only(top:20),
-                      child: Center(child: CircularProgressIndicator()),
-                    ):
-                    _buttonValid()),
+                  ),
+                  (errorMobile != ''
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                          child: Text(
+                            errorMobile,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
+                      : Container()),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  (circularProgressValid ?
+                  Padding(
+                    padding: EdgeInsets.only(top:20),
+                    child: Center(child: CircularProgressIndicator()),
+                  ):
+                  _buttonValid()),
 
-                  ],
-                ),
+                ],
               ),
             ),
         )

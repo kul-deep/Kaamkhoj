@@ -12,27 +12,29 @@ class ContactUsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-        body: SingleChildScrollView(
-      child: Container(
-          width: MediaQuery.of(context).size.width,
-          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-          child: Padding(
-            padding: EdgeInsets.only(top: 60, bottom: 60, right: 23, left: 23),
-            child: Container(
-              padding:
-                  EdgeInsets.only(top: 20, bottom: 20, right: 10, left: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/background.png"),
-                      fit: BoxFit.cover)),
-              child: Column(
-                  children: <Widget>[_buildTitle(), _column(), _buildTitle2()]),
-            ),
-          )),
-    ));
+    return SafeArea(
+          child: Scaffold(
+        backgroundColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+          body: SingleChildScrollView(
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+            child: Padding(
+              padding: EdgeInsets.only(top: 60, bottom: 60, right: 23, left: 23),
+              child: Container(
+                padding:
+                    EdgeInsets.only(top: 20, bottom: 20, right: 10, left: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/background.png"),
+                        fit: BoxFit.cover)),
+                child: Column(
+                    children: <Widget>[_buildTitle(), _column(), _buildTitle2()]),
+              ),
+            )),
+      )),
+    );
   }
 
   Widget _buildTitle() {

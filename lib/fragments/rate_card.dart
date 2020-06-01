@@ -114,17 +114,19 @@ class Entry {
 class ExpansionTileDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Expansion List'),
-        // ),
-        body: ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (BuildContext context, int index) => EntryItem(
-            data[index],
+    return SafeArea(
+          child: Scaffold(
+          // appBar: AppBar(
+          //   title: const Text('Expansion List'),
+          // ),
+          body: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (BuildContext context, int index) => EntryItem(
+              data[index],
+            ),
           ),
-        ),
-      
+        
+      ),
     );
   }
 }

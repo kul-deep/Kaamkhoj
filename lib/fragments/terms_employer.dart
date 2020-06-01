@@ -13,24 +13,26 @@ class TermsEmployerPage extends StatelessWidget {
                       fontWeight: FontWeight.normal);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width:MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-      image: AssetImage("assets/images/background.png"),
-      fit: BoxFit.cover
-            )
+    return SafeArea(
+          child: Scaffold(
+        body: Container(
+          width:MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+        image: AssetImage("assets/images/background.png"),
+        fit: BoxFit.cover
+              )
+            ),
+          child: SingleChildScrollView(
+                    child: Column(
+              children: <Widget>[_buildTitle(),_column(),
+              // new RaisedButton(onPressed: HomePageState._showBottom, child: new Text('Click me'),)
+                       ]
+            ),
           ),
-        child: SingleChildScrollView(
-                  child: Column(
-            children: <Widget>[_buildTitle(),_column(),
-            // new RaisedButton(onPressed: HomePageState._showBottom, child: new Text('Click me'),)
-                     ]
-          ),
-        ),
-      )
+        )
+      ),
     ) ;
   }
   Widget _buildTitle(){

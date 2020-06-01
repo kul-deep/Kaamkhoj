@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class EmployeeForm extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: Container(
-        child: Column(
-           children: <Widget>[_buildTitle(),_column()]
-        ))
-      );
+    return SafeArea(
+          child: Scaffold(
+        body: Container(
+          child: Column(
+             children: <Widget>[_buildTitle(),_column()]
+          ))
+        ),
+    );
       
   }
   Widget _buildTitle(){
