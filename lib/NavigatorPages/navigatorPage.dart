@@ -55,6 +55,8 @@ class NavigatorPage extends StatefulWidget {
 
 class NavigatorPageState extends State<NavigatorPage> {
   String name="";
+
+  bool logot_select=false;
   @override
   void initState() {
     super.initState();
@@ -117,7 +119,14 @@ class NavigatorPageState extends State<NavigatorPage> {
   }
   
   _onSelectItem(int index) {
-    setState(() => _selectedDrawerIndex = index);
+    setState(() {
+      print(index);
+      _selectedDrawerIndex = index;
+      if(index==14) {
+        logot_select = true;
+      }
+    });
+//    setState(() => _selectedDrawerIndex = index);
     Navigator.of(context).pop(); // close the drawer
   }
 
@@ -241,49 +250,148 @@ class NavigatorPageState extends State<NavigatorPage> {
       }
     }
 
-    return SafeArea(
-      child: new Scaffold(
+    _scaffold(){
+      return new Scaffold(
         appBar: new AppBar(
+
           // here we display the title corresponding to the fragment
           // you can instead choose to have a static title
+
           title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
-          style: GoogleFonts.ptSans(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold)),
+              style: GoogleFonts.ptSans(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold)),
         ),
 
         drawer: new Drawer(
           child: SingleChildScrollView(
             child: Column(
-            children: <Widget>[
-              Container(
-              height: 250,
-              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+              children: <Widget>[
+                Container(
+                  height: 250,
+                  color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+                      ),
+                      Center(child: Text(name,
+                        style: GoogleFonts.openSans(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),)),
+                    ],
                   ),
-                  Center(child: Text(name,
-                    style: GoogleFonts.openSans(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),)),
-                ],
-              ),
+                ),
+                Column(children: drawerOptions),
+              ],
             ),
-               Column(children: drawerOptions),
-            ],
           ),
         ),
+        body: _getDrawerItemWidget(_selectedDrawerIndex),
+      );
+
+    }
+
+    _scaffoldlogot() {
+      return new Scaffold(
+//        appBar: new AppBar(
+//
+//          // here we display the title corresponding to the fragment
+//          // you can instead choose to have a static title
+//
+//          title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
+//              style: GoogleFonts.ptSans(
+//                  color: Colors.white,
+//                  fontSize: 28,
+//                  fontWeight: FontWeight.bold)),
+//        ),
+
+        drawer: new Drawer(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 250,
+                  color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+                      ),
+                      Center(child: Text(name,
+                        style: GoogleFonts.openSans(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),)),
+                    ],
+                  ),
+                ),
+                Column(children: drawerOptions),
+              ],
+            ),
+          ),
         ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
-      ),
+      );
+    }
+
+
+
+    return SafeArea(
+    child: ( logot_select? _scaffoldlogot(): _scaffold()),
     );
+//      child: new Scaffold(
+//        appBar: new AppBar(
+//
+//          // here we display the title corresponding to the fragment
+//          // you can instead choose to have a static title
+//
+//          title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
+//          style: GoogleFonts.ptSans(
+//                        color: Colors.white,
+//                        fontSize: 28,
+//                        fontWeight: FontWeight.bold)),
+//        ),
+//
+//        drawer: new Drawer(
+//          child: SingleChildScrollView(
+//            child: Column(
+//            children: <Widget>[
+//              Container(
+//              height: 250,
+//              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+//              child: Column(
+//                crossAxisAlignment: CrossAxisAlignment.start,
+//                mainAxisSize: MainAxisSize.min,
+//                children: <Widget>[
+//                  Padding(
+//                    padding: const EdgeInsets.only(top: 20),
+//                    child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+//                  ),
+//                  Center(child: Text(name,
+//                    style: GoogleFonts.openSans(
+//                        color: Colors.white,
+//                        fontSize: 18,
+//                        fontWeight: FontWeight.bold),)),
+//                ],
+//              ),
+//            ),
+//               Column(children: drawerOptions),
+//            ],
+//          ),
+//        ),
+//        ),
+//        body: _getDrawerItemWidget(_selectedDrawerIndex),
+//      ),
+//    );
   }
 
   Future<void> logout() async {
@@ -291,4 +399,6 @@ class NavigatorPageState extends State<NavigatorPage> {
       //Remove String
       prefs.remove("Login");
   }
+
+
 }
