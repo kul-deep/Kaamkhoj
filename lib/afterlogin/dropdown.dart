@@ -199,7 +199,7 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
         height: 40,
         minWidth: MediaQuery.of(context).size.width - 10,
         child: Align(
-          alignment: Alignment.center,
+          alignment: Alignment.bottomCenter,
           child: RaisedButton(
               onPressed: () {
                 setState(() {

@@ -20,7 +20,7 @@ class ThankyouPageState extends State<ThankyouPage> {
   }
 
   _startTimer() {
-    _counter = 5;
+    _counter = 15;
     if (_timer != null) {
       _timer.cancel();
     }
@@ -41,14 +41,33 @@ class ThankyouPageState extends State<ThankyouPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage("assets/images/thankyou.png")),
-          ),
+        backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+  crossAxisAlignment: CrossAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          //     mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/images/upper.png")),
+              ),
+            ),
+            Center(
+              child: Text('Thank You',
+              style: GoogleFonts.sourceSansPro(
+                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                          fontSize: 40,
+                          ),
+              ),
+            )
+          ],
+        ),
         ),
       ),
     );

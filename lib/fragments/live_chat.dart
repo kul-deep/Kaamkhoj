@@ -23,79 +23,77 @@ class LiveChatState extends State<LiveChatPage> {
   await launch(
 //               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
   "https://wa.me/+917977763205?text=Hello");}
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
           child: Scaffold(
-        body: Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage("assets/images/thankyou.png")),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: ButtonTheme(
+            backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
+            bottomNavigationBar: Container(
               height: 40,
-              minWidth: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: RaisedButton(
-                    onPressed: () {
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              child:
+              ButtonTheme(
+        height: 40,
+        minWidth: 290,
+        child: Align(
+          alignment: Alignment.center,
+          child: RaisedButton(
+              onPressed: () {
                       launchWhatsapp();
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Text(
-                      'Chat Again',
-                      style: GoogleFonts.karla(
-                          color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    textColor: Colors.white,
-                    elevation: 7,
-                    color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+
+
+                // valid();
+                // sformKey.currentState.();
+                // verifyPhone();
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              child: Text(
+                'Chat Again',
+                style: GoogleFonts.karla(
+                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
               ),
-            ),
+              textColor: Colors.white,
+              elevation: 7,
+              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+        ),
+      ),
+                         ),
+        body: SingleChildScrollView(
+                  child: Column(
+            children: <Widget>[
+              Container(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                height: 300,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/images/upper.png")),
+                )),
+                Column(
+                  children: <Widget>[
+                    Text('Thank You',
+                    style: GoogleFonts.sourceSansPro(
+                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                fontSize: 40,
+                                ),
+                    ),
+                    
+                                      
+                  ],
+                ),
+            ],
           ),
+          
         ),
       ),
     );
+  
   }
-
-
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    // TODO: implement build
-//    return new Center(
-//        child: new RaisedButton(
-//          onPressed:() {
-//
-//          },
-////          onPressed: () async => await launch(
-////
-////               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
-////              "https://wa.me/+917977763205?text=Hello"),
-////        onPressed:() => _launchURL(),
-//          child: Text("Thank You"),
-//
-//        )
-//
-//    );
-//  }
 
 }
