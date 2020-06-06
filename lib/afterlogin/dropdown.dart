@@ -4,6 +4,7 @@ import 'package:kaamkhoj/test/employee_form1.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:toast/toast.dart';
 
 class ChooseYourWork extends StatefulWidget {
   String type, phoneNo;
@@ -157,7 +158,6 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
       MaterialPageRoute(builder: (context) => NavigatorPage()),
     );
   }
-
     return WillPopScope(
       onWillPop: _onBackPressed,
           child: SafeArea(
@@ -212,24 +212,28 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
           alignment: Alignment.bottomCenter,
           child: RaisedButton(
               onPressed: () {
-//                setState(() {
-//                  circularProgress=true;
-//                });
-                  if (type == "Employer") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              EmployerForm(selectedUser.firstName, phoneNo)),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              EmployeeForm(selectedUser.firstName, phoneNo)),
-                    );
-                  }
+
+               if(selectedUser==null){
+                 Toast.show("Please Select A Job", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+
+               }else{
+
+                 if (type == "Employer") {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                         builder: (context) =>
+                             EmployerForm(selectedUser.firstName, phoneNo)),
+                   );
+                 } else {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                         builder: (context) =>
+                             EmployeeForm(selectedUser.firstName, phoneNo)),
+                   );
+                 }
+               }
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
