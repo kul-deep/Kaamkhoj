@@ -8,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -596,18 +597,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                 });
                               }
                               else {
-
                                 setState(() {
                                   errorMobile = "";
                                 });
-
                                 if (value.length < 10) {
                                   setState(() {
                                     errorMobile = "Mobile number contains 10 digits";
                                   });
                                 }
                               }
-
                             },
                           ),
                         ),
@@ -689,7 +687,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Form(
                         key: this._formKey,
                         child: TypeAheadFormField(
-
                           textFieldConfiguration: TextFieldConfiguration(
                             controller: this._typeAheadController,
                             decoration: InputDecoration(
@@ -717,6 +714,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 hintText: 'City'),
                           ),
                           suggestionsCallback: (pattern) {
+                            if(_typeAheadController!=""){
+                              errorCity="";
+                            }
                             return CitiesService.getSuggestions(pattern);
                           },
                           itemBuilder: (context, suggestion) {
@@ -922,31 +922,38 @@ class _RegisterPageState extends State<RegisterPage> {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-                setState(() {
-                  circularProgress=true;
+                check_internet().then((intenet) {
+                  if (intenet != null && intenet) {
+                    setState(() {
+                      circularProgress=true;
+                    });
+                    var concatenate = StringBuffer();
+
+                    _pin.forEach((item) {
+                      concatenate.write(item);
+                    });
+
+                    print(concatenate);
+
+                    if(concatenate.length ==6){
+                      signIn(concatenate.toString());
+                      setState(() {
+                        errorOtp="";
+                      });
+
+                    }
+                    else{
+                      setState(() {
+                        circularProgress=false;
+                        errorOtp="Please Fill OTP";
+
+                      });
+                    }                  }
+                  else{
+                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  }
                 });
-                var concatenate = StringBuffer();
 
-                _pin.forEach((item) {
-                  concatenate.write(item);
-                });
-
-                print(concatenate);
-
-                if(concatenate.length ==6){
-                  signIn(concatenate.toString());
-                  setState(() {
-                    errorOtp="";
-                  });
-
-                }
-                else{
-                  setState(() {
-                    circularProgress=false;
-                    errorOtp="Please Fill OTP";
-
-                  });
-                }
 
               },
               shape: RoundedRectangleBorder(
@@ -971,13 +978,18 @@ class _RegisterPageState extends State<RegisterPage> {
         alignment: Alignment.center,
         child: RaisedButton(
             onPressed: () {
-              setState(() {
-                circularProgressReg=true;
+              check_internet().then((intenet) {
+                if (intenet != null && intenet) {
+                  setState(() {
+                    circularProgressReg=true;
+                  });
+                  valid();
+                }
+                else{
+                  Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }
               });
 
-              valid();
-              // sformKey.currentState.();
-              // verifyPhone();
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50)),

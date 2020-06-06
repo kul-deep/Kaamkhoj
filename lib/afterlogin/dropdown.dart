@@ -212,9 +212,9 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
           alignment: Alignment.bottomCenter,
           child: RaisedButton(
               onPressed: () {
-                setState(() {
-                  circularProgress=true;
-                });
+//                setState(() {
+//                  circularProgress=true;
+//                });
                   if (type == "Employer") {
                     Navigator.push(
                       context,

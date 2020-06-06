@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
@@ -499,6 +500,9 @@ class RadioButtonWidget extends State {
                                 return suggestionsBox;
                               },
                               onSuggestionSelected: (suggestion) {
+                                if(_typeAheadController!=""){
+                                  errorCity="";
+                                }
                                 this._typeAheadController.text = suggestion;
                               },
                               onSaved: (value) {
@@ -542,35 +546,39 @@ class RadioButtonWidget extends State {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-                if (radioItemGender == '' ||
-                    radioItemHrs == '' ||
-                    radioItemReligion == '' ||
-                    radioItemAge == '') {
-                  Toast.show("Please fill all the fields", context,
-                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                } else {
-                  this._formKey.currentState.save();
-                  setState(() {
-                    circularProgress = true;
-                  });
-                  if (city != '') {
-                    print(radioItemGender);
-                    print(radioItemHrs);
-                    print(radioItemReligion);
-                    print(radioItemAge);
-                    createRecord();
-                  } else {
-                    setState(() {
-                      errorCity = "Please fill this field";
-                      circularProgress = false;
-                    });
-                    Toast.show("Please fill all the fields", context,
-                        duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                check_internet().then((intenet) {
+                  if (intenet != null && intenet) {
+                    if (radioItemGender == '' ||
+                        radioItemHrs == '' ||
+                        radioItemReligion == '' ||
+                        radioItemAge == '') {
+                      Toast.show("Please fill all the fields", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    } else {
+                      this._formKey.currentState.save();
+                      setState(() {
+                        circularProgress = true;
+                      });
+                      if (city != '') {
+                        print(radioItemGender);
+                        print(radioItemHrs);
+                        print(radioItemReligion);
+                        print(radioItemAge);
+                        createRecord();
+                      } else {
+                        setState(() {
+                          errorCity = "Please fill this field";
+                          circularProgress = false;
+                        });
+                        Toast.show("Please fill all the fields", context,
+                            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                      }
+                    }
                   }
-                }
-                //  valid();
-                // sformKey.currentState.();
-                // verifyPhone();
+                  else{
+                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  }
+                });
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),

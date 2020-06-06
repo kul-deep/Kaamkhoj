@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
 
@@ -339,16 +340,6 @@ class RadioButtonWidget extends State {
                               child: new Text("40 & above", style: font2),
                             ),
 
-//                        new Radio(
-//                          groupValue: radioItemAge,
-//                          value: 'All',
-//                          onChanged: (val) {
-//                            setState(() {
-//                              radioItemAge = val;
-//                            });
-//                          },
-//                        ),
-//                        new Text("All"),
                           ],
                         ),
                       ),
@@ -375,24 +366,30 @@ class RadioButtonWidget extends State {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-                if(radioItemGender == '' || radioItemHrs == '' || radioItemReligion == '' || radioItemAge == ''){
-                  Toast.show("Please fill all the fields", context,
-                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
 
-                }
-                else{
-                print(radioItemGender);
-                print(radioItemHrs);
-                print(radioItemReligion);
-                print(radioItemAge);
-                createRecord();
-                setState(() {
-                  circularProgress=true;
+                check_internet().then((intenet) {
+                  if (intenet != null && intenet) {
+
+                    if(radioItemGender == '' || radioItemHrs == '' || radioItemReligion == '' || radioItemAge == ''){
+                      Toast.show("Please fill all the fields", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+
+                    }
+                    else{
+                      print(radioItemGender);
+                      print(radioItemHrs);
+                      print(radioItemReligion);
+                      print(radioItemAge);
+                      createRecord();
+                      setState(() {
+                        circularProgress=true;
+                      });
+                    }
+                  }
+                  else{
+                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  }
                 });
-                }
-                //  valid();
-                // sformKey.currentState.();
-                // verifyPhone();
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),

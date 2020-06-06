@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/forgetpassword.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -135,7 +138,14 @@ class _LoginPageState extends State<LoginPage> {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-                valid();
+                check_internet().then((intenet) {
+                  if (intenet != null && intenet) {
+                    valid();
+                  }
+                  else{
+                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  }
+                });
                 // sformKey.currentState.();
                 // verifyPhone();
               },

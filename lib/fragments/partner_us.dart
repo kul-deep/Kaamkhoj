@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -370,6 +371,9 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                         return suggestionsBox;
                       },
                       onSuggestionSelected: (suggestion) {
+                        if(_typeAheadController!=""){
+                          errorCity="";
+                        }
                         this._typeAheadController.text = suggestion;
                       },
                       onSaved: (value) {
@@ -443,12 +447,18 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
         alignment: Alignment.center,
         child: RaisedButton(
             onPressed: () {
-              setState(() {
-                circularProgress=true;
+              check_internet().then((intenet) {
+                if (intenet != null && intenet) {
+                  setState(() {
+                    circularProgress=true;
+                  });
+                  valid();
+                }
+                else{
+                  Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }
               });
-              valid();
-              // sformKey.currentState.();
-              // verifyPhone();
+
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50)),
@@ -466,115 +476,3 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
     );
   }
 }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    return Container(
-//      decoration: BoxDecoration(
-//          image: DecorationImage(
-//              image: AssetImage("assets/images/background.png"),
-//              fit: BoxFit.cover)),
-//      child: Scaffold(
-//        backgroundColor: Colors.transparent,
-//        resizeToAvoidBottomPadding: false,
-//        resizeToAvoidBottomInset: false,
-//        body: Center(
-//          child: SingleChildScrollView(
-//            child: Column(
-//              mainAxisAlignment: MainAxisAlignment.center,
-//              children: <Widget>[
-//                _buildTitle(),
-//                Padding(
-//                  padding: EdgeInsets.all(10),
-//                  child: TextFormField(
-//                    decoration: InputDecoration(
-//                        // labelText: 'Full Name',
-//                        labelText: 'Name of Individual/Agency'),
-//                    onChanged: (value) {
-//                      this.name = value;
-//                    },
-//                  ),
-//                ),
-//                (errorMessage != ''
-//                    ? Text(
-//                        errorMessage,
-//                        style: TextStyle(color: Colors.red),
-//                      )
-//                    : Container()),
-//                SizedBox(
-//                  height: 10,
-//                ),
-//                Padding(
-//                  padding: EdgeInsets.all(10),
-//                  child: TextFormField(
-//                    keyboardType: TextInputType.phone,
-//                    decoration: InputDecoration(
-//                        labelText: 'Mobile Number',
-//                        hintText: 'Enter 10 digit number'),
-//                    onChanged: (value) {
-//                      this.phoneNo = "+91" + value;
-//                    },
-//                  ),
-//                ),
-//                (errorMessage != ''
-//                    ? Text(
-//                        errorMessage,
-//                        style: TextStyle(color: Colors.red),
-//                      )
-//                    : Container()),
-//                SizedBox(
-//                  height: 10,
-//                ),
-//                Padding(
-//                  padding: EdgeInsets.all(10),
-//                  child: TextField(
-//                    decoration: InputDecoration(labelText: 'City'),
-//                    onChanged: (value) {
-//                      this.city = value;
-//                    },
-//                  ),
-//                ),
-//                (errorMessage != ''
-//                    ? Text(
-//                        errorMessage,
-//                        style: TextStyle(color: Colors.red),
-//                      )
-//                    : Container()),
-//                SizedBox(
-//                  height: 10,
-//                ),
-//                Padding(
-//                  padding: EdgeInsets.all(10),
-//                  child: TextFormField(
-//                    decoration: InputDecoration(
-//                        labelText: 'Email ID', hintText: 'you@gmail.com'),
-//                    onChanged: (value) {
-//                      this.email = value;
-//                    },
-//                  ),
-//                ),
-//                (errorMessage != ''
-//                    ? Text(
-//                        errorMessage,
-//                        style: TextStyle(color: Colors.red),
-//                      )
-//                    : Container()),
-//                SizedBox(
-//                  height: 10,
-//                ),
-//                RaisedButton(
-//                  onPressed: () {
-//                    validateRecord();
-//                  },
-//                  child: Text('Submit'),
-//                  textColor: Colors.white,
-//                  elevation: 7,
-//                  color: Colors.blue,
-//                )
-//              ],
-//            ),
-//          ),
-//        ),
-//      ),
-//    );
-//  }

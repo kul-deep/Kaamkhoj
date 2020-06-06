@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
+import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 import 'package:toast/toast.dart';
@@ -569,13 +570,18 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
         alignment: Alignment.center,
         child: RaisedButton(
             onPressed: () {
-              setState(() {
-                circularProgressValid=true;
+              check_internet().then((intenet) {
+                if (intenet != null && intenet) {
+                  setState(() {
+                    circularProgressValid=true;
+                  });
+                  valid();
+                }
+                else{
+                  Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                }
               });
 
-              valid();
-              // sformKey.currentState.();
-              // verifyPhone();
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50)),

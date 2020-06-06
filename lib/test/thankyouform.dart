@@ -42,32 +42,40 @@ class ThankyouPageState extends State<ThankyouPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-  crossAxisAlignment: CrossAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          //     mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/images/upper.png")),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 50.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 350,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("assets/images/upper.png")),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'Thank You',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.sourceSansPro(
+                        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
-            Center(
-              child: Text('Thank You',
-              style: GoogleFonts.sourceSansPro(
-                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                          fontSize: 40,
-                          ),
-              ),
-            )
-          ],
-        ),
+          ),
         ),
       ),
     );

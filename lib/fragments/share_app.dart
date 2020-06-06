@@ -35,81 +35,85 @@ class ShareAppState extends State<ShareAppPage> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() {
-    return Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
-    );
-  }
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NavigatorPage()),
+      );
+    }
+
     return WillPopScope(
       onWillPop: _onBackPressed,
-          child: SafeArea(
-            child: Scaffold(
-              backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
-              bottomNavigationBar: Container(
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
+          bottomNavigationBar: Container(
+            height: 40,
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            child: Padding(
+              padding: const EdgeInsets.only(left:16.0,right: 16.0),
+              child: ButtonTheme(
                 height: 40,
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child:
-                ButtonTheme(
-          height: 40,
-          minWidth: 290,
-          child: Align(
-            alignment: Alignment.center,
-            child: RaisedButton(
-                onPressed: () {
-
+                minWidth: MediaQuery.of(context).size.width,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: RaisedButton(
+                      onPressed: () {
                         Share.share(
                             'Check out this app KaamKhoj https://play.google.com/store/apps/details?id=com.saishvilas.final3hd');
-                            
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
-                child: Text(
-                  'Please Share This Again',
-                  style: GoogleFonts.karla(
-                      color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                textColor: Colors.white,
-                elevation: 7,
-                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-          ),
-        ),
-                           ),
-          body: SingleChildScrollView(
-                    child: Column(
-              children: <Widget>[
-                Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("assets/images/upper.png")),
-                  )),
-                  Column(
-                    children: <Widget>[
-                      Text('Thank You For Sharinf This Application',
-                      style: GoogleFonts.sourceSansPro(
-                                  color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                                  fontSize: 40,
-                                  ),
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Text(
+                        'Please Share This Again',
+                        style: GoogleFonts.karla(
+                            color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
-                      
-                                        
-                    ],
-                  ),
-              ],
+                      textColor: Colors.white,
+                      elevation: 7,
+                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                ),
+              ),
             ),
-            
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 350,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/images/upper.png")),
+                        )),
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                          child: Text(
+                            'Thank You For Sharing This Application',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.sourceSansPro(
+                              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
     );
-  
   }
-
 }
