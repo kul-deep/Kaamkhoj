@@ -358,7 +358,7 @@ class RadioButtonWidget extends State {
                       (circularProgress ?
                       Padding(
                         padding: EdgeInsets.only(top:20),
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
                       ):
                       _button()),
                     ]),

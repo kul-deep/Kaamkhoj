@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 
 class TermsEmployerPage extends StatelessWidget {
   var font1 = GoogleFonts.openSans(
@@ -13,25 +13,34 @@ class TermsEmployerPage extends StatelessWidget {
                       fontWeight: FontWeight.normal);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-          child: Scaffold(
-        body: Container(
-          width:MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-        image: AssetImage("assets/images/background.png"),
-        fit: BoxFit.cover
-              )
+    Future<bool> _onBackPressed() {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NavigatorPage()),
+    );
+  }
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+          child: SafeArea(
+            child: Scaffold(
+          body: Container(
+            width:MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+          image: AssetImage("assets/images/background.png"),
+          fit: BoxFit.cover
+                )
+              ),
+            child: SingleChildScrollView(
+                      child: Column(
+                children: <Widget>[_buildTitle(),_column(),
+                // new RaisedButton(onPressed: HomePageState._showBottom, child: new Text('Click me'),)
+                         ]
+              ),
             ),
-          child: SingleChildScrollView(
-                    child: Column(
-              children: <Widget>[_buildTitle(),_column(),
-              // new RaisedButton(onPressed: HomePageState._showBottom, child: new Text('Click me'),)
-                       ]
-            ),
-          ),
-        )
+          )
+        ),
       ),
     ) ;
   }

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/test/employee_form1.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 
 class ChooseYourWork extends StatefulWidget {
   String type, phoneNo;
@@ -150,47 +151,56 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
         fontWeight: FontWeight.bold);
     var font2 = GoogleFonts.sourceSansPro(
         color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+        Future<bool> _onBackPressed() {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NavigatorPage()),
+    );
+  }
 
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
-          body: Container(
-            decoration: BoxDecoration(
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+          child: SafeArea(
+        child: Scaffold(
+            backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
+            body: Container(
+              decoration: BoxDecoration(
 //                  borderRadius: BorderRadius.circular(50),
-                image: DecorationImage(
-                    image: AssetImage("assets/images/background.png"),
-                    fit: BoxFit.cover)),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  _buildTitle(),
-                  Container(
-                    padding: EdgeInsets.all(20.0),
-                  ),
-                  Column(
-                    children: createRadioListUsers(),
-                  ),
-                ],
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/background.png"),
+                      fit: BoxFit.cover)),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    _buildTitle(),
+                    Container(
+                      padding: EdgeInsets.all(20.0),
+                    ),
+                    Column(
+                      children: createRadioListUsers(),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          bottomNavigationBar: Container(
-              height: 40,
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: Row(children: <Widget>[
-                (errorMsg != ''
-                    ? Padding(
-                  padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                  child: Text(
-                    errorMsg,
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ) : Container()),
-                (circularProgress
-                    ? Center(child: CircularProgressIndicator())
-                    : _button()),
-              ]))),
+            bottomNavigationBar: Container(
+                height: 40,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Row(children: <Widget>[
+                  (errorMsg != ''
+                      ? Padding(
+                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                    child: Text(
+                      errorMsg,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ) : Container()),
+                  (circularProgress
+                      ? Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b))))
+                      : _button()),
+                ]))),
+      ),
     );
   }
 
