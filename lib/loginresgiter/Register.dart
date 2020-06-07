@@ -230,6 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
       setState(() {
+        circularProgressReg=false;
         otp = "1";
         c = Colors.grey[700];
         _startTimer();
@@ -405,22 +406,26 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Future<bool> _onBackPressed() {
-      if (otp== "1"){
-        return Future.value(false);
-        setState(() {
-          otp= "0";
-           });
-      }
-    else{ 
+  Future<bool> _onBackPressed() {
+    print(otp);
+    if (otp!= "0"){
+      print("inside");
+      setState(() {
+        otp= "0";
+      });
+      return Future.value(false);
+    }
+    else{
       return Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LoginPage()),
-    );
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+
     return otp == "0"
         ? WillPopScope(
           onWillPop: _onBackPressed,
@@ -799,7 +804,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       (circularProgressReg ?
                       Padding(
                         padding: EdgeInsets.only(top:20),
-                        child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
+                        child: Center(child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                                              Color.fromARGB(
+                                                  0xff, 0x88, 0x02, 0x0b)))),
                       ):
                       _buttonReg()),
 
@@ -839,96 +847,99 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
         )
-        : SafeArea(
-            child: Scaffold(
-              backgroundColor: Color(0xfff7e9e9),
-              resizeToAvoidBottomPadding: false,
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                width: MediaQuery.of(context).size.width,
-                height: 300,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/images/kaamkhoj_logo.png")),
+        : WillPopScope(
+          onWillPop: _onBackPressed,
+          child: SafeArea(
+              child: Scaffold(
+                backgroundColor: Color(0xfff7e9e9),
+                resizeToAvoidBottomPadding: false,
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage("assets/images/kaamkhoj_logo.png")),
+                  ),
+                ),
+                    Center(
+                      child: Text(
+                        'Enter OTP',
+                        style: GoogleFonts.ptSans(
+                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    textfields,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              '00:$_counter',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: new GestureDetector(
+                              onTap: () {
+                                if (resendotp == 1) {
+                                  resendotp = 0;
+                                  verifyPhone();
+                                }
+                              },
+                              child: new Text(
+                                'Resend OTP',
+                                style: GoogleFonts.ptSans(
+                                    color: c,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    (errorOtp != ''
+                        ? Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        errorOtp,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.red,fontSize: 13),
+                      ),
+                    )
+                        : Container()),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    (circularProgress ?
+                    Padding(
+                      padding: EdgeInsets.only(top:20),
+                      child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
+                    ):
+                    _button()),
+
+                  ],
                 ),
               ),
-                  Center(
-                    child: Text(
-                      'Enter OTP',
-                      style: GoogleFonts.ptSans(
-                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  textfields,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            '00:$_counter',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: new GestureDetector(
-                            onTap: () {
-                              if (resendotp == 1) {
-                                resendotp = 0;
-                                verifyPhone();
-                              }
-                            },
-                            child: new Text(
-                              'Resend OTP',
-                              style: GoogleFonts.ptSans(
-                                  color: c,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  (errorOtp != ''
-                      ? Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      errorOtp,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red,fontSize: 13),
-                    ),
-                  )
-                      : Container()),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  (circularProgress ?
-                  Padding(
-                    padding: EdgeInsets.only(top:20),
-                    child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
-                  ):
-                  _button()),
-
-                ],
-              ),
             ),
-          );
+        );
   }
 
   _button()

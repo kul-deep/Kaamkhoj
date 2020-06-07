@@ -169,9 +169,15 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() {
-    Navigator.of(context).pop(true);
-    return Future.value(false);
+//      exit(0);
+      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+
+//    Navigator.of(context).pop(true);
+//    return Future.value(false);
+    print("Inside");
+    return Future.value(true);
   }
+
     return WillPopScope(
       onWillPop: _onBackPressed,
           child: SafeArea(

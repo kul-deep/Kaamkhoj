@@ -11,6 +11,8 @@ import 'package:kaamkhoj/loginresgiter/passwordchange.dart';
 import 'package:kaamkhoj/test/employer_form.dart';
 import 'package:toast/toast.dart';
 
+import 'Login.dart';
+
 class ForgetPassword extends StatefulWidget {
   final String lastPin;
   final int fields;
@@ -45,8 +47,8 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  bool circularProgress=false;
-  bool circularProgressValid=false;
+  bool circularProgress = false;
+  bool circularProgressValid = false;
 
   //--------------------------OTP Handle Methods----------------//
   int _counter = 30;
@@ -198,12 +200,12 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
     print("inside" + phoneNo);
 
     final snapShot =
-    await Firestore.instance.collection('data').document(phoneNo).get();
+        await Firestore.instance.collection('data').document(phoneNo).get();
 
     if (snapShot == null || !snapShot.exists) {
       setState(() {
         errorMobile = "User Doesn't Exist";
-        circularProgressValid=false;
+        circularProgressValid = false;
       });
       Toast.show("User Doesn't Exist", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -219,7 +221,7 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
       if (phoneNo == "") {
         setState(() {
           errorMobile = errorblank;
-          circularProgressValid=false;
+          circularProgressValid = false;
         });
       }
 
@@ -227,12 +229,11 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
       if (errorMobile == "") {
-
         checkExist();
 //        verifyPhone();
       } else {
         setState(() {
-          circularProgressValid=false;
+          circularProgressValid = false;
         });
         Toast.show("Please fill all the fields correctly", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -240,8 +241,8 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
     }
   }
 
-  _button(){
-    return   ButtonTheme(
+  _button() {
+    return ButtonTheme(
         height: 40,
         minWidth: 290,
         child: Align(
@@ -264,15 +265,13 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
                   setState(() {
                     errorOtp = "";
                   });
-                }
-                else {
+                } else {
                   setState(() {
                     circularProgress = false;
                     errorOtp = "Please Fill OTP";
                   });
                 }
               },
-
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               child: Text(
@@ -287,12 +286,12 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
         ));
   }
 
-
   Future<void> verifyPhone() async {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
       setState(() {
         otp = "1";
+        circularProgressValid=false;
         c = Colors.grey[700];
         _startTimer();
       });
@@ -329,8 +328,8 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
     } catch (e) {
       print(e.toString());
       setState(() {
-        circularProgressValid=false;
-        errorMobile=e.code;
+        circularProgressValid = false;
+        errorMobile = e.code;
       });
     }
   }
@@ -353,22 +352,38 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => PasswordChangePage(phoneNo)));
     } catch (e) {
-      String error1="";
+      String error1 = "";
       print("error" + e.toString());
-      switch(e.code){
+      switch (e.code) {
         case "ERROR_INVALID_VERIFICATION_CODE":
-          error1="Invalid Otp";
+          error1 = "Invalid Otp";
           break;
         case "ERROR_SESSION_EXPIRED":
-          error1="Time Limit Exceeded. Resend Otp";
+          error1 = "Time Limit Exceeded. Resend Otp";
           break;
         default:
-          error1="Something Has Gone Worong";
+          error1 = "Something Has Gone Worong";
       }
       setState(() {
-        circularProgress=false;
-        errorOtp=error1;
+        circularProgress = false;
+        errorOtp = error1;
       });
+    }
+  }
+
+  Future<bool> _onBackPressed() {
+    print(otp);
+    if (otp != "0") {
+      print("inside");
+      setState(() {
+        otp = "0";
+      });
+      return Future.value(false);
+    } else {
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     }
   }
 
@@ -377,189 +392,201 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return otp == "0"
-        ? SafeArea(
-          child: Scaffold(
-              backgroundColor: Color(0xfff7e9e9),
-              resizeToAvoidBottomPadding: false,
-              body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-              width: MediaQuery.of(context).size.width,
-              height: 300,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage("assets/images/kaamkhoj_logo.png")),
-              ),
-              ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 35, top: 20, right: 35, bottom: 5),
-                    child: Center(
-                      child: Container(
-                        height: 55,
-                        child: TextField(
-                          maxLength: 10,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                              hintStyle: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 14),
-                              counterText: "",
-                              focusedBorder: new OutlineInputBorder(
+        ? WillPopScope(
+            onWillPop: _onBackPressed,
+            child: SafeArea(
+              child: Scaffold(
+                backgroundColor: Color(0xfff7e9e9),
+                resizeToAvoidBottomPadding: false,
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image:
+                                AssetImage("assets/images/kaamkhoj_logo.png")),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 35, top: 20, right: 35, bottom: 5),
+                      child: Center(
+                        child: Container(
+                          height: 55,
+                          child: TextField(
+                            maxLength: 10,
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color:
+                                        Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                    fontSize: 14),
+                                counterText: "",
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      const Radius.circular(10.0),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.white70,
+                                    )),
+                                enabledBorder: new OutlineInputBorder(
                                   borderRadius: const BorderRadius.all(
                                     const Radius.circular(10.0),
                                   ),
                                   borderSide: BorderSide(
                                     color: Colors.white70,
-                                  )),
-                              enabledBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
+                                  ),
                                 ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white70,
-                              prefixIcon: Icon(Icons.phone),
-                              hintText: 'Mobile No.'),
-                          onChanged: (value) {
-                            this.phoneNo = "+91" + value;
-                            if (value.length < 10) {
-                              setState(() {
-                                errorMobile =
-                                    "Mobile number contains 10 digits";
-                              });
-                            } else {
-                              setState(() {
-                                errorMobile = "";
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  (errorMobile != ''
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                          child: Text(
-                            errorMobile,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      : Container()),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  (circularProgressValid ?
-                  Padding(
-                    padding: EdgeInsets.only(top:20),
-                    child: Center(child: CircularProgressIndicator()),
-                  ):
-                  _buttonValid()),
-
-                ],
-              ),
-            ),
-        )
-        : SafeArea(
-          child: Scaffold(
-              backgroundColor: Color(0xfff7e9e9),
-              resizeToAvoidBottomPadding: false,
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("assets/images/kaamkhoj_logo.png")),
-                  ),
-                ),
-                  Padding(
-                    padding: const EdgeInsets.only(top:20.0),
-                    child: Center(
-                      child: Text(
-                        'Enter OTP',
-                        style: GoogleFonts.ptSans(
-                            color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  textfields,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            '00:$_counter',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: new GestureDetector(
-                            onTap: () {
-                              if (resendotp == 1) {
-                                resendotp=0;
-                                verifyPhone();
-                                print("Resend");
+                                filled: true,
+                                fillColor: Colors.white70,
+                                prefixIcon: Icon(Icons.phone),
+                                hintText: 'Mobile No.'),
+                            onChanged: (value) {
+                              this.phoneNo = "+91" + value;
+                              if (value.length < 10) {
+                                setState(() {
+                                  errorMobile =
+                                      "Mobile number contains 10 digits";
+                                });
+                              } else {
+                                setState(() {
+                                  errorMobile = "";
+                                });
                               }
                             },
-                            child: new Text(
-                              'Resend OTP',
-                              style: GoogleFonts.ptSans(
-                                  color: c,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  (errorOtp != ''
-                      ? Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      errorOtp,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red,fontSize: 13),
+                    (errorMobile != ''
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                            child: Text(
+                              errorMobile,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container()),
+                    SizedBox(
+                      height: 20,
                     ),
-                  )
-                      : Container()),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  (circularProgress ?
-                  Padding(
-                    padding: EdgeInsets.only(top:20),
-                    child: Center(child: CircularProgressIndicator()),
-                  ):
-                  _button()),
-                ],
+                    (circularProgressValid
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: Center(child: CircularProgressIndicator( valueColor: new AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(
+                                    0xff, 0x88, 0x02, 0x0b)))),
+                          )
+                        : _buttonValid()),
+                  ],
+                ),
               ),
             ),
-        );
+          )
+        : WillPopScope(
+            onWillPop: _onBackPressed,
+            child: SafeArea(
+              child: Scaffold(
+                backgroundColor: Color(0xfff7e9e9),
+                resizeToAvoidBottomPadding: false,
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image:
+                                AssetImage("assets/images/kaamkhoj_logo.png")),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Center(
+                        child: Text(
+                          'Enter OTP',
+                          style: GoogleFonts.ptSans(
+                              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    textfields,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              '00:$_counter',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: new GestureDetector(
+                              onTap: () {
+                                if (resendotp == 1) {
+                                  resendotp = 0;
+                                  verifyPhone();
+                                  print("Resend");
+                                }
+                              },
+                              child: new Text(
+                                'Resend OTP',
+                                style: GoogleFonts.ptSans(
+                                    color: c,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    (errorOtp != ''
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              errorOtp,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red, fontSize: 13),
+                            ),
+                          )
+                        : Container()),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    (circularProgress
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: Center(child: CircularProgressIndicator( valueColor: new AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(
+                                    0xff, 0x88, 0x02, 0x0b)))),
+                          )
+                        : _button()),
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 
   _buttonValid() {
@@ -573,18 +600,18 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
               check_internet().then((intenet) {
                 if (intenet != null && intenet) {
                   setState(() {
-                    circularProgressValid=true;
+                    circularProgressValid = true;
                   });
                   valid();
-                }
-                else{
-                  Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                } else {
+                  Toast.show("No Internet!\nCheck your Connection or Try Again",
+                      context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                 }
               });
-
             },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             child: Text(
               'Verify',
               style: GoogleFonts.karla(
