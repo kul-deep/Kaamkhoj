@@ -49,8 +49,6 @@ class ThankyouPageState extends State<ThankyouPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                //     mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -81,36 +79,3 @@ class ThankyouPageState extends State<ThankyouPage> {
     );
   }
 }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    // TODO: implement build
-//    return new Center(
-//        child: Container(
-//      child: ButtonTheme(
-//          height: 40,
-//          minWidth: 290,
-//          child: Align(
-//            alignment: Alignment.center,
-//            child: RaisedButton(
-//                onPressed: () {
-//                  Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                        builder: (context) => NavigatorPage(),
-//                      ));
-//                },
-//                shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.circular(50)),
-//                child: Text(
-//                  'Submit',
-//                  style: GoogleFonts.karla(
-//                      color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-//                      fontSize: 16,
-//                      fontWeight: FontWeight.bold),
-//                ),
-//                elevation: 7,
-//                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-//          )),
-//    ));
-//  }

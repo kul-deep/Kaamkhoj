@@ -10,6 +10,10 @@ class HowWeWorkPage extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.normal);
+  var font3 = GoogleFonts.sourceSansPro(
+                      color: Colors.blue[300],
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal);
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() {
@@ -54,7 +58,19 @@ class HowWeWorkPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
   mainAxisSize: MainAxisSize.min,
       children : <Widget>[
-        Text('An employer has to first create a login and password at www..co.in and then fill up the employer registration form after which our call centre will get in touch with you. An employer can also call us on 022-66661314 from anywhere in the world and connect directly with our call centre. For further information we also have a FAQ section on our website.',style: font2,textAlign: TextAlign.justify),
+        RichText(
+          textAlign: TextAlign.justify,
+  text: TextSpan(
+    text: 'An employer has to first create a login and password at',
+    style: font2,
+    children: <TextSpan>[
+      TextSpan(text: ' kaamkhoj.co.in',style: font3),
+      TextSpan(text: ' and then fill up the employer registration form after which our call centre will get in touch with you. An employer can also call us on'),
+      TextSpan(text: ' 022-66661314',style: font3),
+      TextSpan(text: ' from anywhere in the world and connect directly with our call centre. For further information we also have a FAQ section on our website.', style:font2),
+    ],
+  ),
+),
         Container(margin: EdgeInsets.only(top:10),),
         Center(
         child: Text('Value we deliver',style: font1),),

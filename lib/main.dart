@@ -108,15 +108,17 @@ class _MyAppState extends State<MyApp1> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Nabigator Page',
-      home: Scaffold(
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage("assets/images/splashscreen.png")
+      title: 'Navigator Page',
+      home: SafeArea(
+              child: Scaffold(
+          body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage("assets/images/splashscreen.png")
+              ),
             ),
           ),
         ),
