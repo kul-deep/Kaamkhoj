@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,35 +17,40 @@ class ContactUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() {
-    return Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
-    );
-  }
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NavigatorPage()),
+      );
+    }
+
     return WillPopScope(
       onWillPop: _onBackPressed,
-          child: SafeArea(
-            child: Scaffold(
-          backgroundColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+      child: SafeArea(
+        child: Scaffold(
+            backgroundColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
             body: SingleChildScrollView(
-          child: Container(
-              width: MediaQuery.of(context).size.width,
-              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-              child: Padding(
-                padding: EdgeInsets.only(top: 60, bottom: 60, right: 23, left: 23),
-                child: Container(
-                  padding:
-                      EdgeInsets.only(top: 20, bottom: 20, right: 10, left: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/background.png"),
-                          fit: BoxFit.cover)),
-                  child: Column(
-                      children: <Widget>[_buildTitle(), _column(), _buildTitle2()]),
-                ),
-              )),
-        )),
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: 60, bottom: 60, right: 23, left: 23),
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          top: 20, bottom: 20, right: 10, left: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/background.png"),
+                              fit: BoxFit.cover)),
+                      child: Column(children: <Widget>[
+                        _buildTitle(),
+                        _column(),
+                        _buildTitle2()
+                      ]),
+                    ),
+                  )),
+            )),
       ),
     );
   }
@@ -72,54 +78,75 @@ class ContactUsPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 10),
               ),
-               RichText(
+              RichText(
                 textAlign: TextAlign.justify,
                 text: TextSpan(
-                  text:
-                      'Telephone:',
+                  text: 'Telephone: ',
                   style: font2,
                   children: <TextSpan>[
                     TextSpan(
-                        text: '022-66661314/ 022-66661414',
+                        text: '022-66661314/ ',
                         style: font3,
-                        ),
-                    
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {launch("tel://02266661314")}),
+                    TextSpan(
+                        text: '022-66661414',
+                        style: font3,
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {launch("tel://02266661414")}),
                   ],
                 ),
-              ),              
+              ),
               Container(margin: EdgeInsets.only(bottom: 10)),
               RichText(
                 textAlign: TextAlign.justify,
                 text: TextSpan(
-                  text:
-                      'WhatsApp :',
+                  text: 'WhatsApp :',
                   style: font2,
                   children: <TextSpan>[
                     TextSpan(
                         text: ' 08879392064',
                         style: font3,
-                        ),                    
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {launchWhatsapp()}),
                   ],
                 ),
-              ),             
+              ),
               Container(margin: EdgeInsets.only(bottom: 10)),
-               RichText(
+              RichText(
                 textAlign: TextAlign.justify,
                 text: TextSpan(
-                  text:
-                      'Email :',
+                  text: 'Email :',
                   style: font2,
                   children: <TextSpan>[
                     TextSpan(
                         text: ' customercare@kaamkhoj.co.in',
                         style: font3,
-                        ),                    
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {_launchURLEmail()}),
                   ],
                 ),
               ),
               Container(margin: EdgeInsets.only(top: 10)),
               Center(child: Text('Social Media', style: font1)),
             ]));
+  }
+
+
+  launchWhatsapp() async {
+    await launch(
+//               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
+        "https://wa.me/+917977763205?text=Hello");
+  }
+
+  _launchURLEmail() async {
+    String url="mailto:customercare@kaamkhoj.co.in?subject=&body=";
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   _launchURL(String urltype) async {

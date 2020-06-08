@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:kaamkhoj/loginresgiter/Register.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   var font1 = GoogleFonts.openSans(
@@ -10,7 +13,8 @@ class PrivacyPolicyPage extends StatelessWidget {
   var font2 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
   var font3 = GoogleFonts.sourceSansPro(
-      color: Colors.blue[300], fontSize: 16, fontWeight: FontWeight.normal);
+      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+       fontSize: 16, fontWeight: FontWeight.normal);
   var font4 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold);
 
@@ -20,7 +24,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   Future<bool> _onBackPressed() {
     return Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
+      MaterialPageRoute(builder: (context) => RegisterPage()),
     );
   }
     return WillPopScope(
@@ -39,6 +43,27 @@ class PrivacyPolicyPage extends StatelessWidget {
                 ))),
       ),
     );
+  }
+
+
+  _launchURL() async {
+    String url = "http://www.kaamkhoj.co.in/";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+
+  _launchURLEmail() async {
+    String url="mailto:customercare@kaamkhoj.co.in?subject=&body=";
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
   
   Widget _column() {
@@ -67,6 +92,8 @@ class PrivacyPolicyPage extends StatelessWidget {
                     TextSpan(
                         text: ' http://kaamkhoj.co.in/',
                         style: font3,
+                    recognizer: new TapGestureRecognizer()
+                      ..onTap = () => {_launchURL()},
                         ),
                     TextSpan(
                         text:
@@ -344,6 +371,8 @@ class PrivacyPolicyPage extends StatelessWidget {
                     TextSpan(
                         text: ' customercare@kaamkhoj.co.in',
                         style: font3,
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {_launchURLEmail()}
                         ),
                     
                   ],
@@ -360,6 +389,8 @@ class PrivacyPolicyPage extends StatelessWidget {
                     TextSpan(
                         text: ' 022-66661414',
                         style: font3,
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {launch("tel://02266661414")}
                         ),
                     
                   ],

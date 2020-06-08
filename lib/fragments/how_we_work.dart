@@ -80,7 +80,7 @@ class HowWeWorkPage extends StatelessWidget {
                         text: ' kaamkhoj.co.in',
                         style: font3,
                         recognizer: new TapGestureRecognizer()
-                          ..onTap = () => {_launchURL()}),
+                ..onTap = () => {_launchURL()}),
                     TextSpan(
                         text:
                             ' and then fill up the employer registration form after which our call centre will get in touch with you. An employer can also call us on'),

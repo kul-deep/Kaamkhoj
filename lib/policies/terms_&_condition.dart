@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:kaamkhoj/loginresgiter/Register.dart';
 class TermsConditionPage extends StatelessWidget {
   var font1 = GoogleFonts.sourceSansPro(
                       color: Colors.black,
@@ -11,7 +12,7 @@ class TermsConditionPage extends StatelessWidget {
     Future<bool> _onBackPressed() {
     return Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
+      MaterialPageRoute(builder: (context) => RegisterPage()),
     );
   }
     return WillPopScope(
@@ -88,7 +89,7 @@ class TermsConditionPage extends StatelessWidget {
   Widget _buildTitle1(){
     return Container(margin: EdgeInsets.only(top:10), 
     child: Center(
-      child:Text('General Terms for Employeer',style: GoogleFonts.openSans(
+      child:Text('General Terms for Employer',style: GoogleFonts.openSans(
                       color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                       fontSize: 18,
                       fontWeight: FontWeight.bold)),

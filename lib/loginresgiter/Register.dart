@@ -10,11 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/policies/privacy_policy.dart';
+import 'package:kaamkhoj/policies/terms_&_condition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:validators/validators.dart';
 import 'data.dart';
-
 
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -61,7 +62,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String _selectedCity;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
   final databaseReference = Firestore.instance;
   String errorName = '';
   String errorEmail = '';
@@ -80,11 +80,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Color c = Colors.grey[700];
   Timer _timer;
 
-  bool circularProgress=false;
+  bool circularProgress = false;
 
-  String errorOtp="";
+  String errorOtp = "";
 
-  bool circularProgressReg=false;
+  bool circularProgressReg = false;
 
   void _startTimer() {
     _counter = 30;
@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
       setState(() {
-        circularProgressReg=false;
+        circularProgressReg = false;
         otp = "1";
         c = Colors.grey[700];
         _startTimer();
@@ -268,8 +268,8 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       print(e.toString());
       setState(() {
-        circularProgressReg=false;
-        errorMsg=e.code;
+        circularProgressReg = false;
+        errorMsg = e.code;
       });
     }
   }
@@ -294,8 +294,6 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
-
   signIn(smsotp) async {
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
@@ -312,21 +310,21 @@ class _RegisterPageState extends State<RegisterPage> {
       print("Yes");
       createRecord();
     } catch (e) {
-      String error1="";
+      String error1 = "";
       print("error" + e.toString());
-      switch(e.code){
+      switch (e.code) {
         case "ERROR_INVALID_VERIFICATION_CODE":
-          error1="Invalid Otp";
+          error1 = "Invalid Otp";
           break;
         case "ERROR_SESSION_EXPIRED":
-          error1="Time Limit Exceeded. Resend Otp";
+          error1 = "Time Limit Exceeded. Resend Otp";
           break;
         default:
-          error1="Something Has Gone Worong";
+          error1 = "Something Has Gone Worong";
       }
       setState(() {
-        circularProgress=false;
-        errorOtp=error1;
+        circularProgress = false;
+        errorOtp = error1;
       });
     }
   }
@@ -343,7 +341,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
       setState(() {
         errorMsg = "User Already Exist";
-        circularProgressReg=false;
+        circularProgressReg = false;
       });
       Toast.show("User Already Exist", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -359,7 +357,7 @@ class _RegisterPageState extends State<RegisterPage> {
         (password == "") ||
         (city == "")) {
       setState(() {
-        circularProgressReg=false;
+        circularProgressReg = false;
       });
       String errorblank = "Please fill this field";
       if (name == "") {
@@ -398,7 +396,7 @@ class _RegisterPageState extends State<RegisterPage> {
         verify();
       } else {
         setState(() {
-          circularProgressReg=false;
+          circularProgressReg = false;
         });
         Toast.show("Please fill all the fields correctly", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -408,14 +406,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<bool> _onBackPressed() {
     print(otp);
-    if (otp!= "0"){
+    if (otp != "0") {
       print("inside");
       setState(() {
-        otp= "0";
+        otp = "0";
       });
       return Future.value(false);
-    }
-    else{
+    } else {
       return Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
@@ -425,11 +422,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return otp == "0"
         ? WillPopScope(
-          onWillPop: _onBackPressed,
-                  child: SafeArea(
+            onWillPop: _onBackPressed,
+            child: SafeArea(
               child: Scaffold(
                 backgroundColor: Color(0xfff7e9e9),
                 body: SingleChildScrollView(
@@ -444,8 +440,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:
-                                  AssetImage("assets/images/kaamkhoj_logo.png")),
+                              image: AssetImage(
+                                  "assets/images/kaamkhoj_logo.png")),
                         ),
                       ),
                       Center(
@@ -466,8 +462,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: TextField(
                               decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
-                                      color:
-                                          Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                      color: Color.fromARGB(
+                                          0xff, 0x1d, 0x22, 0x26),
                                       fontSize: 14),
                                   focusedBorder: new OutlineInputBorder(
                                       borderRadius: const BorderRadius.all(
@@ -526,8 +522,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: TextField(
                               decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
-                                      color:
-                                          Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                      color: Color.fromARGB(
+                                          0xff, 0x1d, 0x22, 0x26),
                                       fontSize: 14),
                                   focusedBorder: new OutlineInputBorder(
                                       borderRadius: const BorderRadius.all(
@@ -587,8 +583,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
-                                      color:
-                                          Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                      color: Color.fromARGB(
+                                          0xff, 0x1d, 0x22, 0x26),
                                       fontSize: 14),
                                   counterText: "",
                                   focusedBorder: new OutlineInputBorder(
@@ -613,18 +609,18 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: (value) {
                                 this.phoneNo = "+91" + value;
                                 // valid();
-                                if(!isNumeric(value)){
+                                if (!isNumeric(value)) {
                                   setState(() {
                                     errorMobile = "Should Contain Only Digits";
                                   });
-                                }
-                                else {
+                                } else {
                                   setState(() {
                                     errorMobile = "";
                                   });
                                   if (value.length < 10) {
                                     setState(() {
-                                      errorMobile = "Mobile number contains 10 digits";
+                                      errorMobile =
+                                          "Mobile number contains 10 digits";
                                     });
                                   }
                                 }
@@ -652,8 +648,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
-                                      color:
-                                          Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                      color: Color.fromARGB(
+                                          0xff, 0x1d, 0x22, 0x26),
                                       fontSize: 14),
                                   focusedBorder: new OutlineInputBorder(
                                       borderRadius: const BorderRadius.all(
@@ -701,8 +697,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             )
                           : Container()),
-
-
                       Padding(
                         padding: EdgeInsets.only(
                             left: 35, top: 15, right: 35, bottom: 10),
@@ -713,7 +707,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               controller: this._typeAheadController,
                               decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
-                                      color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                      color: Color.fromARGB(
+                                          0xff, 0x1d, 0x22, 0x26),
                                       fontSize: 14),
                                   focusedBorder: new OutlineInputBorder(
                                       borderRadius: const BorderRadius.all(
@@ -736,8 +731,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   hintText: 'City'),
                             ),
                             suggestionsCallback: (pattern) {
-                              if(_typeAheadController!=""){
-                                errorCity="";
+                              if (_typeAheadController != "") {
+                                errorCity = "";
                               }
                               return CitiesService.getSuggestions(pattern);
                             },
@@ -779,10 +774,40 @@ class _RegisterPageState extends State<RegisterPage> {
                                 fontSize: 12),
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Terms and conditions',
+                                  text: 'Terms and conditions',
+                                  style: GoogleFonts.sourceSansPro(
+                                      color: Color.fromARGB(
+                                          0xff, 0x88, 0x02, 0x0b),
+                                      fontSize: 12),
+                                  recognizer: new TapGestureRecognizer()
+                                    ..onTap = () => {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TermsConditionPage()))
+                                        }),
+                              TextSpan(
+                                text: ' and ',
                                 style: GoogleFonts.sourceSansPro(
-                                    color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                    color:
+                                        Color.fromARGB(0xff, 0xa9, 0xa9, 0xa9),
                                     fontSize: 12),
+                              ),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: GoogleFonts.sourceSansPro(
+                                    color:
+                                        Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                    fontSize: 12),
+                                  recognizer: new TapGestureRecognizer()
+                                    ..onTap = () => {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PrivacyPolicyPage()))
+                                    }
                               ),
                             ],
                           ),
@@ -797,20 +822,22 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Text(
                                 errorMsg,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.red, fontSize: 13),
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 13),
                               ),
                             )
                           : Container()),
-                      (circularProgressReg ?
-                      Padding(
-                        padding: EdgeInsets.only(top:20),
-                        child: Center(child: CircularProgressIndicator(
-                            valueColor: new AlwaysStoppedAnimation<Color>(
+                      (circularProgressReg
+                          ? Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
                                               Color.fromARGB(
                                                   0xff, 0x88, 0x02, 0x0b)))),
-                      ):
-                      _buttonReg()),
-
+                            )
+                          : _buttonReg()),
                       Center(
                           child: Padding(
                         padding: const EdgeInsets.only(top: 10.0, bottom: 20),
@@ -828,11 +855,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => LoginPage()),
+                                              builder: (context) =>
+                                                  LoginPage()),
                                         )
                                       },
                                 style: GoogleFonts.sourceSansPro(
-                                    color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                    color:
+                                        Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                     fontSize: 15),
                               ),
                             ],
@@ -846,10 +875,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-        )
+          )
         : WillPopScope(
-          onWillPop: _onBackPressed,
-          child: SafeArea(
+            onWillPop: _onBackPressed,
+            child: SafeArea(
               child: Scaffold(
                 backgroundColor: Color(0xfff7e9e9),
                 resizeToAvoidBottomPadding: false,
@@ -858,14 +887,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("assets/images/kaamkhoj_logo.png")),
-                  ),
-                ),
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image:
+                                AssetImage("assets/images/kaamkhoj_logo.png")),
+                      ),
+                    ),
                     Center(
                       child: Text(
                         'Enter OTP',
@@ -917,34 +947,37 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     (errorOtp != ''
                         ? Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        errorOtp,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.red,fontSize: 13),
-                      ),
-                    )
+                            alignment: Alignment.center,
+                            child: Text(
+                              errorOtp,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red, fontSize: 13),
+                            ),
+                          )
                         : Container()),
                     SizedBox(
                       height: 10,
                     ),
-                    (circularProgress ?
-                    Padding(
-                      padding: EdgeInsets.only(top:20),
-                      child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
-                    ):
-                    _button()),
-
+                    (circularProgress
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Color.fromARGB(
+                                                0xff, 0x88, 0x02, 0x0b)))),
+                          )
+                        : _button()),
                   ],
                 ),
               ),
             ),
-        );
+          );
   }
 
-  _button()
-  {
-    return  ButtonTheme(
+  _button() {
+    return ButtonTheme(
         height: 40,
         minWidth: 290,
         child: Align(
@@ -954,7 +987,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 check_internet().then((intenet) {
                   if (intenet != null && intenet) {
                     setState(() {
-                      circularProgress=true;
+                      circularProgress = true;
                     });
                     var concatenate = StringBuffer();
 
@@ -964,26 +997,25 @@ class _RegisterPageState extends State<RegisterPage> {
 
                     print(concatenate);
 
-                    if(concatenate.length ==6){
+                    if (concatenate.length == 6) {
                       signIn(concatenate.toString());
                       setState(() {
-                        errorOtp="";
+                        errorOtp = "";
                       });
-
-                    }
-                    else{
+                    } else {
                       setState(() {
-                        circularProgress=false;
-                        errorOtp="Please Fill OTP";
-
+                        circularProgress = false;
+                        errorOtp = "Please Fill OTP";
                       });
-                    }                  }
-                  else{
-                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    }
+                  } else {
+                    Toast.show(
+                        "No Internet!\nCheck your Connection or Try Again",
+                        context,
+                        duration: Toast.LENGTH_LONG,
+                        gravity: Toast.BOTTOM);
                   }
                 });
-
-
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
@@ -1000,7 +1032,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   _buttonReg() {
-    return  ButtonTheme(
+    return ButtonTheme(
       height: 40,
       minWidth: 290,
       child: Align(
@@ -1010,18 +1042,18 @@ class _RegisterPageState extends State<RegisterPage> {
               check_internet().then((intenet) {
                 if (intenet != null && intenet) {
                   setState(() {
-                    circularProgressReg=true;
+                    circularProgressReg = true;
                   });
                   valid();
-                }
-                else{
-                  Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                } else {
+                  Toast.show("No Internet!\nCheck your Connection or Try Again",
+                      context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                 }
               });
-
             },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             child: Text(
               'Register',
               style: GoogleFonts.karla(
