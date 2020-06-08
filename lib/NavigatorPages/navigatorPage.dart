@@ -16,6 +16,7 @@ import '../fragments/how_we_work.dart';
 import '../fragments/terms_employee.dart';
 import '../fragments/terms_employer.dart';
 import '../fragments/contact_us.dart';
+import 'package:kaamkhoj/policies/privacy_policy.dart';
 
 class DrawerItem {
   String title;
