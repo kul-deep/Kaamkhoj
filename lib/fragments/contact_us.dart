@@ -10,6 +10,8 @@ class ContactUsPage extends StatelessWidget {
       fontWeight: FontWeight.bold);
   var font2 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+  var font3 = GoogleFonts.sourceSansPro(
+      color: Colors.blue[300], fontSize: 16, fontWeight: FontWeight.normal);
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +72,51 @@ class ContactUsPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 10),
               ),
-              Text('Telephone: 022-66661314 / 022-66661414.', style: font2),
+               RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                  text:
+                      'Telephone:',
+                  style: font2,
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: '022-66661314/ 022-66661414',
+                        style: font3,
+                        ),
+                    
+                  ],
+                ),
+              ),              
               Container(margin: EdgeInsets.only(bottom: 10)),
-              Text('WhatsApp : 08879392064',
-                  style: font2, textAlign: TextAlign.justify),
+              RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                  text:
+                      'WhatsApp :',
+                  style: font2,
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: ' 08879392064',
+                        style: font3,
+                        ),                    
+                  ],
+                ),
+              ),             
               Container(margin: EdgeInsets.only(bottom: 10)),
-              Text('Email : customercare@kaamkhoj.co.in',
-                  style: font2, textAlign: TextAlign.justify),
+               RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                  text:
+                      'Email :',
+                  style: font2,
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: ' customercare@kaamkhoj.co.in',
+                        style: font3,
+                        ),                    
+                  ],
+                ),
+              ),
               Container(margin: EdgeInsets.only(top: 10)),
               Center(child: Text('Social Media', style: font1)),
             ]));

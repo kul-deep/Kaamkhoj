@@ -1,15 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class SecondFragment extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     return new Center(
-//       child: new Text("Hello Fragment 2"),
-//     );
-//   }
-
-// }
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';

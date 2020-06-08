@@ -45,7 +45,7 @@ class NavigatorPage extends StatefulWidget {
     new DrawerItem("Please Share This App", Icons.share),
     new DrawerItem("Online Payment", Icons.payment),
     new DrawerItem("Live Chat", Icons.chat),
-    new DrawerItem("Logout", Icons.local_pizza),
+    new DrawerItem("Logout", Icons.power_settings_new),
   ];
 
   @override
