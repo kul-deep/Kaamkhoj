@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,10 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/forgetpassword.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:validators/validators.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import '../test1.dart';
 import 'Register.dart';
 // import 'package:kaamkhoj/homepage.dart';
 
@@ -27,16 +31,16 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 //  final formKey = GlobalKey<FormState>();
-  String phoneNo = "", password = "";
+  String phoneNo = "",
+      password = "";
   String errorMobile = '';
   String errorPass = '';
   String errorMsg = '';
 
-  bool circularProgress=false;
+  bool circularProgress = false;
 
   String type;
   final databaseReference = Firestore.instance;
-
 
 //  _LoginPageState(String type) {
 //    this.type = type;
@@ -49,15 +53,14 @@ class _LoginPageState extends State<LoginPage> {
     getName();
   }
 
-  getName()  {
+  getName() {
     DocumentReference documentReference =
     databaseReference.collection("data").document(phoneNo);
     documentReference.get().then((datasnapshot) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('Name', datasnapshot['Name'] );
+      prefs.setString('Name', datasnapshot['Name']);
       SignIn();
     });
-
   }
 
   void valid() {
@@ -78,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       if (errorMobile == "" && errorPass == "") {
         setState(() {
-          circularProgress=true;
+          circularProgress = true;
         });
         verify();
       } else {
@@ -90,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void verify() {
     DocumentReference documentReference =
-        databaseReference.collection("data").document(phoneNo);
+    databaseReference.collection("data").document(phoneNo);
     documentReference.get().then((datasnapshot) {
       if (datasnapshot.exists) {
 //        print(datasnapshot.data['password'].toString());
@@ -99,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
           addStringToSF();
         } else {
           setState(() {
-            circularProgress=false;
+            circularProgress = false;
             errorMsg = "Wrong Credentials";
           });
           Toast.show("Wrong Credentials", context,
@@ -108,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       } else {
         setState(() {
-          circularProgress=false;
+          circularProgress = false;
           errorMsg = "User does not exist";
         });
 
@@ -126,11 +129,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
-
-  _button(){
+  _button() {
     return Padding(
-      padding: const EdgeInsets.only(top:20),
+      padding: const EdgeInsets.only(top: 20),
       child: ButtonTheme(
         height: 40,
         minWidth: 290,
@@ -138,12 +139,24 @@ class _LoginPageState extends State<LoginPage> {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                    builder: (context) =>
+//                    ContactsPage()));
+//              getPhoneNumbers();
+
+
+
                 check_internet().then((intenet) {
                   if (intenet != null && intenet) {
                     valid();
-                  }
-                  else{
-                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  } else {
+                    Toast.show(
+                        "No Internet!\nCheck your Connection or Try Again",
+                        context,
+                        duration: Toast.LENGTH_LONG,
+                        gravity: Toast.BOTTOM);
                   }
                 });
                 // sformKey.currentState.();
@@ -174,26 +187,29 @@ class _LoginPageState extends State<LoginPage> {
 
 //    Navigator.of(context).pop(true);
 //    return Future.value(false);
-    print("Inside");
-    return Future.value(true);
-  }
+      print("Inside");
+      return Future.value(true);
+    }
 
     return WillPopScope(
       onWillPop: _onBackPressed,
-          child: SafeArea(
+      child: SafeArea(
         child: Scaffold(
           backgroundColor: Color(0xfff7e9e9),
           resizeToAvoidBottomPadding: false,
           body: Form(
             child: SingleChildScrollView(
-                        child: Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 //            Image.asset("assets/images/union.png"),
                   Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     height: 300,
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -212,8 +228,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 35, top: 15, right: 35, bottom: 10),
                     child: Center(
                       child: Container(
                         // color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
@@ -251,20 +267,19 @@ class _LoginPageState extends State<LoginPage> {
                           onChanged: (value) {
                             this.phoneNo = "+91" + value;
                             // valid();
-                            if(!isNumeric(value)){
+                            if (!isNumeric(value)) {
                               setState(() {
                                 errorMobile = "Should Contain Only Digits";
                               });
-                            }
-                            else {
-
+                            } else {
                               setState(() {
                                 errorMobile = "";
                               });
 
                               if (value.length < 10) {
                                 setState(() {
-                                  errorMobile = "Mobile number contains 10 digits";
+                                  errorMobile =
+                                  "Mobile number contains 10 digits";
                                 });
                               }
                             }
@@ -275,17 +290,17 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   (errorMobile != ''
                       ? Padding(
-                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                          child: Text(
-                            errorMobile,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
+                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                    child: Text(
+                      errorMobile,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
                       : Container()),
 
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
+                    padding: EdgeInsets.only(
+                        left: 35, top: 15, right: 35, bottom: 10),
                     child: Center(
                       child: Container(
                         height: 55,
@@ -323,7 +338,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (value.length < 6) {
                               setState(() {
                                 errorPass =
-                                    "Password must contain atleast 6 characters";
+                                "Password must contain atleast 6 characters";
                               });
                             } else {
                               setState(() {
@@ -337,12 +352,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   (errorPass != ''
                       ? Padding(
-                          padding: const EdgeInsets.only(left: 85.0),
-                          child: Text(
-                            errorPass,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
+                    padding: const EdgeInsets.only(left: 85.0),
+                    child: Text(
+                      errorPass,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
                       : Container()),
                   (errorMsg != ''
                       ? Align(
@@ -350,16 +365,20 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       errorMsg,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red,fontSize: 13),
+                      style: TextStyle(color: Colors.red, fontSize: 13),
                     ),
                   )
                       : Container()),
-                  (circularProgress ?
-                      Padding(
-                        padding: EdgeInsets.only(top:20),
-                        child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),)),
-                      ): _button()),
-
+                  (circularProgress
+                      ? Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Center(
+                        child: CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                        )),
+                  )
+                      : _button()),
 
                   Center(
                     child: Padding(
@@ -374,13 +393,15 @@ class _LoginPageState extends State<LoginPage> {
                             TextSpan(
                               text: 'Forgot Password',
                               recognizer: new TapGestureRecognizer()
-                                ..onTap = () => {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ForgetPassword()),
-                                      )
-                                    },
+                                ..onTap = () =>
+                                {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgetPassword()),
+                                  )
+                                },
                               style: GoogleFonts.sourceSansPro(
                                   color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                   fontSize: 15),
@@ -403,13 +424,15 @@ class _LoginPageState extends State<LoginPage> {
                             TextSpan(
                               text: 'Register',
                               recognizer: new TapGestureRecognizer()
-                                ..onTap = () => {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => RegisterPage()),
-                                      )
-                                    },
+                                ..onTap = () =>
+                                {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterPage()),
+                                  )
+                                },
                               style: GoogleFonts.sourceSansPro(
                                   color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                   fontSize: 15),
@@ -426,5 +449,54 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+
+  getPhoneNumbers() async {
+    final PermissionStatus permissionStatus = await
+
+    _getPermission();
+
+    if (permissionStatus == PermissionStatus.granted) {
+//  Navigator.push(
+//  context, MaterialPageRoute(builder: (context) => ContactsPage()));
+    getContacts();
+    } else {
+      //If permissions have been denied show standard cupertino alert dialog
+      showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              CupertinoAlertDialog(
+                title: Text('Permissions error'),
+                content: Text('Please enable contacts access '
+                    'permission in system settings'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: Text('OK'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+                ],
+              ));
+    }
+  }
+
+  Future<void> getContacts() async {
+    //Make sure we already have permissions for contacts when we get to this
+    //page, so we can just retrieve it
+    final Iterable<Contact> contacts = await ContactsService.getContacts();
+    print("Contact"+contacts.elementAt(30).displayName);
+  }
+
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+      await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
+    } else {
+      return permission;
+    }
   }
 }
