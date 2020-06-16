@@ -47,6 +47,10 @@ dependencies:
   permission_handler:
   contacts_service:
 
+  mailer2: ^1.2.5
+
+  flutter_local_notifications:
+
 dev_dependencies:
   flutter_launcher_icons: "^0.7.5"
   flutter_test:

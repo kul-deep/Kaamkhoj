@@ -53,7 +53,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ThankyouPage()),
+      MaterialPageRoute(builder: (context) => ThankyouPage(phoneNo)),
     );
   }
 

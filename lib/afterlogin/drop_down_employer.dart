@@ -6,10 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:toast/toast.dart';
 
-class ChooseYourWork extends StatefulWidget {
+class ChooseYourWorkEmployer extends StatefulWidget {
   String type, phoneNo;
 
-  ChooseYourWork(String type) {
+  ChooseYourWorkEmployer(String type) {
     this.type = type;
 //    this.phoneNo="+919594976005";
 //    print("Choose Your Work"+phoneNo);
@@ -71,15 +71,15 @@ Widget _buildTitle(String type) {
         children: [
           (type == "Employer"
               ? Text('Do you want an Employee? \nSelect of one of the box',
-                  style: font1,textAlign: TextAlign.center,)
+            style: font1,textAlign: TextAlign.center,)
               : Text('Do you need any job? \nSelect of one of the box',
-                  style: font1,textAlign: TextAlign.center)),
+              style: font1,textAlign: TextAlign.center)),
         ],
       ));
 }
 
-class ChooseYourWorkState extends State<ChooseYourWork> {
-  //
+class ChooseYourWorkState extends State<ChooseYourWorkEmployer> {
+
   List<User> users;
   User selectedUser;
   int selectedRadio;
@@ -197,18 +197,18 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
                 child: Row(children: <Widget>[
                   (errorMsg != ''
                       ? Padding(
-                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                          child: Text(
-                            errorMsg,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
+                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                    child: Text(
+                      errorMsg,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  )
                       : Container()),
                   (circularProgress
                       ? Center(
-                          child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(
-                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b))))
+                      child: CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Color.fromARGB(0xff, 0x88, 0x02, 0x0b))))
                       : _button()),
                 ]))),
       ),

@@ -18,7 +18,7 @@ class LiveChatState extends State<LiveChatPage> {
   launchWhatsapp() async {
     await launch(
 //               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
-        "https://wa.me/+917977763205?text=Hello");
+        "https://wa.me/+917977763205?text=Hi");
   }
 
   @override
@@ -82,7 +82,7 @@ class LiveChatState extends State<LiveChatPage> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Thank You',
+                          'Thank You\n ',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.sourceSansPro(
                             color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),

@@ -73,7 +73,7 @@ class HowWeWorkPage extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 text: TextSpan(
                   text:
-                      'An employer has to first create a login and password at',
+                      'An employer has to first create a login and password on KaamKhoj App or at',
                   style: font2,
                   children: <TextSpan>[
                     TextSpan(

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/afterlogin/drop_down_employer.dart';
 import 'package:kaamkhoj/afterlogin/dropdown.dart';
 import 'package:kaamkhoj/fragments/live_chat.dart';
 import 'package:kaamkhoj/fragments/partner_us.dart';
@@ -97,7 +98,7 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 7:
         return new PartnerUsPage();
       case 8:
-        return new ChooseYourWork("Employer");
+        return new ChooseYourWorkEmployer("Employer");
       case 9:
         return new ChooseYourWork("Employee");          //ChooseType("register");//Sign UP
       case 10:

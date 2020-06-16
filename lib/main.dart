@@ -1,10 +1,11 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/fragments/choose_work.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/mail_test.dart';
+import 'package:kaamkhoj/notifications.dart';
 import 'package:kaamkhoj/test1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-//      home: token == null ? LoginPage() : MyApp()),
+//      home: MyNotApp()),
         home: token == null ? MyApp1("Login") : MyApp1("Navigator")),
   );
 }
@@ -110,19 +111,60 @@ class _MyAppState extends State<MyApp1> {
     return new MaterialApp(
       title: 'Navigator Page',
       home: SafeArea(
-              child: Scaffold(
-          body: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage("assets/images/splashscreen.png")
+        child: Scaffold(
+          backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 60.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height: 350,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage("assets/images/upper.png")),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        'Reliable help Anytime Anywhere',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.sourceSansPro(
+                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
+//      home: SafeArea(
+//              child: Scaffold(
+//          body: Container(
+//            width: MediaQuery.of(context).size.width,
+//            height: MediaQuery.of(context).size.height,
+//            decoration: BoxDecoration(
+//              image: DecorationImage(
+//                  fit: BoxFit.fill,
+//                  image: AssetImage("assets/images/splashscreen.png")
+//              ),
+//            ),
+//          ),
+//        ),
+//      ),
       theme: new ThemeData(
         primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
       ),
