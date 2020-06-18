@@ -136,7 +136,7 @@ class ContactUsPage extends StatelessWidget {
   launchWhatsapp() async {
     await launch(
 //               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
-        "https://wa.me/+917977763205?text=Hello");
+        "https://wa.me/+917977763205?text=Hi");
   }
 
   _launchURLEmail() async {

@@ -12,7 +12,15 @@ class BackendService {
 
 class CitiesService {
   static final List<String> cities = [
-    "Port Blair",
+    "Mumbai",
+    "Delhi",
+    "New Delhi",
+    "Bangalore",
+    "Navi Mumbai",
+    "Kolkata",
+    "Pune",
+    "Chennai",
+    "Nagpur",
     "Adoni",
     "Amaravati",
     "Anantapur",
@@ -89,8 +97,6 @@ class CitiesService {
     "Daman And Diu (Union Territory)",
     "Daman",
     "Diu",
-    "Delhi",
-    "New Delhi",
     "Goa",
     "Madgaon",
     "Panaji",
@@ -174,7 +180,7 @@ class CitiesService {
     "Saraikela",
     "Badami",
     "Ballari",
-    "Bangalore",
+
     "Belgavi",
     "Bhadravati",
     "Bidar",
@@ -278,14 +284,11 @@ class CitiesService {
     "Mahabaleshwar",
     "Malegaon",
     "Matheran",
-    "Mumbai",
-    "Nagpur",
     "Nanded",
     "Nashik",
     "Osmanabad",
     "Pandharpur",
     "Parbhani",
-    "Pune",
     "Ratnagiri",
     "Sangli",
     "Satara",
@@ -382,7 +385,6 @@ class CitiesService {
     "Mangan",
     "Arcot",
     "Chengalpattu",
-    "Chennai",
     "Chidambaram",
     "Coimbatore",
     "Cuddalore",
@@ -509,7 +511,6 @@ class CitiesService {
     "Kanchrapara",
     "Kharagpur",
     "Koch Bihar",
-    "Kolkata",
     "Krishnanagar",
     "Malda",
     "Midnapore",
@@ -526,6 +527,7 @@ class CitiesService {
     "Siuri",
     "Tamluk",
     "Titagarh",
+    "Port Blair",
   ];
 
   static List<String> getSuggestions(String query) {

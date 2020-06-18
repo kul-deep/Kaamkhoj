@@ -83,13 +83,23 @@ class ShareAppState extends State<ShareAppPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
+                Padding(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: Text(
+                  'KaamKhoj',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.sourceSansPro(
+                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold
+                  ))),
                     Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 350,
+                        height: 275,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("assets/images/upper.png")),
+                              image: AssetImage("assets/images/logo.png")),
                         )),
                     Column(
                       children: <Widget>[
@@ -100,7 +110,7 @@ class ShareAppState extends State<ShareAppPage> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.sourceSansPro(
                               color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                              fontSize: 40,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold
                             ),
                           ),

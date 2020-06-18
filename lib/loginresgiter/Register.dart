@@ -734,7 +734,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               if (_typeAheadController != "") {
                                 errorCity = "";
                               }
-                              return CitiesService.getSuggestions(pattern);
+                              return CitiesService.getSuggestions(pattern.trim());
                             },
                             itemBuilder: (context, suggestion) {
                               return ListTile(

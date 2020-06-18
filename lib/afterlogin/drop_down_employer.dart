@@ -70,9 +70,9 @@ Widget _buildTitle(String type) {
       child: Column(
         children: [
           (type == "Employer"
-              ? Text('Do you want an Employee? \nSelect of one of the box',
+              ? Text('Do you want an Employee? \nSelect one of the following',
             style: font1,textAlign: TextAlign.center,)
-              : Text('Do you need any job? \nSelect of one of the box',
+              : Text('Do you need any job? \nSelect one of the following',
               style: font1,textAlign: TextAlign.center)),
         ],
       ));

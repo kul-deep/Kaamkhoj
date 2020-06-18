@@ -115,35 +115,41 @@ class _MyAppState extends State<MyApp1> {
           backgroundColor: Color.fromARGB(0xff, 0xf5, 0xea, 0xea),
           body: Center(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 60.0),
+              padding: const EdgeInsets.only(bottom: 50.0),
               child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                        child: Text('KaamKhoj',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.sourceSansPro(
+                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold))),
                     Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      height: 350,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage("assets/images/upper.png")),
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        'Reliable help Anytime Anywhere',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.sourceSansPro(
-                          color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
+                        width: MediaQuery.of(context).size.width,
+                        height: 275,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/images/logo.png")),
+                        )),
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                          child: Text(
+                            'Reliable Help Anytime Anywhere',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.sourceSansPro(
+                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                    )
+                      ],
+                    ),
                   ],
                 ),
               ),

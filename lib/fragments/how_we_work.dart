@@ -52,6 +52,11 @@ class HowWeWorkPage extends StatelessWidget {
     }
   }
 
+  launchWhatsapp() async {
+    await launch(
+//               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
+        "https://wa.me/+917977763205?text=Hi");
+  }
 
   Widget _buildTitle() {
     return Container(
@@ -80,17 +85,27 @@ class HowWeWorkPage extends StatelessWidget {
                         text: ' kaamkhoj.co.in',
                         style: font3,
                         recognizer: new TapGestureRecognizer()
-                ..onTap = () => {_launchURL()}),
+                          ..onTap = () => {_launchURL()}),
                     TextSpan(
                         text:
                             ' and then fill up the employer registration form after which our call centre will get in touch with you. An employer can also call us on'),
-                    TextSpan(text: ' 022-66661314', style: font3,
+                    TextSpan(
+                        text: ' 022-66661314',
+                        style: font3,
                         recognizer: new TapGestureRecognizer()
-                          ..onTap = () => {  launch("tel://02266661314")
-                          }),
+                          ..onTap = () => {launch("tel://02266661314")}),
                     TextSpan(
                         text:
-                            ' from anywhere in the world and connect directly with our call centre. For further information we also have a FAQ section on our website.',
+                            ' from anywhere in the world and connect directly with our call centre and you can WhatsApp us anytime on ',
+                        style: font2),
+                    TextSpan(
+                        text: '8879392064',
+                        style: font3,
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => {launchWhatsapp()}),
+                    TextSpan(
+                        text:
+                            '. For further information we also have a FAQ section on our website.',
                         style: font2),
                   ],
                 ),

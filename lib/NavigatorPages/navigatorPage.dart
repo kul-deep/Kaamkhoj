@@ -40,8 +40,8 @@ class NavigatorPage extends StatefulWidget {
     new DrawerItem("Terms For Employer", Icons.info),
     new DrawerItem("Rate Card", Icons.library_books),
     new DrawerItem("Partner Us", Icons.directions_walk),
-    new DrawerItem("Want an Employee?", Icons.announcement),
-    new DrawerItem("Want A Job?", Icons.announcement),
+    new DrawerItem("Do You Want An Employee", Icons.announcement),
+    new DrawerItem("Do You Want A Job", Icons.announcement),
     new DrawerItem("Contact Us", Icons.call),
     new DrawerItem("Please Share This App", Icons.share),
     new DrawerItem("Online Payment", Icons.payment),
@@ -262,7 +262,7 @@ class NavigatorPageState extends State<NavigatorPage> {
           title: new Text(widget.drawerItems[_selectedDrawerIndex].title,
               style: GoogleFonts.ptSans(
                   color: Colors.white,
-                  fontSize: 28,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold)),
         ),
 

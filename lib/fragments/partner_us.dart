@@ -360,7 +360,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             hintText: 'City'),
                       ),
                       suggestionsCallback: (pattern) {
-                        return CitiesService.getSuggestions(pattern);
+                        return CitiesService.getSuggestions(pattern.trim());
                       },
                       itemBuilder: (context, suggestion) {
                         return ListTile(

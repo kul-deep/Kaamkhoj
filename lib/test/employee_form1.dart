@@ -113,6 +113,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemGender,
                               value: 'Male',
                               onChanged: (val) {
@@ -127,6 +128,7 @@ class RadioButtonWidget extends State {
                                     minWidth: 100, maxWidth: 100),
                                 child: new Text("Male", style: font2)),
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemGender,
                               value: 'Female',
                               onChanged: (val) {
@@ -151,6 +153,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemHrs,
                               value: '4 Hours',
                               onChanged: (val) {
@@ -166,6 +169,7 @@ class RadioButtonWidget extends State {
                               child: new Text("4 Hours", style: font2),
                             ),
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemHrs,
                               value: '8 Hours',
                               onChanged: (val) {
@@ -183,6 +187,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemHrs,
                               value: '12 Hours',
                               onChanged: (val) {
@@ -198,6 +203,7 @@ class RadioButtonWidget extends State {
                               child: new Text("12 Hours", style: font2),
                             ),
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemHrs,
                               value: '24 Hours',
                               onChanged: (val) {
@@ -222,6 +228,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemReligion,
                               value: 'Hindu',
                               onChanged: (val) {
@@ -237,6 +244,7 @@ class RadioButtonWidget extends State {
                               child: new Text("Hindu", style: font2),
                             ),
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemReligion,
                               value: 'Christian',
                               onChanged: (val) {
@@ -254,6 +262,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemReligion,
                               value: 'Muslim',
                               onChanged: (val) {
@@ -269,6 +278,7 @@ class RadioButtonWidget extends State {
                               child: new Text("Muslim", style: font2),
                             ),
 //                        new Radio(
+//                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
 //                          groupValue: radioItemReligion,
 //                          value: 'All',
 //                          onChanged: (val) {
@@ -293,6 +303,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemAge,
                               value: '18-30',
                               onChanged: (val) {
@@ -308,6 +319,7 @@ class RadioButtonWidget extends State {
                               child: new Text("18-30", style: font2),
                             ),
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemAge,
                               value: '31-40',
                               onChanged: (val) {
@@ -325,6 +337,7 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
+                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
                               groupValue: radioItemAge,
                               value: '40 & above',
                               onChanged: (val) {
