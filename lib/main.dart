@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/fragments/choose_work.dart';
+import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
 import 'package:kaamkhoj/mail_test.dart';
 import 'package:kaamkhoj/notifications.dart';
+import 'package:kaamkhoj/paytmPayment/PaymentPaytmPage.dart';
 import 'package:kaamkhoj/test1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -24,8 +26,8 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-//      home: MyNotApp()),
-        home: token == null ? MyApp1("Login") : MyApp1("Navigator")),
+      home: PaytmPaymentPage()),
+//        home: token == null ? MyApp1("Login") : MyApp1("Navigator")),
   );
 }
 

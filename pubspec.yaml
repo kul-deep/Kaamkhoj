@@ -49,6 +49,8 @@ dependencies:
 
   mailer2: ^1.2.5
 
+  path_provider: ^1.6.11
+  webview_flutter: ^0.3.22+1
   flutter_local_notifications:
 
 dev_dependencies:
