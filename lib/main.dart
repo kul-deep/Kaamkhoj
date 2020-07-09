@@ -26,11 +26,10 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-      home: PaytmPaymentPage()),
-//        home: token == null ? MyApp1("Login") : MyApp1("Navigator")),
+        // home: PaytmPaymentPage()),
+        home: token == null ? MyApp1("Login") : MyApp1("Navigator")),
   );
 }
-
 
 class MyApp1 extends StatefulWidget {
   String type;
@@ -179,4 +178,3 @@ class _MyAppState extends State<MyApp1> {
     );
   }
 }
-

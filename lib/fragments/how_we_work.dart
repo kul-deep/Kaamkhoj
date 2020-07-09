@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,7 +36,11 @@ class HowWeWorkPage extends StatelessWidget {
                     image: AssetImage("assets/images/background.png"),
                     fit: BoxFit.cover)),
             child: SingleChildScrollView(
-              child: Column(children: <Widget>[_buildTitle(), _column()]),
+              child: Column(children: <Widget>[
+                _carousel(context),
+                _buildTitle(),
+                _column()
+              ]),
             ),
           ),
         ),
@@ -65,6 +70,29 @@ class HowWeWorkPage extends StatelessWidget {
         child: Text('How we Work?', style: font1),
       ),
     );
+  }
+
+  Widget _carousel(BuildContext context) {
+    return SizedBox(
+        height: 200.0,
+        width: MediaQuery.of(context).size.width,
+        child: Carousel(
+          images: [
+            ExactAssetImage("assets/images/Baby-Sitter-(work).jpg"),
+            ExactAssetImage("assets/images/healthycooks copy1(work).jpg"),
+            ExactAssetImage("assets/images/movetomalaysia-maid copy(work).jpg"),
+            ExactAssetImage("assets/images/nurse-appreciation copy(work).jpg"),
+          ],
+          dotSize: 4.0,
+          dotSpacing: 15.0,
+          dotColor: Colors.lightGreenAccent,
+          indicatorBgPadding: 5.0,
+          boxFit: BoxFit.fill,
+//      dotBgColor: Colors.transparent.withOpacity(0),
+//      borderRadius: true,
+          moveIndicatorFromBottom: 180.0,
+//      noRadiusForIndicator: true,
+        ));
   }
 
   Widget _column() {

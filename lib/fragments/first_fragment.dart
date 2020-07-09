@@ -69,7 +69,7 @@ class HomeFragment extends StatelessWidget {
 
   Widget _carousel(BuildContext context) {
     return SizedBox(
-        height: 300.0,
+        height: 200.0,
         width: MediaQuery.of(context).size.width,
         child: Carousel(
           images: [

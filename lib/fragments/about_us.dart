@@ -1,6 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
 class AboutUsPage extends StatelessWidget {
   var font1 = GoogleFonts.openSans(
@@ -9,15 +10,16 @@ class AboutUsPage extends StatelessWidget {
       fontWeight: FontWeight.bold);
   var font2 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
-  
+
   @override
   Widget build(BuildContext context) {
-  Future<bool> _onBackPressed() {
-    return Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
-    );
-  }
+    Future<bool> _onBackPressed() {
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NavigatorPage()),
+      );
+    }
+
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: SafeArea(
@@ -30,11 +32,13 @@ class AboutUsPage extends StatelessWidget {
                         image: AssetImage("assets/images/background.png"),
                         fit: BoxFit.cover)),
                 child: SingleChildScrollView(
-                  child: Column(children: <Widget>[_column()]),
+                  child:
+                      Column(children: <Widget>[_carousel(context), _column()]),
                 ))),
       ),
     );
   }
+
   // Widget _buildTitle(){
   //   return Container(margin: EdgeInsets.only(top:10),
   //   child: Center(
@@ -45,6 +49,28 @@ class AboutUsPage extends StatelessWidget {
   //                     fontWeight: FontWeight.bold)),
   //   ),);
   // }
+  Widget _carousel(BuildContext context) {
+    return SizedBox(
+        height: 200.0,
+        width: MediaQuery.of(context).size.width,
+        child: Carousel(
+          images: [
+            ExactAssetImage("assets/images/Baby-Sitter-(work).jpg"),
+            ExactAssetImage("assets/images/healthycooks copy1(work).jpg"),
+            ExactAssetImage("assets/images/movetomalaysia-maid copy(work).jpg"),
+            ExactAssetImage("assets/images/nurse-appreciation copy(work).jpg"),
+          ],
+          dotSize: 4.0,
+          dotSpacing: 15.0,
+          dotColor: Colors.lightGreenAccent,
+          indicatorBgPadding: 5.0,
+          boxFit: BoxFit.fill,
+//      dotBgColor: Colors.transparent.withOpacity(0),
+//      borderRadius: true,
+          moveIndicatorFromBottom: 180.0,
+//      noRadiusForIndicator: true,
+        ));
+  }
 
   Widget _column() {
     return Container(

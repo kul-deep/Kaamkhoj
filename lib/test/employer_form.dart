@@ -7,6 +7,7 @@ import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
+import 'package:email_validator/email_validator.dart';
 
 class EmployerForm extends StatelessWidget {
   String work;
@@ -45,14 +46,15 @@ class Radiobutton extends StatefulWidget {
 }
 
 class RadioButtonWidget extends State {
-  String radioItemGender = '';
   String radioItemHrs = '';
   String radioItemReligion = '';
-  String radioItemAge = '';
-
   String work, phoneNo;
+  String errorGender = '';
   String city = '';
+  String email = '';
   String errorCity = '';
+  String errorEmail = '';
+  String radioItemGender = "";
 
   bool circularProgress = false;
 
@@ -85,12 +87,12 @@ class RadioButtonWidget extends State {
           .collection("Employer")
           .document("0")
           .setData({
-        'Gender': radioItemGender,
         'Hrs': radioItemHrs,
         'Religion': radioItemReligion,
-        'Age': radioItemAge,
         'Work': work,
         'City': city,
+        'email': email,
+        'Gender': radioItemGender,
       });
     } else {
       QuerySnapshot querySnapshot = await Firestore.instance
@@ -107,10 +109,8 @@ class RadioButtonWidget extends State {
           .collection("Employer")
           .document(list.length.toString())
           .setData({
-        'Gender': radioItemGender,
         'Hrs': radioItemHrs,
         'Religion': radioItemReligion,
-        'Age': radioItemAge,
         'Work': work,
         'City': city,
       });
@@ -121,6 +121,31 @@ class RadioButtonWidget extends State {
         MaterialPageRoute(
           builder: (context) => ThankyouPage(phoneNo),
         ));
+  }
+
+  bool valid() {
+    this._formKey.currentState.save();
+    if (email == '') {
+      setState(() {
+        circularProgress = false;
+      });
+      String errorblank = "Please fill this field";
+      if (email == "") {
+        setState(() {
+          errorEmail = errorblank;
+        });
+      }
+      Toast.show("Please fill all the fields", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+    } else {
+      if (errorEmail == "") {
+        return true;
+      } else {
+        Toast.show("Please fill all the fields correctly", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      }
+    }
+    return false;
   }
 
   Widget build(BuildContext context) {
@@ -151,6 +176,64 @@ class RadioButtonWidget extends State {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Center(
+                            child: Container(
+                              height: 55,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Color.fromARGB(
+                                            0xff, 0x1d, 0x22, 0x26),
+                                        fontSize: 14),
+                                    focusedBorder: new OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.white70,
+                                        )),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white70,
+                                    prefixIcon: Icon(Icons.email),
+                                    hintText: 'Email ID'),
+                                onChanged: (value) {
+                                  this.email = value.trim();
+                                  // valid();
+                                  if (EmailValidator.validate(this.email)) {
+                                    setState(() {
+                                      errorEmail = "";
+                                    });
+                                  } else {
+                                    setState(() {
+                                      errorEmail = "Invalid Email Address";
+                                    });
+                                  }
+                                },
+                                // validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
+                                // onSaved: (email)=> _email = email,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // (errorEmail != ''
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.only(left: 85.0),
+                        //         child: Text(
+                        //           errorEmail,
+                        //           style: TextStyle(color: Colors.red),
+                        //         ),
+                        //       )
+                        //     : Container()),
                         Container(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
@@ -163,7 +246,8 @@ class RadioButtonWidget extends State {
                           child: new Row(
                             children: <Widget>[
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemGender,
                                 value: 'Male',
                                 onChanged: (val) {
@@ -173,13 +257,13 @@ class RadioButtonWidget extends State {
                                 },
                               ),
                               new Container(
-                                margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
-                                constraints: BoxConstraints(
-                                    minWidth: 100, maxWidth: 100),
-                                child: new Text("Male", style: font2),
-                              ),
+                                  margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
+                                  constraints: BoxConstraints(
+                                      minWidth: 100, maxWidth: 100),
+                                  child: new Text("Male", style: font2)),
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemGender,
                                 value: 'Female',
                                 onChanged: (val) {
@@ -204,7 +288,8 @@ class RadioButtonWidget extends State {
                           child: new Row(
                             children: <Widget>[
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemHrs,
                                 value: '4 Hours',
                                 onChanged: (val) {
@@ -220,7 +305,8 @@ class RadioButtonWidget extends State {
                                 child: new Text("4 Hours", style: font2),
                               ),
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemHrs,
                                 value: '8 Hours',
                                 onChanged: (val) {
@@ -238,7 +324,8 @@ class RadioButtonWidget extends State {
                           child: new Row(
                             children: <Widget>[
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemHrs,
                                 value: '12 Hours',
                                 onChanged: (val) {
@@ -254,7 +341,8 @@ class RadioButtonWidget extends State {
                                 child: new Text("12 Hours", style: font2),
                               ),
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemHrs,
                                 value: '24 Hours',
                                 onChanged: (val) {
@@ -279,7 +367,8 @@ class RadioButtonWidget extends State {
                           child: new Row(
                             children: <Widget>[
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemReligion,
                                 value: 'Hindu',
                                 onChanged: (val) {
@@ -295,7 +384,8 @@ class RadioButtonWidget extends State {
                                 child: new Text("Hindu", style: font2),
                               ),
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemReligion,
                                 value: 'Christian',
                                 onChanged: (val) {
@@ -313,7 +403,8 @@ class RadioButtonWidget extends State {
                           child: new Row(
                             children: <Widget>[
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemReligion,
                                 value: 'Muslim',
                                 onChanged: (val) {
@@ -329,7 +420,8 @@ class RadioButtonWidget extends State {
                                 child: new Text("Muslim", style: font2),
                               ),
                               new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemReligion,
                                 value: 'Any',
                                 onChanged: (val) {
@@ -342,132 +434,6 @@ class RadioButtonWidget extends State {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text(
-                            'Employee Age',
-                            style: font1,
-                          ),
-                        ),
-                        new Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                                groupValue: radioItemAge,
-                                value: '18-30',
-                                onChanged: (val) {
-                                  setState(() {
-                                    radioItemAge = val;
-                                  });
-                                },
-                              ),
-                              new Container(
-                                margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
-                                constraints: BoxConstraints(
-                                    minWidth: 100, maxWidth: 100),
-                                child: new Text("18-30", style: font2),
-                              ),
-                              new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                                groupValue: radioItemAge,
-                                value: '31-40',
-                                onChanged: (val) {
-                                  setState(() {
-                                    radioItemAge = val;
-                                  });
-                                },
-                              ),
-                              new Text("31-40", style: font2),
-                            ],
-                          ),
-                        ),
-                        new Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                                groupValue: radioItemAge,
-                                value: '40 & above',
-                                onChanged: (val) {
-                                  setState(() {
-                                    radioItemAge = val;
-                                  });
-                                },
-                              ),
-                              new Container(
-                                margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
-                                constraints: BoxConstraints(
-                                    minWidth: 100, maxWidth: 100),
-                                child: new Text("40 & above", style: font2),
-                              ),
-                              new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                                groupValue: radioItemAge,
-                                value: 'Any',
-                                onChanged: (val) {
-                                  setState(() {
-                                    radioItemAge = val;
-                                  });
-                                },
-                              ),
-                              new Text("Any", style: font2),
-                            ],
-                          ),
-                        ),
-//                        Padding(
-//                          padding: EdgeInsets.only(
-//                              left: 5, top: 20, right: 5, bottom: 20),
-//                          child: Center(
-//                            child: Container(
-//                              height: 55,
-//                              child: TextField(
-//                                decoration: InputDecoration(
-//                                    hintStyle: GoogleFonts.poppins(
-//                                        color: Color.fromARGB(
-//                                            0xff, 0x1d, 0x22, 0x26),
-//                                        fontSize: 14),
-//                                    focusedBorder: new OutlineInputBorder(
-//                                        borderRadius: const BorderRadius.all(
-//                                          const Radius.circular(10.0),
-//                                        ),
-//                                        borderSide: BorderSide(
-//                                          color: Colors.white70,
-//                                        )),
-//                                    enabledBorder: new OutlineInputBorder(
-//                                      borderRadius: const BorderRadius.all(
-//                                        const Radius.circular(10.0),
-//                                      ),
-//                                      borderSide: BorderSide(
-//                                        color: Colors.white70,
-//                                      ),
-//                                    ),
-//                                    filled: true,
-//                                    fillColor: Colors.white70,
-//                                    prefixIcon: Icon(Icons.home),
-//                                    hintText: 'City'),
-//                                onChanged: (value) {
-//                                  this.city = value;
-//                                  // valid();
-//                                  Pattern pattern =
-//                                      r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
-//                                  RegExp regex = new RegExp(pattern);
-//                                  if (!regex.hasMatch(city)) {
-//                                    setState(() {
-//                                      errorCity = "Invalid city name";
-//                                    });
-//                                  } else {
-//                                    setState(() {
-//                                      errorCity = "";
-//                                    });
-//                                  }
-//                                },
-//                              ),
-//                            ),
-//                          ),
-//                        ),
                         Padding(
                           padding: EdgeInsets.only(
                               left: 5, top: 20, right: 5, bottom: 20),
@@ -514,8 +480,8 @@ class RadioButtonWidget extends State {
                                 return suggestionsBox;
                               },
                               onSuggestionSelected: (suggestion) {
-                                if(_typeAheadController!=""){
-                                  errorCity="";
+                                if (_typeAheadController != "") {
+                                  errorCity = "";
                                 }
                                 this._typeAheadController.text = suggestion;
                               },
@@ -540,8 +506,12 @@ class RadioButtonWidget extends State {
                         (circularProgress
                             ? Padding(
                                 padding: EdgeInsets.only(top: 20),
-                                child:
-                                    Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                        valueColor:
+                                            new AlwaysStoppedAnimation<Color>(
+                                                Color.fromARGB(
+                                                    0xff, 0x88, 0x02, 0x0b)))),
                               )
                             : _button()),
                       ]),
@@ -560,39 +530,40 @@ class RadioButtonWidget extends State {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-                check_internet().then((intenet) {
-                  if (intenet != null && intenet) {
-                    if (radioItemGender == '' ||
-                        radioItemHrs == '' ||
-                        radioItemReligion == '' ||
-                        radioItemAge == '') {
-                      Toast.show("Please fill all the fields", context,
-                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                    } else {
-                      this._formKey.currentState.save();
-                      setState(() {
-                        circularProgress = true;
-                      });
-                      if (city != '') {
-                        print(radioItemGender);
-                        print(radioItemHrs);
-                        print(radioItemReligion);
-                        print(radioItemAge);
-                        createRecord();
-                      } else {
-                        setState(() {
-                          errorCity = "Please fill this field";
-                          circularProgress = false;
-                        });
+                if (valid()) {
+                  check_internet().then((intenet) {
+                    if (intenet != null && intenet) {
+                      if (radioItemHrs == '' || radioItemReligion == '') {
                         Toast.show("Please fill all the fields", context,
                             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                      } else {
+                        this._formKey.currentState.save();
+                        setState(() {
+                          circularProgress = true;
+                        });
+                        if (city != '') {
+                          print(radioItemHrs);
+                          print(radioItemReligion);
+                          createRecord();
+                        } else {
+                          setState(() {
+                            errorCity = "Please fill this field";
+                            circularProgress = false;
+                          });
+                          Toast.show("Please fill all the fields", context,
+                              duration: Toast.LENGTH_LONG,
+                              gravity: Toast.BOTTOM);
+                        }
                       }
+                    } else {
+                      Toast.show(
+                          "No Internet!\nCheck your Connection or Try Again",
+                          context,
+                          duration: Toast.LENGTH_LONG,
+                          gravity: Toast.BOTTOM);
                     }
-                  }
-                  else{
-                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                  }
-                });
+                  });
+                }
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),

@@ -38,14 +38,11 @@ class Radiobutton extends StatefulWidget {
 }
 
 class RadioButtonWidget extends State {
-  String radioItemGender = '';
   String radioItemHrs = '';
   String radioItemReligion = '';
-  String radioItemAge = '';
-
   String work, phoneNo;
 
-  bool circularProgress=false;
+  bool circularProgress = false;
 
   RadioButtonWidget(String work, String phoneNo) {
     this.work = work;
@@ -61,10 +58,8 @@ class RadioButtonWidget extends State {
         .collection("Employee")
         .document("data")
         .setData({
-      'Gender': radioItemGender,
       'Hrs': radioItemHrs,
       'Religion': radioItemReligion,
-      'Age': radioItemAge,
       'Work': work,
     });
     Navigator.push(
@@ -104,46 +99,6 @@ class RadioButtonWidget extends State {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          'Gender',
-                          style: font1,
-                        ),
-                      ),
-                      new Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: new Row(
-                          children: <Widget>[
-                            new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                              groupValue: radioItemGender,
-                              value: 'Male',
-                              onChanged: (val) {
-                                setState(() {
-                                  radioItemGender = val;
-                                });
-                              },
-                            ),
-                            new Container(
-                                margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
-                                constraints: BoxConstraints(
-                                    minWidth: 100, maxWidth: 100),
-                                child: new Text("Male", style: font2)),
-                            new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                              groupValue: radioItemGender,
-                              value: 'Female',
-                              onChanged: (val) {
-                                setState(() {
-                                  radioItemGender = val;
-                                });
-                              },
-                            ),
-                            new Text("Female", style: font2),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
                           'Select Hours',
                           style: font1,
                         ),
@@ -153,7 +108,8 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemHrs,
                               value: '4 Hours',
                               onChanged: (val) {
@@ -169,7 +125,8 @@ class RadioButtonWidget extends State {
                               child: new Text("4 Hours", style: font2),
                             ),
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemHrs,
                               value: '8 Hours',
                               onChanged: (val) {
@@ -187,7 +144,8 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemHrs,
                               value: '12 Hours',
                               onChanged: (val) {
@@ -203,7 +161,8 @@ class RadioButtonWidget extends State {
                               child: new Text("12 Hours", style: font2),
                             ),
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemHrs,
                               value: '24 Hours',
                               onChanged: (val) {
@@ -228,7 +187,8 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemReligion,
                               value: 'Hindu',
                               onChanged: (val) {
@@ -244,7 +204,8 @@ class RadioButtonWidget extends State {
                               child: new Text("Hindu", style: font2),
                             ),
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemReligion,
                               value: 'Christian',
                               onChanged: (val) {
@@ -262,7 +223,8 @@ class RadioButtonWidget extends State {
                         child: new Row(
                           children: <Widget>[
                             new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                               groupValue: radioItemReligion,
                               value: 'Muslim',
                               onChanged: (val) {
@@ -291,116 +253,54 @@ class RadioButtonWidget extends State {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Employee Age',
-                          style: font1,
-                        ),
-                      ),
-                      new Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: new Row(
-                          children: <Widget>[
-                            new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                              groupValue: radioItemAge,
-                              value: '18-30',
-                              onChanged: (val) {
-                                setState(() {
-                                  radioItemAge = val;
-                                });
-                              },
-                            ),
-                            new Container(
-                              margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
-                              constraints:
-                                  BoxConstraints(minWidth: 100, maxWidth: 100),
-                              child: new Text("18-30", style: font2),
-                            ),
-                            new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                              groupValue: radioItemAge,
-                              value: '31-40',
-                              onChanged: (val) {
-                                setState(() {
-                                  radioItemAge = val;
-                                });
-                              },
-                            ),
-                            new Text("31-40", style: font2),
-                          ],
-                        ),
-                      ),
-                      new Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: new Row(
-                          children: <Widget>[
-                            new Radio(
-                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
-                              groupValue: radioItemAge,
-                              value: '40 & above',
-                              onChanged: (val) {
-                                setState(() {
-                                  radioItemAge = val;
-                                });
-                              },
-                            ),
-                            new Container(
-                              margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
-                              constraints:
-                                  BoxConstraints(minWidth: 100, maxWidth: 100),
-                              child: new Text("40 & above", style: font2),
-                            ),
-
-                          ],
-                        ),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
-                      (circularProgress ?
-                      Padding(
-                        padding: EdgeInsets.only(top:20),
-                        child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
-                      ):
-                      _button()),
+                      (circularProgress
+                          ? Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Color.fromARGB(
+                                                  0xff, 0x88, 0x02, 0x0b)))),
+                            )
+                          : _button()),
                     ]),
               ),
             ),
           ),
         ));
   }
-  _button(){
-    return   ButtonTheme(
+
+  _button() {
+    return ButtonTheme(
         height: 40,
         minWidth: 290,
         child: Align(
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-
                 check_internet().then((intenet) {
                   if (intenet != null && intenet) {
-
-                    if(radioItemGender == '' || radioItemHrs == '' || radioItemReligion == '' || radioItemAge == ''){
+                    if (radioItemHrs == '' || radioItemReligion == '') {
                       Toast.show("Please fill all the fields", context,
                           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-
-                    }
-                    else{
-                      print(radioItemGender);
+                    } else {
                       print(radioItemHrs);
                       print(radioItemReligion);
-                      print(radioItemAge);
                       createRecord();
                       setState(() {
-                        circularProgress=true;
+                        circularProgress = true;
                       });
                     }
-                  }
-                  else{
-                    Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  } else {
+                    Toast.show(
+                        "No Internet!\nCheck your Connection or Try Again",
+                        context,
+                        duration: Toast.LENGTH_LONG,
+                        gravity: Toast.BOTTOM);
                   }
                 });
               },
@@ -409,14 +309,12 @@ class RadioButtonWidget extends State {
               child: Text(
                 'Submit',
                 style: GoogleFonts.karla(
-                    color: Color.fromARGB(
-                        0xff, 0xff, 0xff, 0xff),
+                    color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
               ),
               elevation: 7,
               color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-        ))
-    ;
+        ));
   }
 }

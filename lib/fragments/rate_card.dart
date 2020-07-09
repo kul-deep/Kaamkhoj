@@ -29,7 +29,6 @@ class RateCard extends StatelessWidget {
                 image: AssetImage("assets/images/background.png"),
                 fit: BoxFit.cover)),
         child: ListView.builder(
-
           itemBuilder: (context, i) {
             if (i >= data.length) return null;
             return ExpansionTile(
@@ -102,7 +101,6 @@ class RateCard extends StatelessWidget {
                     ),
                   ),
 
-
 //              RichText(
 //                text: TextSpan(
 //                  children: <TextSpan>[
@@ -147,9 +145,9 @@ class ExpansionTileDemo extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0,0),
-              child: Text("The above rate card in only a rough indication and totally depends on the skill sets of the employee, work timings, experience, age  and the city of the employment so we have to keep all this in mind when negotiating the salary of the employees."),
-
+              padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 0),
+              child: Text(
+                  "The above rate card in only a rough indication and totally depends on the skill sets of the employee, work timings, experience, age  and the city of the employment so we have to keep all this in mind when negotiating the salary of the employees."),
             )
           ],
         ),
