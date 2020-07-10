@@ -53,6 +53,8 @@ class _RegisterPageState extends State<RegisterPage> {
 //  final formKey = GlobalKey<FormState>();
   String phoneNo = "",
       name = "",
+      radioItemGender = "",
+      age = "",
       email = "",
       password = "",
       city = "",
@@ -65,7 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final databaseReference = Firestore.instance;
   String errorName = '';
   String errorEmail = '';
+  String errorGender = '';
   String errorMobile = '';
+  String errorAge = '';
   String errorPass = '';
   String errorCity = '';
   String errorMsg = '';
@@ -277,8 +281,9 @@ class _RegisterPageState extends State<RegisterPage> {
   void createRecord() async {
     await databaseReference.collection("data").document(phoneNo).setData({
       'Number': phoneNo,
+      'Age': age,
       'Name': name,
-      'email': email,
+      'Gender': radioItemGender,
       'password': password,
       'city': city,
     });
@@ -350,9 +355,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void valid() {
     this._formKey.currentState.save();
-    print(city);
+    print(radioItemGender);
     if ((name == "") ||
-        (email == "") ||
+        (radioItemGender == "") ||
+        (age == "") ||
         (phoneNo == "") ||
         (password == "") ||
         (city == "")) {
@@ -365,9 +371,14 @@ class _RegisterPageState extends State<RegisterPage> {
           errorName = errorblank;
         });
       }
-      if (email == "") {
+      if (radioItemGender == "") {
         setState(() {
-          errorEmail = errorblank;
+          errorGender = errorblank;
+        });
+      }
+      if (age == "") {
+        setState(() {
+          errorAge = errorblank;
         });
       }
       if (phoneNo == "") {
@@ -389,7 +400,7 @@ class _RegisterPageState extends State<RegisterPage> {
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
       if (errorName == "" &&
-          errorEmail == "" &&
+          errorAge == "" &&
           errorMobile == "" &&
           errorPass == "" &&
           errorCity == "") {
@@ -422,6 +433,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    var font1 = GoogleFonts.openSans(
+        color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+        fontSize: 18,
+        fontWeight: FontWeight.bold);
+    var font2 = GoogleFonts.sourceSansPro(
+        color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
     return otp == "0"
         ? WillPopScope(
             onWillPop: _onBackPressed,
@@ -520,67 +537,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Container(
                             height: 55,
                             child: TextField(
-                              decoration: InputDecoration(
-                                  hintStyle: GoogleFonts.poppins(
-                                      color: Color.fromARGB(
-                                          0xff, 0x1d, 0x22, 0x26),
-                                      fontSize: 14),
-                                  focusedBorder: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(10.0),
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: Colors.white70,
-                                      )),
-                                  enabledBorder: new OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                      const Radius.circular(10.0),
-                                    ),
-                                    borderSide: BorderSide(
-                                      color: Colors.white70,
-                                    ),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white70,
-                                  prefixIcon: Icon(Icons.email),
-                                  hintText: 'Email ID'),
-                              onChanged: (value) {
-                                this.email = value.trim();
-                                // valid();
-                                if (EmailValidator.validate(this.email)) {
-                                  setState(() {
-                                    errorEmail = "";
-                                  });
-                                } else {
-                                  setState(() {
-                                    errorEmail = "Invalid Email Address";
-                                  });
-                                }
-                              },
-                              // validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
-                              // onSaved: (email)=> _email = email,
-                            ),
-                          ),
-                        ),
-                      ),
-                      (errorEmail != ''
-                          ? Padding(
-                              padding: const EdgeInsets.only(left: 85.0),
-                              child: Text(
-                                errorEmail,
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            )
-                          : Container()),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 35, top: 15, right: 35, bottom: 10),
-                        child: Center(
-                          child: Container(
-                            height: 55,
-                            child: TextField(
                               maxLength: 10,
-                              keyboardType: TextInputType.phone,
+                              inputFormatters: <TextInputFormatter>[
+                                WhitelistingTextInputFormatter.digitsOnly,
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(),
                               decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
                                       color: Color.fromARGB(
@@ -634,6 +595,114 @@ class _RegisterPageState extends State<RegisterPage> {
                               padding: const EdgeInsets.only(left: 85.0),
                               child: Text(
                                 errorMobile,
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            )
+                          : Container()),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 35, top: 15, right: 35, bottom: 10),
+                        child: Center(
+                          child: Container(
+                            height: 55,
+                            child: TextField(
+                                maxLength: 2,
+                                inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly,
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                decoration: InputDecoration(
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Color.fromARGB(
+                                            0xff, 0x1d, 0x22, 0x26),
+                                        fontSize: 14),
+                                    counterText: "",
+                                    focusedBorder: new OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.white70,
+                                        )),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white70,
+                                    prefixIcon: Icon(Icons.refresh),
+                                    hintText: 'Age'),
+                                onChanged: (value) {
+                                  this.age = value.trim();
+                                }),
+                          ),
+                        ),
+                      ),
+                      (errorAge != ''
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 85.0),
+                              child: Text(
+                                errorAge,
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            )
+                          : Container()),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 35, top: 15, right: 35, bottom: 10),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 40),
+                        child: Text(
+                          'Gender',
+                          style: font1,
+                        ),
+                      ),
+                      new Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: new Row(
+                          children: <Widget>[
+                            new Radio(
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              groupValue: radioItemGender,
+                              value: 'Male',
+                              onChanged: (val) {
+                                setState(() {
+                                  radioItemGender = val;
+                                });
+                              },
+                            ),
+                            new Container(
+                                margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
+                                constraints: BoxConstraints(
+                                    minWidth: 100, maxWidth: 100),
+                                child: new Text("Male", style: font2)),
+                            new Radio(
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              groupValue: radioItemGender,
+                              value: 'Female',
+                              onChanged: (val) {
+                                setState(() {
+                                  radioItemGender = val;
+                                });
+                              },
+                            ),
+                            new Text("Female", style: font2),
+                          ],
+                        ),
+                      ),
+                      (errorGender != ''
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 85.0),
+                              child: Text(
+                                errorGender,
                                 style: TextStyle(color: Colors.red),
                               ),
                             )
@@ -734,7 +803,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               if (_typeAheadController != "") {
                                 errorCity = "";
                               }
-                              return CitiesService.getSuggestions(pattern.trim());
+                              return CitiesService.getSuggestions(
+                                  pattern.trim());
                             },
                             itemBuilder: (context, suggestion) {
                               return ListTile(
@@ -795,20 +865,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                     fontSize: 12),
                               ),
                               TextSpan(
-                                text: 'Privacy Policy',
-                                style: GoogleFonts.sourceSansPro(
-                                    color:
-                                        Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                                    fontSize: 12),
+                                  text: 'Privacy Policy',
+                                  style: GoogleFonts.sourceSansPro(
+                                      color: Color.fromARGB(
+                                          0xff, 0x88, 0x02, 0x0b),
+                                      fontSize: 12),
                                   recognizer: new TapGestureRecognizer()
                                     ..onTap = () => {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PrivacyPolicyPage()))
-                                    }
-                              ),
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PrivacyPolicyPage()))
+                                        }),
                             ],
                           ),
                         ),
