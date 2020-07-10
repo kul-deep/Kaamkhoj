@@ -30,9 +30,9 @@ class _PaytmPaymentPageState extends State<PaytmPaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Paytm Payments"),
-      ),
+//      appBar: AppBar(
+//        title: Text("Paytm Payments"),
+//      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

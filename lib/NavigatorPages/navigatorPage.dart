@@ -10,6 +10,7 @@ import 'package:kaamkhoj/fragments/rate_card.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/paytmPayment/PaymentPaytmPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../fragments/first_fragment.dart';
 import '../fragments/about_us.dart';
@@ -106,7 +107,7 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 11:
         return new ShareAppPage();
       case 12:
-        return new PaymentPage();
+        return new PaytmPaymentPage();
       case 13:
         return new LiveChatPage();
       case 14:
