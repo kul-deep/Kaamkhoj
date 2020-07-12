@@ -51,12 +51,12 @@ class AboutUsPage extends StatelessWidget {
   // }
   Widget _carousel(BuildContext context) {
     return SizedBox(
-        height: 200.0,
+        height: 300.0,
         width: MediaQuery.of(context).size.width,
         child: Carousel(
           images: [
-            ExactAssetImage("assets/images/Baby-Sitter-(work).jpg"),
             ExactAssetImage("assets/images/healthycooks copy1(work).jpg"),
+            ExactAssetImage("assets/images/Baby-Sitter-(work).jpg"),
             ExactAssetImage("assets/images/movetomalaysia-maid copy(work).jpg"),
             ExactAssetImage("assets/images/nurse-appreciation copy(work).jpg"),
           ],

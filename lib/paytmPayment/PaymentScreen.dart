@@ -35,6 +35,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final checksumResult = responseJSON["status"];
       final paytmResponse = responseJSON["data"];
+      print(paytmResponse);
       if (paytmResponse["STATUS"] == "TXN_SUCCESS") {
         if (checksumResult==0) {
           _responseStatus = STATUS_SUCCESSFUL;

@@ -85,3 +85,33 @@ void sendMailContacts(String tomail,File file1) {
       .then((envelope) => print('Email sent!'))
       .catchError((e) => print('Error occurred: $e'));
 }
+
+
+void sendMailReceipt(String tomail,File file1) {
+  print(tomail);
+  var options = new GmailSmtpOptions()
+    ..username = 'akhati12345@gmail.com'
+    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+  // you need to use one of those here.
+
+  // How you use and store passwords is up to you. Beware of storing passwords in plain.
+
+  // Create our email transport.
+  var emailTransport = new SmtpTransport(options);
+
+  // Create our mail/envelope.
+  var envelope = new Envelope()
+    ..from = 'akhati12345@gmail.com'
+    ..recipients.add(tomail)
+//    ..bccRecipients.add('hidden@recipient.com')
+    ..subject = 'Contacts of User from Kaamkhoj App'
+    ..attachments.add(new Attachment(file: file1))
+    ..text = 'This is a cool email message. Whats up?'
+    ..html = '<h1>Hi Admin, </h1> <p>this is the mail has receipt of 1000</p>';
+
+  // Email it.
+  emailTransport.send(envelope)
+      .then((envelope) => print('Email sent!'))
+      .catchError((e) => print('Error occurred: $e'));
+}
+
