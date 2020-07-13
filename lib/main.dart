@@ -45,6 +45,7 @@ class _MyAppState extends State<MyApp> {
   int _counter;
   Timer _timer;
 
+
   _MyAppState(String type) {
     this.type = type;
   }
@@ -55,6 +56,7 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
 //    FocusScope.of(context).requestFocus(new FocusNode());
     _startTimer();
+
   }
 
   _startTimer() {

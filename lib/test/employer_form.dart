@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
@@ -60,6 +61,7 @@ class RadioButtonWidget extends State {
 
   final TextEditingController _typeAheadController = TextEditingController();
   String _selectedCity;
+  final databaseReference = Firestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   RadioButtonWidget(String work, String phoneNo) {
@@ -91,7 +93,7 @@ class RadioButtonWidget extends State {
         'Religion': radioItemReligion,
         'Work': work,
         'City': city,
-        'email': email,
+        'Email': email,
         'Gender': radioItemGender,
       });
     } else {
@@ -113,14 +115,27 @@ class RadioButtonWidget extends State {
         'Religion': radioItemReligion,
         'Work': work,
         'City': city,
+        'Email': email,
+        'Gender': radioItemGender,
       });
     }
+    getMail(phoneNo);
 
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ThankyouPage(phoneNo),
         ));
+  }
+
+
+  void getMail(String phoneNo1) {
+    DocumentReference documentReference =
+    databaseReference.collection("data").document(phoneNo1);
+    documentReference.get().then((datasnapshot) {
+      sendMail(email,datasnapshot.data['Name'].toString());
+      sendMailEmployerAdmin(datasnapshot.data['Name'].toString(),datasnapshot.data['Age'].toString(),datasnapshot.data['Gender'].toString(),phoneNo1, datasnapshot.data['city'].toString(),radioItemHrs, radioItemReligion, work, city, email, radioItemGender);
+    });
   }
 
   bool valid() {
