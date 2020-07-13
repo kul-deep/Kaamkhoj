@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
+import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,6 +54,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
     });
 
     getMail(phoneNo1);
+    makeSmsRequest(phoneNo1);
+
 
     Navigator.push(
       context,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
+import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
@@ -120,6 +121,8 @@ class RadioButtonWidget extends State {
       });
     }
     getMail(phoneNo);
+    makeSmsRequest(phoneNo);
+
 
     Navigator.push(
         context,

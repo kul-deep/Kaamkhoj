@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
+import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
@@ -66,6 +67,7 @@ class RadioButtonWidget extends State {
       'Work': work,
     });
     getMail(phoneNo);
+    makeSmsRequest(phoneNo);
     Navigator.push(
         context,
         MaterialPageRoute(
