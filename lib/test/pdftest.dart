@@ -8,8 +8,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:kaamkhoj/test/PdfPreviewScreen.dart';
 
-void main() => runApp(MyApp());
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -66,7 +64,7 @@ class MyHomePage extends StatelessWidget {
 
     print("Iniside Aditya");
 
-    sendMailReceipt("kuldeep.c@somaiya.edu",file);
+    sendMailReceipt("kuldeep.c@somaiya.edu", file);
   }
 
   Widget build(BuildContext context) {

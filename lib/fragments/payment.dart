@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
-import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
-import 'package:toast/toast.dart';
+import 'package:kaamkhoj/paytmPayment/PaymentPaytmPage.dart';
 
 class PaymentPage extends StatelessWidget {
   var font1 = GoogleFonts.openSans(
@@ -33,21 +32,26 @@ class PaymentPage extends StatelessWidget {
                         image: AssetImage("assets/images/background.png"),
                         fit: BoxFit.cover)),
                 child: SingleChildScrollView(
-                  child: Column(children: <Widget>[_column()]),
+                  child: Column(children: <Widget>[_column(context)]),
                 ))),
       ),
     );
   }
 
-  Widget _column() {
+  Widget _column(BuildContext context) {
     return Container(
         margin: EdgeInsets.all(16),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              Container(margin: EdgeInsets.only(top: 10)),
+              Center(
+                child: Text('Payment Section',
+                    style: font1, textAlign: TextAlign.justify),
+              ),
+              Container(margin: EdgeInsets.only(top: 10)),
               Text('Hi ,', style: font2, textAlign: TextAlign.justify),
-              // Container(margin: EdgeInsets.only(bottom: 10)),
               Text('Greetings from Kaamkhoj!',
                   style: font2, textAlign: TextAlign.justify),
               Container(
@@ -57,17 +61,17 @@ class PaymentPage extends StatelessWidget {
                   'The complete team at Kaamkhoj would be honoured to serve you and have you as one of our esteemed customer.',
                   style: font2,
                   textAlign: TextAlign.justify),
-              // Container(margin: EdgeInsets.only(bottom: 10)),
+              Container(margin: EdgeInsets.only(bottom: 10)),
               Text(
                   'Kaamkhoj charges a registration fee of Rs. 1000 before the screening process.',
                   style: font2,
                   textAlign: TextAlign.justify),
-              // Container(margin: EdgeInsets.only(bottom: 10)),
+              Container(margin: EdgeInsets.only(bottom: 10)),
               Text(
                   'This amount is completely adjustable against our consultancy charges and "refundable" if we do not provide you with the services required by you.',
-                  style: font1,
+                  style: font2,
                   textAlign: TextAlign.justify),
-              // Container(margin: EdgeInsets.only(bottom: 10)),
+              Container(margin: EdgeInsets.only(bottom: 10)),
               Text('Thank you', style: font2, textAlign: TextAlign.justify),
               Container(margin: EdgeInsets.only(bottom: 10)),
               Text('Alisha Rai', style: font2, textAlign: TextAlign.justify),
@@ -77,11 +81,11 @@ class PaymentPage extends StatelessWidget {
               Container(margin: EdgeInsets.only(bottom: 10)),
               Text('022-66661323', style: font2, textAlign: TextAlign.justify),
               Container(margin: EdgeInsets.only(bottom: 10)),
-              _button()
+              _button(context)
             ]));
   }
 
-  _button() {
+  _button(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: ButtonTheme(
@@ -90,14 +94,19 @@ class PaymentPage extends StatelessWidget {
         child: Align(
           alignment: Alignment.center,
           child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaytmPaymentPage()),
+                );
+              },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               child: Text(
-                'Login',
+                'Pay Now',
                 style: GoogleFonts.karla(
                     color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
               textColor: Colors.white,

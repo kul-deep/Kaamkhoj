@@ -5,6 +5,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/Mail/sms_.dart';
+import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
@@ -123,21 +124,30 @@ class RadioButtonWidget extends State {
     getMail(phoneNo);
     makeSmsRequest(phoneNo);
 
-
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ThankyouPage(phoneNo),
+          builder: (context) => PaymentPage(),
         ));
   }
 
-
   void getMail(String phoneNo1) {
     DocumentReference documentReference =
-    databaseReference.collection("data").document(phoneNo1);
+        databaseReference.collection("data").document(phoneNo1);
     documentReference.get().then((datasnapshot) {
-      sendMail(email,datasnapshot.data['Name'].toString());
-      sendMailEmployerAdmin(datasnapshot.data['Name'].toString(),datasnapshot.data['Age'].toString(),datasnapshot.data['Gender'].toString(),phoneNo1, datasnapshot.data['city'].toString(),radioItemHrs, radioItemReligion, work, city, email, radioItemGender);
+      sendMail(email, datasnapshot.data['Name'].toString());
+      sendMailEmployerAdmin(
+          datasnapshot.data['Name'].toString(),
+          datasnapshot.data['Age'].toString(),
+          datasnapshot.data['Gender'].toString(),
+          phoneNo1,
+          datasnapshot.data['city'].toString(),
+          radioItemHrs,
+          radioItemReligion,
+          work,
+          city,
+          email,
+          radioItemGender);
     });
   }
 

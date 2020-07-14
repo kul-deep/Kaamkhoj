@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/afterlogin/drop_down_employer.dart';
@@ -27,11 +26,6 @@ class DrawerItem {
 }
 
 class NavigatorPage extends StatefulWidget {
-
-
-
-
-
   final drawerItems = [
     new DrawerItem("Home", Icons.home),
     new DrawerItem("About Us", Icons.info),
@@ -57,25 +51,24 @@ class NavigatorPage extends StatefulWidget {
 }
 
 class NavigatorPageState extends State<NavigatorPage> {
-  String name="";
+  String name = "";
 
-  bool logot_select=false;
+  bool logot_select = false;
   @override
   void initState() {
     super.initState();
 //        FocusScope.of(context).requestFocus(new FocusNode());
-        getStringValuesSF();
-
+    getStringValuesSF();
   }
+
   getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
     String stringValue = prefs.getString('Name');
-   setState(() {
-     name=stringValue;
-   });
+    setState(() {
+      name = stringValue;
+    });
   }
-
 
   int _selectedDrawerIndex = 0;
 
@@ -101,7 +94,8 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 8:
         return new ChooseYourWorkEmployer("Employer");
       case 9:
-        return new ChooseYourWork("Employee");          //ChooseType("register");//Sign UP
+        return new ChooseYourWork(
+            "Employee"); //ChooseType("register");//Sign UP
       case 10:
         return new ContactUsPage();
       case 11:
@@ -116,16 +110,18 @@ class NavigatorPageState extends State<NavigatorPage> {
         return LoginPage();
 
       default:
-        return new Text("Error",style: GoogleFonts.ptSans(),
+        return new Text(
+          "Error",
+          style: GoogleFonts.ptSans(),
         );
     }
   }
-  
+
   _onSelectItem(int index) {
     setState(() {
       print(index);
       _selectedDrawerIndex = index;
-      if(index==14) {
+      if (index == 14) {
         logot_select = true;
       }
     });
@@ -139,124 +135,115 @@ class NavigatorPageState extends State<NavigatorPage> {
     for (var i = 0; i < widget.drawerItems.length; i++) {
       var d = widget.drawerItems[i];
 
-      if (i==6) {
-        drawerOptions.add(
-            Column(
-              children: [
-                ListTile(
-                  leading: new Icon(d.icon),
-                  title: new Text(d.title),
-                  selected: i == _selectedDrawerIndex,
-                  onTap: () => _onSelectItem(i),
-                ),
-                Divider(),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:20.0),
-                    child: Text("Partner With Us",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold) ),
-                  ),
-                ),
-              ],
-            )
-        );
-      }
-
-      else if (i==7) {
-        drawerOptions.add(
-             Column(
-               children: [
-                 ListTile(
-                  leading: new Icon(d.icon),
-                  title: new Text(d.title),
-                  selected: i == _selectedDrawerIndex,
-                  onTap: () => _onSelectItem(i),
-            ),
-                 Divider(),
-                 Align(
-                   alignment: Alignment.centerLeft,
-                   child: Padding(
-                     padding: const EdgeInsets.only(left:20.0),
-                     child: Text("Job Related",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
-                         color: Colors.black,
-                         fontSize: 20,
-                         fontWeight: FontWeight.bold) ),
-                   ),
-                 ),
-               ],
-             )
-        );
-    }
-      else if(i==9){
-        drawerOptions.add(
-            Column(
-              children: [
-                ListTile(
-                  leading: new Icon(d.icon),
-                  title: new Text(d.title),
-                  selected: i == _selectedDrawerIndex,
-                  onTap: () => _onSelectItem(i),
-                ),
-                Divider(),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:20.0),
-                    child: Text("Communicate",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold) ),
-                  ),
-                ),
-              ],
-            )
-        );
-      }
-      else if(i==13){
-        drawerOptions.add(
-            Column(
-              children: [
-                ListTile(
-                  leading: new Icon(d.icon),
-                  title: new Text(d.title),
-                  selected: i == _selectedDrawerIndex,
-                  onTap: () => _onSelectItem(i),
-                ),
-                Divider(),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:20.0),
-                    child: Text("Logout",textAlign: TextAlign.left ,style:GoogleFonts.ptSans(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold) ),
-                  ),
-                ),
-              ],
-            )
-        );
-      }
-      else{
-        drawerOptions.add(
-            new ListTile(
+      if (i == 6) {
+        drawerOptions.add(Column(
+          children: [
+            ListTile(
               leading: new Icon(d.icon),
               title: new Text(d.title),
               selected: i == _selectedDrawerIndex,
               onTap: () => _onSelectItem(i),
-            )
-        );
-
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Partner With Us",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ));
+      } else if (i == 7) {
+        drawerOptions.add(Column(
+          children: [
+            ListTile(
+              leading: new Icon(d.icon),
+              title: new Text(d.title),
+              selected: i == _selectedDrawerIndex,
+              onTap: () => _onSelectItem(i),
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Job Related",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ));
+      } else if (i == 9) {
+        drawerOptions.add(Column(
+          children: [
+            ListTile(
+              leading: new Icon(d.icon),
+              title: new Text(d.title),
+              selected: i == _selectedDrawerIndex,
+              onTap: () => _onSelectItem(i),
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Communicate",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ));
+      } else if (i == 13) {
+        drawerOptions.add(Column(
+          children: [
+            ListTile(
+              leading: new Icon(d.icon),
+              title: new Text(d.title),
+              selected: i == _selectedDrawerIndex,
+              onTap: () => _onSelectItem(i),
+            ),
+            Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Logout",
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.ptSans(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ));
+      } else {
+        drawerOptions.add(new ListTile(
+          leading: new Icon(d.icon),
+          title: new Text(d.title),
+          selected: i == _selectedDrawerIndex,
+          onTap: () => _onSelectItem(i),
+        ));
       }
     }
 
-    _scaffold(){
+    _scaffold() {
       return new Scaffold(
         appBar: new AppBar(
-
           // here we display the title corresponding to the fragment
           // you can instead choose to have a static title
 
@@ -266,7 +253,6 @@ class NavigatorPageState extends State<NavigatorPage> {
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
         ),
-
         drawer: new Drawer(
           child: SingleChildScrollView(
             child: Column(
@@ -280,13 +266,18 @@ class NavigatorPageState extends State<NavigatorPage> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+                        child: Image.asset("assets/images/logo2.png",
+                            height: 200,
+                            width: MediaQuery.of(context).size.width),
                       ),
-                      Center(child: Text(name,
+                      Center(
+                          child: Text(
+                        name,
                         style: GoogleFonts.openSans(
                             color: Colors.white,
                             fontSize: 18,
-                            fontWeight: FontWeight.bold),)),
+                            fontWeight: FontWeight.bold),
+                      )),
                     ],
                   ),
                 ),
@@ -297,7 +288,6 @@ class NavigatorPageState extends State<NavigatorPage> {
         ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
       );
-
     }
 
     _scaffoldlogot() {
@@ -327,13 +317,18 @@ class NavigatorPageState extends State<NavigatorPage> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
-                        child: Image.asset("assets/images/logo2.png",height: 200,width:MediaQuery.of(context).size.width),
+                        child: Image.asset("assets/images/logo2.png",
+                            height: 200,
+                            width: MediaQuery.of(context).size.width),
                       ),
-                      Center(child: Text(name,
+                      Center(
+                          child: Text(
+                        name,
                         style: GoogleFonts.openSans(
                             color: Colors.white,
                             fontSize: 18,
-                            fontWeight: FontWeight.bold),)),
+                            fontWeight: FontWeight.bold),
+                      )),
                     ],
                   ),
                 ),
@@ -346,10 +341,8 @@ class NavigatorPageState extends State<NavigatorPage> {
       );
     }
 
-
-
     return SafeArea(
-    child: ( logot_select? _scaffoldlogot(): _scaffold()),
+      child: (logot_select ? _scaffoldlogot() : _scaffold()),
     );
 //      child: new Scaffold(
 //        appBar: new AppBar(
@@ -398,10 +391,8 @@ class NavigatorPageState extends State<NavigatorPage> {
   }
 
   Future<void> logout() async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      //Remove String
-      prefs.remove("Login");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Remove String
+    prefs.remove("Login");
   }
-
-
 }
