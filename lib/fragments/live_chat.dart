@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 
@@ -19,6 +20,14 @@ class LiveChatState extends State<LiveChatPage> {
     await launch(
 //               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
         "https://wa.me/+917977763205?text=Hi");
+  }
+
+  _makeSmsRequest() async {
+    // make GET request
+    String phoneno="9082768200";
+    String msgText="Welcome to Kaamkhoj. We are pleased to receive your inquiry and look forward to serve you in future.\nPlease contact us on the below given numbers.\nThanks\nAlisha Rai\nCustomer Loyalty Executive\n02266661314/ 02266661323/ 02266661515\nWhatsapp 8879392064";
+    String url = 'http://103.233.79.246//submitsms.jsp?user=Fitzone&key=97a7a78c99XX&mobile='+phoneno+'&message='+msgText+'&senderid=INFOSM&accusage=1';
+    Response response = await get(url);
   }
 
   @override
@@ -48,6 +57,7 @@ class LiveChatState extends State<LiveChatPage> {
                   child: RaisedButton(
                       onPressed: () {
                         launchWhatsapp();
+//                        _makeSmsRequest();
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),

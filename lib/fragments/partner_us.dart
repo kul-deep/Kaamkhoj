@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kaamkhoj/Mail/send_mail.dart';
+import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +35,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
   final TextEditingController _typeAheadController = TextEditingController();
   String _selectedCity;
 
-  bool circularProgress=false;
+  bool circularProgress = false;
 
   Future<String> getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,18 +53,30 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
       'city': city,
     });
 
+    getMail(phoneNo1);
+    makeSmsRequest(phoneNo1);
+
+
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ThankyouPage(phoneNo)),
+      MaterialPageRoute(builder: (context) => ThankyouPage(phoneNo1)),
     );
+  }
+
+  void getMail(String phoneNo1) {
+    DocumentReference documentReference =
+    databaseReference.collection("data").document(phoneNo1);
+    documentReference.get().then((datasnapshot) {
+      sendMail(email,datasnapshot.data['Name'].toString());
+      sendMailPartnerUsAdmin(datasnapshot.data['Name'].toString(),phoneNo1, datasnapshot.data['city'].toString(),phoneNo, name, email, city);
+    });
   }
 
   void valid() {
     this._formKey.currentState.save();
-    print(city);
     if ((name == "") || (email == "") || (phoneNo == "") || (city == "")) {
       setState(() {
-        circularProgress=false;
+        circularProgress = false;
       });
       String errorblank = "Please fill this field";
       if (name == "") {
@@ -93,10 +107,9 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
           errorMobile == "" &&
           errorCity == "") {
         getStringValuesSF();
-        print("Inside");
       } else {
         setState(() {
-          circularProgress=false;
+          circularProgress = false;
         });
         Toast.show("Please fill all the fields correctly", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
@@ -106,15 +119,16 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
   @override
   Widget build(BuildContext context) {
-     Future<bool> _onBackPressed() {
-    return Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
-    );
-  }
+    Future<bool> _onBackPressed() {
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NavigatorPage()),
+      );
+    }
+
     return WillPopScope(
       onWillPop: _onBackPressed,
-          child: SafeArea(
+      child: SafeArea(
         child: Scaffold(
           backgroundColor: Color(0xfff7e9e9),
           body: SingleChildScrollView(
@@ -123,16 +137,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                // Container(
-                //   width: MediaQuery.of(context).size.width,
-                //   height: 300,
-                //   decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //         fit: BoxFit.fill,
-                //         image:
-                //             AssetImage("assets/images/kaamkhoj_logo.png")),
-                //   ),
-                // ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 30.0),
@@ -236,7 +240,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             hintText: 'Agency Email ID'),
                         onChanged: (value) {
                           this.email = value.trim();
-                          // valid();
                           if (EmailValidator.validate(this.email)) {
                             setState(() {
                               errorEmail = "";
@@ -297,7 +300,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             hintText: 'Agency Mobile No.'),
                         onChanged: (value) {
                           this.phoneNo = "+91" + value;
-                          // valid();
                           if (!isNumeric(value)) {
                             setState(() {
                               errorMobile = "Should Contain Only Digits";
@@ -309,7 +311,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
                             if (value.length < 10) {
                               setState(() {
-                                errorMobile = "Mobile number contains 10 digits";
+                                errorMobile =
+                                    "Mobile number contains 10 digits";
                               });
                             }
                           }
@@ -371,8 +374,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                         return suggestionsBox;
                       },
                       onSuggestionSelected: (suggestion) {
-                        if(_typeAheadController!=""){
-                          errorCity="";
+                        if (_typeAheadController != "") {
+                          errorCity = "";
                         }
                         this._typeAheadController.text = suggestion;
                       },
@@ -424,13 +427,15 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                         ),
                       )
                     : Container()),
-                (circularProgress ?
-                Padding(
-                  padding: EdgeInsets.only(top:20),
-                  child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
-                ):
-                _button()),
-
+                (circularProgress
+                    ? Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Center(
+                            child: CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
+                      )
+                    : _button()),
               ],
             )),
           ),
@@ -440,7 +445,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
   }
 
   _button() {
-    return   ButtonTheme(
+    return ButtonTheme(
       height: 40,
       minWidth: 290,
       child: Align(
@@ -450,18 +455,18 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
               check_internet().then((intenet) {
                 if (intenet != null && intenet) {
                   setState(() {
-                    circularProgress=true;
+                    circularProgress = true;
                   });
                   valid();
-                }
-                else{
-                  Toast.show("No Internet!\nCheck your Connection or Try Again", context,duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                } else {
+                  Toast.show("No Internet!\nCheck your Connection or Try Again",
+                      context,
+                      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                 }
               });
-
             },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             child: Text(
               'Submit',
               style: GoogleFonts.karla(

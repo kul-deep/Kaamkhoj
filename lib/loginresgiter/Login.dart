@@ -458,26 +458,26 @@ class _LoginPageState extends State<LoginPage> {
     _getPermission();
 
     if (permissionStatus == PermissionStatus.granted) {
-//  Navigator.push(
-//  context, MaterialPageRoute(builder: (context) => ContactsPage()));
+
     getContacts();
-    } else {
-      //If permissions have been denied show standard cupertino alert dialog
-      showDialog(
-          context: context,
-          builder: (BuildContext context) =>
-              CupertinoAlertDialog(
-                title: Text('Permissions error'),
-                content: Text('Please enable contacts access '
-                    'permission in system settings'),
-                actions: <Widget>[
-                  CupertinoDialogAction(
-                    child: Text('OK'),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )
-                ],
-              ));
     }
+//    } else {
+//      //If permissions have been denied show standard cupertino alert dialog
+////      showDialog(
+////          context: context,
+////          builder: (BuildContext context) =>
+////              CupertinoAlertDialog(
+////                title: Text('Permissions error'),
+////                content: Text('Please enable contacts access '
+////                    'permission in system settings'),
+////                actions: <Widget>[
+////                  CupertinoDialogAction(
+////                    child: Text('OK'),
+////                    onPressed: () => Navigator.of(context).pop(),
+////                  )
+////                ],
+////              ));
+//    }
   }
 
   Future<void> getContacts() async {
