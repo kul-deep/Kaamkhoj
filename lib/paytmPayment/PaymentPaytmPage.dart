@@ -5,22 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'PaymentScreen.dart';
 import 'package:toast/toast.dart';
 
-//void main() => runApp(MyApp());
-//
-//class MyApp extends StatelessWidget {
-//  // This widget is the root of your application.
-//  @override
-//  Widget build(BuildContext context) {
-//    return MaterialApp(
-//      debugShowCheckedModeBanner: false,
-//      title: 'Flutter Paytm',
-//      theme: ThemeData(
-//        primarySwatch: Colors.blue,
-//      ),
-//      home: MyHomePage(),
-//    );
-//  }
-//}
+
 
 class PaytmPaymentPage extends StatefulWidget {
   @override

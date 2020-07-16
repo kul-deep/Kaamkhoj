@@ -101,7 +101,7 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 11:
         return new ShareAppPage();
       case 12:
-        return new PaytmPaymentPage();
+        return new PaymentPage();
       case 13:
         return new LiveChatPage();
       case 14:
