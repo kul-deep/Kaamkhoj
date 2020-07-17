@@ -121,8 +121,8 @@ class RadioButtonWidget extends State {
         'Gender': radioItemGender,
       });
     }
-    getMail(phoneNo);
-    makeSmsRequest(phoneNo);
+//    getMail(phoneNo);
+//    makeSmsRequest(phoneNo);
 
     Navigator.push(
         context,
