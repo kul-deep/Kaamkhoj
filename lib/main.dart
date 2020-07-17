@@ -5,6 +5,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/test/pdftest.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,8 +25,8 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-//        home: MyApp()),
-        home: token == null ? MyApp("Login") : MyApp("Navigator")),
+        home: PdfGenerator()),
+    // home: token == null ? MyApp("Login") : MyApp("Navigator")),
   );
 }
 
@@ -45,7 +46,6 @@ class _MyAppState extends State<MyApp> {
   int _counter;
   Timer _timer;
 
-
   _MyAppState(String type) {
     this.type = type;
   }
@@ -56,7 +56,6 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
 //    FocusScope.of(context).requestFocus(new FocusNode());
     _startTimer();
-
   }
 
   _startTimer() {
@@ -71,7 +70,6 @@ class _MyAppState extends State<MyApp> {
         } else {
           _timer.cancel();
           getPhoneNumbers();
-
         }
       });
     });
@@ -113,8 +111,8 @@ class _MyAppState extends State<MyApp> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
     } else {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => NavigatorPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => NavigatorPage()));
     }
   }
 
