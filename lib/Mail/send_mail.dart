@@ -180,7 +180,9 @@ void sendMailReceipt(String tomail,File file1) {
 }
 
 
-void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId, String amt,String date) {
+void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId, String amt,String date,File file1) {
+//void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId, String amt,String date) {
+
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
     ..username = 'akhati12345@gmail.com'
@@ -199,6 +201,43 @@ void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId
 //    ..recipients.add('Clopes024@gmail.com')
 //    ..bccRecipients.add('hidden@recipient.com')
     ..subject = 'Employer Details'
+    ..attachments.add(new Attachment(file: file1))
+
+//    ..attachments.add(new Attachment(file: new File('path/to/file')))
+    ..text = '<h2>Hello Admin,</h2>'
+    ..html = '<h2>Hello Admin,</h2><p>This is the data of user who has made a payment,</p><p>User Name: $name </p><p>User Phone Number: $phoneNo </p><p>User City: $city </p><p>OrderId: $orderId </p><p>Amount: $amt </p><p>Payemnt Date: $date </p>';
+
+  // Email it.
+  emailTransport.send(envelope)
+      .then((envelope) => print('Email sent!'))
+      .catchError((e) => print('Error occurred: $e'));
+}
+
+
+void sendMailPaymentCust(String name, String phoneNo,String city,String orderId, String amt,String date,File file1,String tomail) {
+
+//  print(emailData.name);
+  var options = new GmailSmtpOptions()
+    ..username = 'akhati12345@gmail.com'
+    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+  // you need to use one of those here.
+
+  // How you use and store passwords is up to you. Beware of storing passwords in plain.
+
+  // Create our email transport.
+  var emailTransport = new SmtpTransport(options);
+
+  // Create our mail/envelope.
+  var envelope = new Envelope()
+    ..from = 'akhati12345@gmail.com'
+    ..recipients.add(tomail)
+
+//    ..recipients.add('aditya.khati@somaiya.edu')
+//    ..recipients.add('Clopes024@gmail.com')
+//    ..bccRecipients.add('hidden@recipient.com')
+    ..subject = 'Employer Details'
+    ..attachments.add(new Attachment(file: file1))
+
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
     ..text = '<h2>Hello Admin,</h2>'
     ..html = '<h2>Hello Admin,</h2><p>This is the data of user who has made a payment,</p><p>User Name: $name </p><p>User Phone Number: $phoneNo </p><p>User City: $city </p><p>OrderId: $orderId </p><p>Amount: $amt </p><p>Payemnt Date: $date </p>';

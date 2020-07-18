@@ -9,6 +9,7 @@ import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -123,12 +124,18 @@ class RadioButtonWidget extends State {
     }
 //    getMail(phoneNo);
 //    makeSmsRequest(phoneNo);
+    addStringToSF(email);
 
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => PaymentPage(),
         ));
+  }
+
+  addStringToSF(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('Email', email);
   }
 
   void getMail(String phoneNo1) {
