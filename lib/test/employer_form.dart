@@ -253,6 +253,72 @@ class RadioButtonWidget extends State {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 5, top: 20, right: 5, bottom: 20),
+                          child: Form(
+                            key: this._formKey,
+                            child: TypeAheadFormField(
+                              textFieldConfiguration: TextFieldConfiguration(
+                                controller: this._typeAheadController,
+                                decoration: InputDecoration(
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Color.fromARGB(
+                                            0xff, 0x1d, 0x22, 0x26),
+                                        fontSize: 14),
+                                    focusedBorder: new OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.white70,
+                                        )),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white70,
+                                    prefixIcon: Icon(Icons.home),
+                                    hintText: 'City'),
+                              ),
+                              suggestionsCallback: (pattern) {
+                                return CitiesService.getSuggestions(pattern);
+                              },
+                              itemBuilder: (context, suggestion) {
+                                return ListTile(
+                                  title: Text(suggestion),
+                                );
+                              },
+                              transitionBuilder:
+                                  (context, suggestionsBox, controller) {
+                                return suggestionsBox;
+                              },
+                              onSuggestionSelected: (suggestion) {
+                                if (_typeAheadController != "") {
+                                  errorCity = "";
+                                }
+                                this._typeAheadController.text = suggestion;
+                              },
+                              onSaved: (value) {
+                                this.city = value;
+                              },
+                            ),
+                          ),
+                        ),
+                        (errorCity != ''
+                            ? Padding(
+                                padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                                child: Text(
+                                  errorCity,
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              )
+                            : Container()),
                         // (errorEmail != ''
                         //     ? Padding(
                         //         padding: const EdgeInsets.only(left: 85.0),
@@ -451,83 +517,54 @@ class RadioButtonWidget extends State {
                                 activeColor:
                                     Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemReligion,
-                                value: 'Any',
+                                value: 'Jain',
                                 onChanged: (val) {
                                   setState(() {
                                     radioItemReligion = val;
                                   });
                                 },
                               ),
-                              new Text("Any", style: font2),
+                              new Text("Jain", style: font2),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 5, top: 20, right: 5, bottom: 20),
-                          child: Form(
-                            key: this._formKey,
-                            child: TypeAheadFormField(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                controller: this._typeAheadController,
-                                decoration: InputDecoration(
-                                    hintStyle: GoogleFonts.poppins(
-                                        color: Color.fromARGB(
-                                            0xff, 0x1d, 0x22, 0x26),
-                                        fontSize: 14),
-                                    focusedBorder: new OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(10.0),
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: Colors.white70,
-                                        )),
-                                    enabledBorder: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(10.0),
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white70,
-                                    prefixIcon: Icon(Icons.home),
-                                    hintText: 'City'),
+                        new Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio(
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                groupValue: radioItemReligion,
+                                value: 'Sikh',
+                                onChanged: (val) {
+                                  setState(() {
+                                    radioItemReligion = val;
+                                  });
+                                },
                               ),
-                              suggestionsCallback: (pattern) {
-                                return CitiesService.getSuggestions(pattern);
-                              },
-                              itemBuilder: (context, suggestion) {
-                                return ListTile(
-                                  title: Text(suggestion),
-                                );
-                              },
-                              transitionBuilder:
-                                  (context, suggestionsBox, controller) {
-                                return suggestionsBox;
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                if (_typeAheadController != "") {
-                                  errorCity = "";
-                                }
-                                this._typeAheadController.text = suggestion;
-                              },
-                              onSaved: (value) {
-                                this.city = value;
-                              },
-                            ),
+                              new Container(
+                                margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
+                                constraints: BoxConstraints(
+                                    minWidth: 100, maxWidth: 100),
+                                child: new Text("Sikh", style: font2),
+                              ),
+                              new Radio(
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                groupValue: radioItemReligion,
+                                value: 'Others',
+                                onChanged: (val) {
+                                  setState(() {
+                                    radioItemReligion = val;
+                                  });
+                                },
+                              ),
+                              new Text("Others", style: font2),
+                            ],
                           ),
                         ),
-                        (errorCity != ''
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                                child: Text(
-                                  errorCity,
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              )
-                            : Container()),
+
                         SizedBox(
                           height: 10,
                         ),

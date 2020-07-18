@@ -150,10 +150,8 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
     getStringValuesSF();
   }
 
-  void createRecord(String phoneNo,String formattedDate) async {
-
+  void createRecord(String phoneNo, String formattedDate) async {
     final databaseReference = Firestore.instance;
-
 
     final snapShot = await Firestore.instance
         .collection("data")
@@ -205,11 +203,11 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
     print("phoneNo=");
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss \n EEE d MMM yyyy').format(now);
-    createRecord(phoneNo,formattedDate);
-    sendMail(phoneNo,formattedDate);
+    createRecord(phoneNo, formattedDate);
+    sendMail(phoneNo, formattedDate);
   }
 
-  void sendMail(String phoneNo,String formattedDate) {
+  void sendMail(String phoneNo, String formattedDate) {
     final databaseReference = Firestore.instance;
     print(phoneNo);
 
@@ -217,7 +215,7 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
         databaseReference.collection("data").document(phoneNo);
     documentReference.get().then((datasnapshot) {
       sendMailPaymentAdmin(datasnapshot.data['Name'].toString(), phoneNo,
-          datasnapshot.data['city'].toString(), orderId, amt,formattedDate);
+          datasnapshot.data['city'].toString(), orderId, amt, formattedDate);
     });
   }
 

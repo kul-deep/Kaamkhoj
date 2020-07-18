@@ -5,7 +5,9 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/test/employee_form1.dart';
 import 'package:kaamkhoj/test/pdftest.dart';
+import 'package:kaamkhoj/testing_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'Mail/send_mail.dart';
 import 'NavigatorPages/navigatorPage.dart';
+import 'fragments/employee_form.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +28,8 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-        home: PdfGenerator()),
-    // home: token == null ? MyApp("Login") : MyApp("Navigator")),
+        // home: Radiobutton()),
+        home: token == null ? MyApp("Login") : MyApp("Navigator")),
   );
 }
 

@@ -45,7 +45,6 @@ class RadioButtonWidget extends State {
   String work, phoneNo;
   final databaseReference = Firestore.instance;
 
-
   bool circularProgress = false;
 
   RadioButtonWidget(String work, String phoneNo) {
@@ -75,12 +74,19 @@ class RadioButtonWidget extends State {
         ));
   }
 
-
   void getMail(String phoneNo1) {
     DocumentReference documentReference =
-    databaseReference.collection("data").document(phoneNo1);
+        databaseReference.collection("data").document(phoneNo1);
     documentReference.get().then((datasnapshot) {
-      sendMailEmployeeAdmin(datasnapshot.data['Name'].toString(),datasnapshot.data['Age'].toString(),datasnapshot.data['Gender'].toString(),phoneNo1, datasnapshot.data['city'].toString(),radioItemHrs, radioItemReligion, work);
+      sendMailEmployeeAdmin(
+          datasnapshot.data['Name'].toString(),
+          datasnapshot.data['Age'].toString(),
+          datasnapshot.data['Gender'].toString(),
+          phoneNo1,
+          datasnapshot.data['city'].toString(),
+          radioItemHrs,
+          radioItemReligion,
+          work);
     });
   }
 
@@ -254,6 +260,19 @@ class RadioButtonWidget extends State {
                                   BoxConstraints(minWidth: 100, maxWidth: 100),
                               child: new Text("Muslim", style: font2),
                             ),
+                            new Radio(
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              groupValue: radioItemReligion,
+                              value: 'Jain',
+                              onChanged: (val) {
+                                setState(() {
+                                  radioItemReligion = val;
+                                });
+                              },
+                            ),
+                            new Text("Jain", style: font2),
+
 //                        new Radio(
 //                              activeColor:Color.fromARGB(0xff, 0x88, 0x02, 0x0b) ,
 //                          groupValue: radioItemReligion,
@@ -265,6 +284,42 @@ class RadioButtonWidget extends State {
 //                          },
 //                        ),
 //                        new Text("All"),
+                          ],
+                        ),
+                      ),
+                      new Container(
+                        margin: EdgeInsets.only(left: 10),
+                        child: new Row(
+                          children: <Widget>[
+                            new Radio(
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              groupValue: radioItemReligion,
+                              value: 'Sikh',
+                              onChanged: (val) {
+                                setState(() {
+                                  radioItemReligion = val;
+                                });
+                              },
+                            ),
+                            new Container(
+                              margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
+                              constraints:
+                                  BoxConstraints(minWidth: 100, maxWidth: 100),
+                              child: new Text("Sikh", style: font2),
+                            ),
+                            new Radio(
+                              activeColor:
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                              groupValue: radioItemReligion,
+                              value: 'Others',
+                              onChanged: (val) {
+                                setState(() {
+                                  radioItemReligion = val;
+                                });
+                              },
+                            ),
+                            new Text("Others", style: font2),
                           ],
                         ),
                       ),

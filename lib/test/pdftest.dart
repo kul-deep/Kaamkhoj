@@ -36,12 +36,12 @@ class MyHomePage extends StatelessWidget {
           .buffer
           .asUint8List(),
     );
-    final PdfImage signature = PdfImage.file(
-      pdf.document,
-      bytes: (await rootBundle.load('assets/images/logo2.png'))
-          .buffer
-          .asUint8List(),
-    );
+    // final PdfImage signature = PdfImage.file(
+    //   pdf.document,
+    //   bytes: (await rootBundle.load('assets/images/logo2.png'))
+    //       .buffer
+    //       .asUint8List(),
+    // );
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat.a5,
       margin: pw.EdgeInsets.all(32),
@@ -127,11 +127,6 @@ class MyHomePage extends StatelessWidget {
                           pw.Padding(
                             padding: pw.EdgeInsets.only(top: 10),
                           ),
-                          pw.Container(
-                              height: 10,
-                              padding: const pw.EdgeInsets.only(left: 20),
-                              alignment: pw.Alignment.topLeft,
-                              child: pw.Image(signature))
                         ]))
               ]))
         ];
