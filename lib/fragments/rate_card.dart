@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 
@@ -9,6 +10,8 @@ class RateCard extends StatelessWidget {
       fontWeight: FontWeight.bold);
   var font2 = GoogleFonts.sourceSansPro(
       color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal);
+  var font3 = GoogleFonts.sourceSansPro(
+      color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal);
 
   @override
   Widget build(BuildContext context) {
@@ -23,108 +26,109 @@ class RateCard extends StatelessWidget {
       onWillPop: _onBackPressed,
       child: Scaffold(
           body: Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
 //                  borderRadius: BorderRadius.circular(50),
             image: DecorationImage(
                 image: AssetImage("assets/images/background.png"),
                 fit: BoxFit.cover)),
-        child:
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text("Aditya"),
-                  SizedBox(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height-150,
-                    child: ListView.builder(
-                      itemBuilder: (context, i) {
-                        if (i >= data.length) return null;
-                        return ExpansionTile(
-                            title: Text(
-                              '${data[i].title}',
-                              style: font1,
-                            ),
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: '${data[i].children[0].title}',
-                                            style: font2)
-                                      ])),
-                                    ),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                      TextSpan(
-                                          text: '${data[i].children[1].title}',
-                                          style: font2)
-                                    ])),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: '${data[i].children[2].title}',
-                                            style: font2)
-                                      ])),
-                                    ),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                      TextSpan(
-                                          text: '${data[i].children[3].title}',
-                                          style: font2)
-                                    ])),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text: '${data[i].children[4].title}',
-                                            style: font2)
-                                      ])),
-                                    ),
-                                    RichText(
-                                        text: TextSpan(children: [
-                                      TextSpan(
-                                          text: '${data[i].children[5].title}',
-                                          style: font2)
-                                    ])),
-                                  ],
-                                ),
-                              ),
-                            ]);
-                      },
-                      itemCount: data.length,
-
-        ),
-                  ),
-                  Text("jhajshjhsjhjahshas"),
-
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  "The below rates could vary depending upon the city, age and the skills sets of the employee .For rates of other services please contact us on 022-66661314 or whatsapp us on 8879392064",
+                  style: font3,
+                  textAlign: TextAlign.justify,
+                ),
               ),
-            ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 150,
+                child: ListView.builder(
+                  itemBuilder: (context, i) {
+                    if (i >= data.length) return null;
+                    return ExpansionTile(
+                        title: Text(
+                          '${data[i].title}',
+                          style: font1,
+                        ),
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                        text: '${data[i].children[0].title}',
+                                        style: font2)
+                                  ])),
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: '${data[i].children[1].title}',
+                                      style: font2)
+                                ])),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                        text: '${data[i].children[2].title}',
+                                        style: font2)
+                                  ])),
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: '${data[i].children[3].title}',
+                                      style: font2)
+                                ])),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(30.0, 3.0, 20.0, 3.0),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                        text: '${data[i].children[4].title}',
+                                        style: font2)
+                                  ])),
+                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: '${data[i].children[5].title}',
+                                      style: font2)
+                                ])),
+                              ],
+                            ),
+                          ),
+                        ]);
+                  },
+                  itemCount: data.length,
+                ),
+              ),
+              Text(""),
+            ],
+          ),
+        ),
       )),
     );
   }
