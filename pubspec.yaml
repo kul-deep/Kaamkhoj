@@ -70,7 +70,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/launcher/playstore.png"
+  image_path: "assets/launcher/icon_circle.png"
 
 #flutter_icons:
 #  ios: true

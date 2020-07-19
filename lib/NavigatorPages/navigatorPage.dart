@@ -6,6 +6,7 @@ import 'package:kaamkhoj/fragments/live_chat.dart';
 import 'package:kaamkhoj/fragments/partner_us.dart';
 import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/fragments/rate_card.dart';
+import 'package:kaamkhoj/fragments/rate_cardtest.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
@@ -88,7 +89,9 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 5:
         return new TermsEmployerPage();
       case 6:
+//        return new RateCardTest();
         return new RateCard();
+
       case 7:
         return new PartnerUsPage();
       case 8:
