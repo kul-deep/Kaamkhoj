@@ -26,10 +26,7 @@ class EmployerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       body:
-//        Container(
-//          margin: EdgeInsets.all(16),
           SafeArea(
         child: Radiobutton(work, phoneNo),
       ),

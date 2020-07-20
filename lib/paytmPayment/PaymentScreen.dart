@@ -162,9 +162,6 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
   final pdf = pw.Document();
 
   writeOnPdf(String formattedDate) async {
-    // final pw.Document doc =
-    // pw.Document(title: 'My Résumé', author: 'David PHAM-VAN');
-
     final PdfImage profileImage = PdfImage.file(
       pdf.document,
       bytes: (await rootBundle.load('assets/images/pdflogo.png'))

