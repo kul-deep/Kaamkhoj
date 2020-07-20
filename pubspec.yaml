@@ -62,24 +62,12 @@ dev_dependencies:
     sdk: flutter
 
 
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/launcher/icon_circle.png"
 
-#flutter_icons:
-#  ios: true
-#  android: true
-#  image_path_android: "assets/launcher/playstore.png"
-#  image_path_ios: "assets/launcher/playstore.png"
-#  image_path_android: "assets/launcher/icon.png"
-#  adaptive_icon_background: "assets/launcher/background.png"
-#  adaptive_icon_foreground: "assets/launcher/foreground.png"
+
 flutter:
 
   # The following line ensures that the Material Icons font is

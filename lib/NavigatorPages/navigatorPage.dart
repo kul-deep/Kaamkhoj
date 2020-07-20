@@ -6,11 +6,9 @@ import 'package:kaamkhoj/fragments/live_chat.dart';
 import 'package:kaamkhoj/fragments/partner_us.dart';
 import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/fragments/rate_card.dart';
-import 'package:kaamkhoj/fragments/rate_cardtest.dart';
 import 'package:kaamkhoj/fragments/services.dart';
 import 'package:kaamkhoj/fragments/share_app.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
-import 'package:kaamkhoj/paytmPayment/PaymentPaytmPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../fragments/first_fragment.dart';
 import '../fragments/about_us.dart';
@@ -18,11 +16,11 @@ import '../fragments/how_we_work.dart';
 import '../fragments/terms_employee.dart';
 import '../fragments/terms_employer.dart';
 import '../fragments/contact_us.dart';
-import 'package:kaamkhoj/policies/privacy_policy.dart';
 
 class DrawerItem {
   String title;
   IconData icon;
+
   DrawerItem(this.title, this.icon);
 }
 
@@ -55,6 +53,7 @@ class NavigatorPageState extends State<NavigatorPage> {
   String name = "";
 
   bool logot_select = false;
+
   @override
   void initState() {
     super.initState();
@@ -97,8 +96,7 @@ class NavigatorPageState extends State<NavigatorPage> {
       case 8:
         return new ChooseYourWorkEmployer("Employer");
       case 9:
-        return new ChooseYourWork(
-            "Employee"); //ChooseType("register");//Sign UP
+        return new ChooseYourWork("Employee");
       case 10:
         return new ContactUsPage();
       case 11:

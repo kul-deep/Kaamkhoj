@@ -44,7 +44,7 @@ class RateCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height - 150,
+                height: MediaQuery.of(context).size.height - 200,
                 child: ListView.builder(
                   itemBuilder: (context, i) {
                     if (i >= data.length) return null;

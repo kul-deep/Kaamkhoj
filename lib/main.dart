@@ -3,11 +3,9 @@ import 'dart:io';
 
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
-import 'package:kaamkhoj/test/employee_form1.dart';
-import 'package:kaamkhoj/test/pdftest.dart';
-import 'package:kaamkhoj/testing_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,13 +13,18 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'Mail/send_mail.dart';
 import 'NavigatorPages/navigatorPage.dart';
-import 'fragments/employee_form.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('Login');
   print(token);
+
+  SystemChrome.setPreferredOrientations([
+
+    DeviceOrientation.portraitUp,
+
+  ]);
 
   runApp(
     MaterialApp(

@@ -14,16 +14,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:validators/validators.dart';
-import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
-import '../test1.dart';
 import 'Register.dart';
-// import 'package:kaamkhoj/homepage.dart';
 
 class LoginPage extends StatefulWidget {
-  //  String type;
-//  LoginPage(String type) {
-//    this.type = type;
-//  }
 
   @override
   _LoginPageState createState() => _LoginPageState();
