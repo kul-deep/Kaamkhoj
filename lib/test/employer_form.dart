@@ -12,6 +12,7 @@ import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:intl/intl.dart';
 
 class EmployerForm extends StatelessWidget {
   String work;
@@ -71,6 +72,8 @@ class RadioButtonWidget extends State {
   }
 
   void createRecord() async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('kk:mm:ss EEE d MMM yyyy').format(now);
     final databaseReference = Firestore.instance;
 
     final snapShot = await Firestore.instance
@@ -95,6 +98,8 @@ class RadioButtonWidget extends State {
         'City': city,
         'Email': email,
         'Gender': radioItemGender,
+        'Date': formattedDate,
+
       });
     } else {
       QuerySnapshot querySnapshot = await Firestore.instance
@@ -117,6 +122,7 @@ class RadioButtonWidget extends State {
         'City': city,
         'Email': email,
         'Gender': radioItemGender,
+        'Date': formattedDate
       });
     }
 //    getMail(phoneNo);

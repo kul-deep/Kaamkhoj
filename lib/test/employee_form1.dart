@@ -8,6 +8,8 @@ import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
+import 'package:intl/intl.dart';
+
 
 class EmployeeForm extends StatelessWidget {
   String work;
@@ -55,6 +57,10 @@ class RadioButtonWidget extends State {
   void createRecord() async {
     final databaseReference = Firestore.instance;
 
+
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('kk:mm:ss EEE d MMM yyyy').format(now);
+
     await databaseReference
         .collection("data")
         .document(phoneNo)
@@ -64,6 +70,8 @@ class RadioButtonWidget extends State {
       'Hrs': radioItemHrs,
       'Religion': radioItemReligion,
       'Work': work,
+      'Date': formattedDate
+
     });
     getMail(phoneNo);
     makeSmsRequest(phoneNo);

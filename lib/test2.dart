@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
+import 'package:kaamkhoj/pincode/pincode.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -37,6 +38,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
   String _selectedCity;
 
   bool circularProgress = false;
+
+  String cityName="";
 
   Future<String> getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -264,6 +267,12 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                           } else {
                             setState(() {
                               errorCode = "";
+                            });
+                            print(value);
+                            getCityName(value).then((value1) {
+                              setState(() {
+                                cityName=value1;
+                              });
                             });
                           }
                         },
@@ -499,15 +508,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                         ),
                       )
                     : Container()),
-                (circularProgress
-                    ? Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: Center(
-                            child: CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
-                      )
-                    : _button()),
+                Text(cityName),
+                _button()
               ],
             )),
           ),

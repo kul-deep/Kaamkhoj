@@ -14,6 +14,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:validators/validators.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:intl/intl.dart';
+
 
 class PartnerUsPage extends StatefulWidget {
   @override
@@ -41,6 +43,10 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
     String phoneNo1 = prefs.getString('Login');
+
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('kk:mm:ss EEE d MMM yyyy').format(now);
+
     await databaseReference
         .collection("data")
         .document(phoneNo1)
@@ -51,6 +57,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
       'Name': name,
       'email': email,
       'city': city,
+      'Date': formattedDate
+
     });
 
     getMail(phoneNo1);
