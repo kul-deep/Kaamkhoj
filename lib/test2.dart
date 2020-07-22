@@ -39,7 +39,9 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
   bool circularProgress = false;
 
-  String cityName="";
+  String cityName = "";
+
+  String areaName = "";
 
   Future<String> getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -84,6 +86,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
         (phoneNo == "") ||
         (city == "") ||
         (code == "")) {
+      print(name + city + code + email + phoneNo);
       setState(() {
         circularProgress = false;
       });
@@ -230,72 +233,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                     child: Container(
                       height: 55,
                       child: TextField(
-                        maxLength: 6,
-                        inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly,
-                        ],
-                        keyboardType: TextInputType.numberWithOptions(),
-                        decoration: InputDecoration(
-                            counterText: "",
-                            hintStyle: GoogleFonts.poppins(
-                                color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                fontSize: 14),
-                            focusedBorder: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.white70,
-                                )),
-                            enabledBorder: new OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(10.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.white70,
-                              ),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white70,
-                            prefixIcon: Icon(Icons.my_location),
-                            hintText: 'Pin Code'),
-                        onChanged: (value) {
-                          if (value.length < 6) {
-                            setState(() {
-                              errorCode = "Enter 6 digit pin code";
-                            });
-                          } else {
-                            setState(() {
-                              errorCode = "";
-                            });
-                            print(value);
-                            getCityName(value).then((value1) {
-                              setState(() {
-                                cityName=value1;
-                              });
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                (errorCode != ''
-                    ? Padding(
-                        padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                        child: Text(
-                          errorCode,
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      )
-                    : Container()),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
-                  child: Center(
-                    child: Container(
-                      height: 55,
-                      child: TextField(
                         decoration: InputDecoration(
                             hintStyle: GoogleFonts.poppins(
                                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
@@ -354,7 +291,10 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                       height: 55,
                       child: TextField(
                         maxLength: 10,
-                        keyboardType: TextInputType.phone,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
                         decoration: InputDecoration(
                             hintStyle: GoogleFonts.poppins(
                                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
@@ -414,12 +354,17 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                 Padding(
                   padding:
                       EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
-                  child: Form(
-                    key: this._formKey,
-                    child: TypeAheadFormField(
-                      textFieldConfiguration: TextFieldConfiguration(
-                        controller: this._typeAheadController,
+                  child: Center(
+                    child: Container(
+                      height: 55,
+                      child: TextField(
+                        maxLength: 6,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
                         decoration: InputDecoration(
+                            counterText: "",
                             hintStyle: GoogleFonts.poppins(
                                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                 fontSize: 14),
@@ -440,41 +385,60 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             ),
                             filled: true,
                             fillColor: Colors.white70,
-                            prefixIcon: Icon(Icons.home),
-                            hintText: 'City'),
+                            prefixIcon: Icon(Icons.my_location),
+                            hintText: 'Pin Code'),
+                        onChanged: (value) {
+                          this.code = value;
+                          if (value.length < 6) {
+                            setState(() {
+                              errorCode = "Enter 6 digit pin code";
+                            });
+                          } else {
+                            setState(() {
+                              errorCode = "";
+                            });
+                            print(value);
+                            getCityName(value).then((value1) {
+                              var arr = value1.split('+');
+                              print(value1);
+
+                              setState(() {
+                                cityName = arr[1];
+                                areaName = arr[0];
+                              });
+                            });
+                          }
+                        },
                       ),
-                      suggestionsCallback: (pattern) {
-                        return CitiesService.getSuggestions(pattern.trim());
-                      },
-                      itemBuilder: (context, suggestion) {
-                        return ListTile(
-                          title: Text(suggestion),
-                        );
-                      },
-                      transitionBuilder: (context, suggestionsBox, controller) {
-                        return suggestionsBox;
-                      },
-                      onSuggestionSelected: (suggestion) {
-                        if (_typeAheadController != "") {
-                          errorCity = "";
-                        }
-                        this._typeAheadController.text = suggestion;
-                      },
-                      onSaved: (value) {
-                        this.city = value;
-                      },
                     ),
                   ),
                 ),
-                (errorCity != ''
+                (errorCode != ''
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
                         child: Text(
-                          errorCity,
+                          errorCode,
                           style: TextStyle(color: Colors.red),
                         ),
                       )
                     : Container()),
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 85, top: 10, right: 35, bottom: 10),
+                    child: Text(
+                      "Area : " + areaName,
+                      style: GoogleFonts.poppins(
+                          color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                          fontSize: 16),
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(left: 85, right: 35, bottom: 10),
+                    child: Text(
+                      "City : " + cityName,
+                      style: GoogleFonts.poppins(
+                          color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                          fontSize: 16),
+                    )),
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
@@ -508,7 +472,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                         ),
                       )
                     : Container()),
-                Text(cityName),
                 _button()
               ],
             )),

@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
+import 'package:kaamkhoj/pincode/pincode.dart';
 import 'package:kaamkhoj/policies/privacy_policy.dart';
 import 'package:kaamkhoj/policies/terms_&_condition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,6 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
       email = "",
       password = "",
       city = "",
+      code = "",
       otp = "0";
   int resendotp = 0;
   final TextEditingController _typeAheadController = TextEditingController();
@@ -72,6 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String errorAge = '';
   String errorPass = '';
   String errorCity = '';
+  String errorCode = '';
   String errorMsg = '';
   String smsOTP, type;
   String verificationId;
@@ -89,6 +92,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String errorOtp = "";
 
   bool circularProgressReg = false;
+
+  String areaName;
+
+  String cityName;
 
   void _startTimer() {
     _counter = 30;
@@ -361,7 +368,7 @@ class _RegisterPageState extends State<RegisterPage> {
         (age == "") ||
         (phoneNo == "") ||
         (password == "") ||
-        (city == "")) {
+        (code == "")) {
       setState(() {
         circularProgressReg = false;
       });
@@ -391,9 +398,9 @@ class _RegisterPageState extends State<RegisterPage> {
           errorPass = errorblank;
         });
       }
-      if (city == "") {
+      if (code == "") {
         setState(() {
-          errorCity = errorblank;
+          errorCode = errorblank;
         });
       }
       Toast.show("Please fill all the fields", context,
@@ -403,7 +410,7 @@ class _RegisterPageState extends State<RegisterPage> {
           errorAge == "" &&
           errorMobile == "" &&
           errorPass == "" &&
-          errorCity == "") {
+          errorCode == "") {
         verify();
       } else {
         setState(() {
@@ -444,7 +451,6 @@ class _RegisterPageState extends State<RegisterPage> {
             onWillPop: _onBackPressed,
             child: SafeArea(
               child: Scaffold(
-
                 backgroundColor: Color(0xfff7e9e9),
                 body: SingleChildScrollView(
                   child: Form(
@@ -641,10 +647,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onChanged: (value) {
                                   this.age = value.trim();
 
-                                  if (int.parse(age)<18) {
+                                  if (int.parse(age) < 18) {
                                     setState(() {
-                                      errorAge =
-                                          "Age must be 18 or older";
+                                      errorAge = "Age must be 18 or older";
                                     });
                                   } else {
                                     setState(() {
@@ -687,7 +692,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: (val) {
                                 setState(() {
                                   radioItemGender = val;
-                                  errorGender="";
+                                  errorGender = "";
                                 });
                               },
                             ),
@@ -704,9 +709,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: (val) {
                                 setState(() {
                                   radioItemGender = val;
-                                  errorGender="";
+                                  errorGender = "";
                                 });
-
                               },
                             ),
                             new Text("Female", style: font2),
@@ -784,12 +788,17 @@ class _RegisterPageState extends State<RegisterPage> {
                       Padding(
                         padding: EdgeInsets.only(
                             left: 35, top: 15, right: 35, bottom: 10),
-                        child: Form(
-                          key: this._formKey,
-                          child: TypeAheadFormField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                              controller: this._typeAheadController,
+                        child: Center(
+                          child: Container(
+                            height: 55,
+                            child: TextField(
+                              maxLength: 6,
+                              inputFormatters: <TextInputFormatter>[
+                                WhitelistingTextInputFormatter.digitsOnly,
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(),
                               decoration: InputDecoration(
+                                  counterText: "",
                                   hintStyle: GoogleFonts.poppins(
                                       color: Color.fromARGB(
                                           0xff, 0x1d, 0x22, 0x26),
@@ -811,43 +820,61 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                   filled: true,
                                   fillColor: Colors.white70,
-                                  prefixIcon: Icon(Icons.home),
-                                  hintText: 'City'),
+                                  prefixIcon: Icon(Icons.my_location),
+                                  hintText: 'Pin Code'),
+                              onChanged: (value) {
+                                this.code = value;
+                                if (value.length < 6) {
+                                  setState(() {
+                                    errorCode = "Enter 6 digit pin code";
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorCode = "";
+                                  });
+                                  print(value);
+                                  getCityName(value).then((value1) {
+                                    var arr = value1.split('+');
+                                    print(value1);
+
+                                    setState(() {
+                                      cityName = arr[1];
+                                      areaName = arr[0];
+                                    });
+                                  });
+                                }
+                              },
                             ),
-                            suggestionsCallback: (pattern) {
-                              if (_typeAheadController != "") {
-                                errorCity = "";
-                              }
-                              return CitiesService.getSuggestions(
-                                  pattern.trim());
-                            },
-                            itemBuilder: (context, suggestion) {
-                              return ListTile(
-                                title: Text(suggestion),
-                              );
-                            },
-                            transitionBuilder:
-                                (context, suggestionsBox, controller) {
-                              return suggestionsBox;
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              this._typeAheadController.text = suggestion;
-                            },
-                            onSaved: (value) {
-                              this.city = value;
-                            },
                           ),
                         ),
                       ),
-                      (errorCity != ''
+                      (errorCode != ''
                           ? Padding(
                               padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
                               child: Text(
-                                errorCity,
+                                errorCode,
                                 style: TextStyle(color: Colors.red),
                               ),
                             )
                           : Container()),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: 85, top: 10, right: 35, bottom: 10),
+                          child: Text(
+                            "Area : " + areaName,
+                            style: GoogleFonts.poppins(
+                                color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                fontSize: 16),
+                          )),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: 85, right: 35, bottom: 10),
+                          child: Text(
+                            "City : " + cityName,
+                            style: GoogleFonts.poppins(
+                                color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                fontSize: 16),
+                          )),
                       Center(
                           child: Padding(
                         padding: const EdgeInsets.only(bottom: 20.0),

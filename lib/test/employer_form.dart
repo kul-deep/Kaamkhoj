@@ -1,6 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
@@ -8,6 +9,7 @@ import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
+import 'package:kaamkhoj/pincode/pincode.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -27,8 +29,7 @@ class EmployerForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          SafeArea(
+      body: SafeArea(
         child: Radiobutton(work, phoneNo),
       ),
     );
@@ -53,8 +54,10 @@ class RadioButtonWidget extends State {
   String work, phoneNo;
   String errorGender = '';
   String city = '';
+  String code = '';
   String email = '';
   String errorCity = '';
+  String errorCode = '';
   String errorEmail = '';
   String radioItemGender = "";
 
@@ -64,6 +67,10 @@ class RadioButtonWidget extends State {
   String _selectedCity;
   final databaseReference = Firestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String areaName;
+
+  var cityName;
 
   RadioButtonWidget(String work, String phoneNo) {
     this.work = work;
@@ -95,11 +102,10 @@ class RadioButtonWidget extends State {
         'Hrs': radioItemHrs,
         'Religion': radioItemReligion,
         'Work': work,
-        'City': city,
+        'Code': code,
         'Email': email,
         'Gender': radioItemGender,
         'Date': formattedDate,
-
       });
     } else {
       QuerySnapshot querySnapshot = await Firestore.instance
@@ -265,13 +271,18 @@ class RadioButtonWidget extends State {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                              left: 5, top: 20, right: 5, bottom: 20),
-                          child: Form(
-                            key: this._formKey,
-                            child: TypeAheadFormField(
-                              textFieldConfiguration: TextFieldConfiguration(
-                                controller: this._typeAheadController,
+                              left: 35, top: 15, right: 35, bottom: 10),
+                          child: Center(
+                            child: Container(
+                              height: 55,
+                              child: TextField(
+                                maxLength: 6,
+                                inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly,
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(),
                                 decoration: InputDecoration(
+                                    counterText: "",
                                     hintStyle: GoogleFonts.poppins(
                                         color: Color.fromARGB(
                                             0xff, 0x1d, 0x22, 0x26),
@@ -293,51 +304,61 @@ class RadioButtonWidget extends State {
                                     ),
                                     filled: true,
                                     fillColor: Colors.white70,
-                                    prefixIcon: Icon(Icons.home),
-                                    hintText: 'City'),
+                                    prefixIcon: Icon(Icons.my_location),
+                                    hintText: 'Pin Code'),
+                                onChanged: (value) {
+                                  this.code = value;
+                                  if (value.length < 6) {
+                                    setState(() {
+                                      errorCode = "Enter 6 digit pin code";
+                                    });
+                                  } else {
+                                    setState(() {
+                                      errorCode = "";
+                                    });
+                                    print(value);
+                                    getCityName(value).then((value1) {
+                                      var arr = value1.split('+');
+                                      print(value1);
+
+                                      setState(() {
+                                        cityName = arr[1];
+                                        areaName = arr[0];
+                                      });
+                                    });
+                                  }
+                                },
                               ),
-                              suggestionsCallback: (pattern) {
-                                return CitiesService.getSuggestions(pattern);
-                              },
-                              itemBuilder: (context, suggestion) {
-                                return ListTile(
-                                  title: Text(suggestion),
-                                );
-                              },
-                              transitionBuilder:
-                                  (context, suggestionsBox, controller) {
-                                return suggestionsBox;
-                              },
-                              onSuggestionSelected: (suggestion) {
-                                if (_typeAheadController != "") {
-                                  errorCity = "";
-                                }
-                                this._typeAheadController.text = suggestion;
-                              },
-                              onSaved: (value) {
-                                this.city = value;
-                              },
                             ),
                           ),
                         ),
-                        (errorCity != ''
+                        (errorCode != ''
                             ? Padding(
                                 padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
                                 child: Text(
-                                  errorCity,
+                                  errorCode,
                                   style: TextStyle(color: Colors.red),
                                 ),
                               )
                             : Container()),
-                        // (errorEmail != ''
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(left: 85.0),
-                        //         child: Text(
-                        //           errorEmail,
-                        //           style: TextStyle(color: Colors.red),
-                        //         ),
-                        //       )
-                        //     : Container()),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 85, top: 10, right: 35, bottom: 10),
+                            child: Text(
+                              "Area : " + areaName,
+                              style: GoogleFonts.poppins(
+                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                  fontSize: 16),
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 85, right: 35, bottom: 10),
+                            child: Text(
+                              "City : " + cityName,
+                              style: GoogleFonts.poppins(
+                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                  fontSize: 16),
+                            )),
                         Container(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
@@ -574,7 +595,6 @@ class RadioButtonWidget extends State {
                             ],
                           ),
                         ),
-
                         SizedBox(
                           height: 10,
                         ),

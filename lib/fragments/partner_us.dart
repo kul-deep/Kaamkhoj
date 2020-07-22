@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
+import 'package:kaamkhoj/pincode/pincode.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -14,8 +15,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:validators/validators.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
-import 'package:intl/intl.dart';
-
 
 class PartnerUsPage extends StatefulWidget {
   @override
@@ -23,7 +22,7 @@ class PartnerUsPage extends StatefulWidget {
 }
 
 class _PartnerUsPageState extends State<PartnerUsPage> {
-  String phoneNo = "", name = "", email = "", city = "";
+  String phoneNo = "", name = "", email = "", city = "", code = "";
   final databaseReference = Firestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -31,6 +30,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
   String errorEmail = '';
   String errorMobile = '';
   String errorCity = '';
+  String errorCode = '';
   String smsOTP, type;
   String verificationId;
   String errorMsg = '';
@@ -39,14 +39,14 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
   bool circularProgress = false;
 
+  String cityName = "";
+
+  String areaName = "";
+
   Future<String> getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
     String phoneNo1 = prefs.getString('Login');
-
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm:ss EEE d MMM yyyy').format(now);
-
     await databaseReference
         .collection("data")
         .document(phoneNo1)
@@ -57,13 +57,11 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
       'Name': name,
       'email': email,
       'city': city,
-      'Date': formattedDate
-
+      'code': code,
     });
 
     getMail(phoneNo1);
     makeSmsRequest(phoneNo1);
-
 
     Navigator.push(
       context,
@@ -73,16 +71,22 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
 
   void getMail(String phoneNo1) {
     DocumentReference documentReference =
-    databaseReference.collection("data").document(phoneNo1);
+        databaseReference.collection("data").document(phoneNo1);
     documentReference.get().then((datasnapshot) {
-      sendMail(email,datasnapshot.data['Name'].toString());
-      sendMailPartnerUsAdmin(datasnapshot.data['Name'].toString(),phoneNo1, datasnapshot.data['city'].toString(),phoneNo, name, email, city);
+      sendMail(email, datasnapshot.data['Name'].toString());
+      sendMailPartnerUsAdmin(datasnapshot.data['Name'].toString(), phoneNo1,
+          datasnapshot.data['city'].toString(), phoneNo, name, email, city);
     });
   }
 
   void valid() {
     this._formKey.currentState.save();
-    if ((name == "") || (email == "") || (phoneNo == "") || (city == "")) {
+    if ((name == "") ||
+        (email == "") ||
+        (phoneNo == "") ||
+        (city == "") ||
+        (code == "")) {
+      print(name + city + code + email + phoneNo);
       setState(() {
         circularProgress = false;
       });
@@ -107,13 +111,19 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
           errorCity = errorblank;
         });
       }
+      if (code == "") {
+        setState(() {
+          errorCode = errorblank;
+        });
+      }
       Toast.show("Please fill all the fields", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
       if (errorName == "" &&
           errorEmail == "" &&
           errorMobile == "" &&
-          errorCity == "") {
+          errorCity == "" &&
+          errorCode == "") {
         getStringValuesSF();
       } else {
         setState(() {
@@ -281,7 +291,10 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                       height: 55,
                       child: TextField(
                         maxLength: 10,
-                        keyboardType: TextInputType.phone,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
                         decoration: InputDecoration(
                             hintStyle: GoogleFonts.poppins(
                                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
@@ -341,12 +354,17 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                 Padding(
                   padding:
                       EdgeInsets.only(left: 35, top: 15, right: 35, bottom: 10),
-                  child: Form(
-                    key: this._formKey,
-                    child: TypeAheadFormField(
-                      textFieldConfiguration: TextFieldConfiguration(
-                        controller: this._typeAheadController,
+                  child: Center(
+                    child: Container(
+                      height: 55,
+                      child: TextField(
+                        maxLength: 6,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
                         decoration: InputDecoration(
+                            counterText: "",
                             hintStyle: GoogleFonts.poppins(
                                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                 fontSize: 14),
@@ -367,41 +385,60 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             ),
                             filled: true,
                             fillColor: Colors.white70,
-                            prefixIcon: Icon(Icons.home),
-                            hintText: 'City'),
+                            prefixIcon: Icon(Icons.my_location),
+                            hintText: 'Pin Code'),
+                        onChanged: (value) {
+                          this.code = value;
+                          if (value.length < 6) {
+                            setState(() {
+                              errorCode = "Enter 6 digit pin code";
+                            });
+                          } else {
+                            setState(() {
+                              errorCode = "";
+                            });
+                            print(value);
+                            getCityName(value).then((value1) {
+                              var arr = value1.split('+');
+                              print(value1);
+
+                              setState(() {
+                                cityName = arr[1];
+                                areaName = arr[0];
+                              });
+                            });
+                          }
+                        },
                       ),
-                      suggestionsCallback: (pattern) {
-                        return CitiesService.getSuggestions(pattern.trim());
-                      },
-                      itemBuilder: (context, suggestion) {
-                        return ListTile(
-                          title: Text(suggestion),
-                        );
-                      },
-                      transitionBuilder: (context, suggestionsBox, controller) {
-                        return suggestionsBox;
-                      },
-                      onSuggestionSelected: (suggestion) {
-                        if (_typeAheadController != "") {
-                          errorCity = "";
-                        }
-                        this._typeAheadController.text = suggestion;
-                      },
-                      onSaved: (value) {
-                        this.city = value;
-                      },
                     ),
                   ),
                 ),
-                (errorCity != ''
+                (errorCode != ''
                     ? Padding(
                         padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
                         child: Text(
-                          errorCity,
+                          errorCode,
                           style: TextStyle(color: Colors.red),
                         ),
                       )
                     : Container()),
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 85, top: 10, right: 35, bottom: 10),
+                    child: Text(
+                      "Area : " + areaName,
+                      style: GoogleFonts.poppins(
+                          color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                          fontSize: 16),
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(left: 85, right: 35, bottom: 10),
+                    child: Text(
+                      "City : " + cityName,
+                      style: GoogleFonts.poppins(
+                          color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                          fontSize: 16),
+                    )),
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
@@ -435,15 +472,7 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                         ),
                       )
                     : Container()),
-                (circularProgress
-                    ? Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: Center(
-                            child: CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b)))),
-                      )
-                    : _button()),
+                _button()
               ],
             )),
           ),
