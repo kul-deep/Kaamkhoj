@@ -227,7 +227,13 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                     child: Container(
                       height: 55,
                       child: TextField(
+                        maxLength: 6,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
                         decoration: InputDecoration(
+                            counterText: "",
                             hintStyle: GoogleFonts.poppins(
                                 color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
                                 fontSize: 14),
@@ -248,17 +254,12 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             ),
                             filled: true,
                             fillColor: Colors.white70,
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(Icons.my_location),
                             hintText: 'Pin Code'),
                         onChanged: (value) {
-                          this.code = value.trim();
-                          // valid();
-                          Pattern pattern =
-                              r'^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$';
-                          RegExp regex = new RegExp(pattern);
-                          if (!regex.hasMatch(code)) {
+                          if (value.length < 6) {
                             setState(() {
-                              errorCode = "Invalid code";
+                              errorCode = "Enter 6 digit pin code";
                             });
                           } else {
                             setState(() {
