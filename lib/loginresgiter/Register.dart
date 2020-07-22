@@ -444,6 +444,7 @@ class _RegisterPageState extends State<RegisterPage> {
             onWillPop: _onBackPressed,
             child: SafeArea(
               child: Scaffold(
+
                 backgroundColor: Color(0xfff7e9e9),
                 body: SingleChildScrollView(
                   child: Form(
@@ -639,6 +640,17 @@ class _RegisterPageState extends State<RegisterPage> {
                                     hintText: 'Age'),
                                 onChanged: (value) {
                                   this.age = value.trim();
+
+                                  if (int.parse(age)<18) {
+                                    setState(() {
+                                      errorAge =
+                                          "Age must be 18 or older";
+                                    });
+                                  } else {
+                                    setState(() {
+                                      errorAge = "";
+                                    });
+                                  }
                                 }),
                           ),
                         ),
@@ -675,6 +687,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: (val) {
                                 setState(() {
                                   radioItemGender = val;
+                                  errorGender="";
                                 });
                               },
                             ),
@@ -691,7 +704,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: (val) {
                                 setState(() {
                                   radioItemGender = val;
+                                  errorGender="";
                                 });
+
                               },
                             ),
                             new Text("Female", style: font2),
@@ -950,7 +965,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SafeArea(
               child: Scaffold(
                 backgroundColor: Color(0xfff7e9e9),
-                resizeToAvoidBottomPadding: false,
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,

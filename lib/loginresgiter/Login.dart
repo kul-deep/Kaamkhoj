@@ -189,7 +189,6 @@ class _LoginPageState extends State<LoginPage> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Color(0xfff7e9e9),
-          resizeToAvoidBottomPadding: false,
           body: Form(
             child: SingleChildScrollView(
               child: Column(
@@ -229,7 +228,10 @@ class _LoginPageState extends State<LoginPage> {
                         height: 55,
                         child: TextField(
                           maxLength: 10,
-                          keyboardType: TextInputType.phone,
+                          inputFormatters: <TextInputFormatter>[
+                            WhitelistingTextInputFormatter.digitsOnly,
+                          ],
+                          keyboardType: TextInputType.numberWithOptions(),
                           decoration: InputDecoration(
                             counterText: "",
                             hintStyle: GoogleFonts.poppins(
