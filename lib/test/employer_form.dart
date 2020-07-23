@@ -170,7 +170,6 @@ class RadioButtonWidget extends State {
           errorEmail = errorblank;
         });
       }
-
       if (code == "") {
         setState(() {
           errorCode = errorblank;

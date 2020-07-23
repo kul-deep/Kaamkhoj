@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
+import 'package:number_to_words_spelling/number_to_words_spelling.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -233,7 +234,7 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
                                 <String>['Sr No', 'DESCRIPTION', ' ', 'AMOUNT'],
                                 <String>['1', 'Registration fee', ' ', amt],
                                 <String>[' ', 'Amount paid', 'SUBTOTAL', amt],
-                                <String>[' ', 'Amount in words', ' ', ' '],
+                                <String>[' ', "Rupees "+NumberWordsSpelling.toWord(amt.substring(0, amt.length - 3),'en_US')+" only", ' ', ' '],
                               ]),
                           pw.Padding(padding: pw.EdgeInsets.only(top: 10)),
                           pw.Text(
