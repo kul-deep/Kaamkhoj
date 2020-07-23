@@ -6,19 +6,13 @@ Future<String> getCityName(String pincode) async {
   // make GET request
   String url = 'https://api.postalpincode.in/pincode/' + pincode;
   Response response = await get(url);
-  // sample info available in response
-//  int statusCode = response.statusCode;
-//  Map<String, String> headers = response.headers;
-//  String contentType = headers['content-type'];
-//  String json = response.body;
-  final jsonresponse = json.decode(response.body) as List;
 
-//  Map<String, dynamic> user = jsonDecode(jsonresponse[0]);
+  final jsonresponse = json.decode(response.body) as List;
 
   var postoffice = jsonresponse[0]['PostOffice'];
 
   if (jsonresponse[0]['Status'] == "Error") {
-    return "Not Exist";
+    return "Please Enter a Valid Pincode+Please Enter a Valid Pincode";
   }
 
   String region;
@@ -41,6 +35,7 @@ Future<String> getCityName(String pincode) async {
       } else {
         region = postoffice[0]['Block'];
       }
+      print(postoffice[i]['Name'] + "+" + region);
       return postoffice[i]['Name'] + "+" + region;
     }
   }

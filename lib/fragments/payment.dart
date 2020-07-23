@@ -24,6 +24,7 @@ class PaymentPage extends StatelessWidget {
       onWillPop: _onBackPressed,
       child: SafeArea(
         child: Scaffold(
+
             body: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,

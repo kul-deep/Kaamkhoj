@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,19 +11,15 @@ import 'package:kaamkhoj/loginresgiter/forgetpassword.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
-import 'package:validators/validators.dart';
 import 'Register.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-//  final formKey = GlobalKey<FormState>();
-  String phoneNo = "",
-      password = "";
+  String phoneNo = "", password = "";
   String errorMobile = '';
   String errorPass = '';
   String errorMsg = '';
@@ -35,11 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   String type;
   final databaseReference = Firestore.instance;
 
-//  _LoginPageState(String type) {
-//    this.type = type;
-//    print("Login as " + type);
-//  }
-
   addStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('Login', phoneNo);
@@ -48,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 
   getName() {
     DocumentReference documentReference =
-    databaseReference.collection("data").document(phoneNo);
+        databaseReference.collection("data").document(phoneNo);
     documentReference.get().then((datasnapshot) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('Name', datasnapshot['Name']);
@@ -86,12 +75,10 @@ class _LoginPageState extends State<LoginPage> {
 
   void verify() {
     DocumentReference documentReference =
-    databaseReference.collection("data").document(phoneNo);
+        databaseReference.collection("data").document(phoneNo);
     documentReference.get().then((datasnapshot) {
       if (datasnapshot.exists) {
-//        print(datasnapshot.data['password'].toString());
         if (password == datasnapshot.data['password'].toString()) {
-          print("Right Password");
           addStringToSF();
         } else {
           setState(() {
@@ -100,7 +87,6 @@ class _LoginPageState extends State<LoginPage> {
           });
           Toast.show("Wrong Credentials", context,
               duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-          print("Wrong credentials");
         }
       } else {
         setState(() {
@@ -132,15 +118,6 @@ class _LoginPageState extends State<LoginPage> {
           alignment: Alignment.center,
           child: RaisedButton(
               onPressed: () {
-//                Navigator.push(
-//                    context,
-//                    MaterialPageRoute(
-//                    builder: (context) =>
-//                    ContactsPage()));
-              getPhoneNumbers();
-
-
-
                 check_internet().then((intenet) {
                   if (intenet != null && intenet) {
                     valid();
@@ -152,8 +129,6 @@ class _LoginPageState extends State<LoginPage> {
                         gravity: Toast.BOTTOM);
                   }
                 });
-                // sformKey.currentState.();
-                // verifyPhone();
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
@@ -175,12 +150,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() {
-//      exit(0);
       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-
-//    Navigator.of(context).pop(true);
-//    return Future.value(false);
-      print("Inside");
       return Future.value(true);
     }
 
@@ -194,14 +164,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-//            Image.asset("assets/images/union.png"),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     height: 300,
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -212,7 +177,6 @@ class _LoginPageState extends State<LoginPage> {
                   Center(
                     child: Text(
                       'Login',
-                      // style: TextStyle(color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),fontSize: 25,fontFamily: GoogleFonts.robotoTextTheme(),
                       style: GoogleFonts.ptSans(
                           color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                           fontSize: 26,
@@ -224,7 +188,6 @@ class _LoginPageState extends State<LoginPage> {
                         left: 35, top: 15, right: 35, bottom: 10),
                     child: Center(
                       child: Container(
-                        // color: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
                         height: 55,
                         child: TextField(
                           maxLength: 10,
@@ -255,28 +218,20 @@ class _LoginPageState extends State<LoginPage> {
                             filled: true,
                             fillColor: Colors.white70,
                             prefixIcon: Icon(Icons.phone),
-
-                            // labelText: 'Mobile Number',
                             hintText: 'Mobile Number',
                           ),
                           onChanged: (value) {
                             this.phoneNo = "+91" + value;
-                            // valid();
-                            if (!isNumeric(value)) {
+
+                            if (value.length < 10) {
                               setState(() {
-                                errorMobile = "Should Contain Only Digits";
+                                errorMobile =
+                                    "Mobile number contains 10 digits";
                               });
                             } else {
                               setState(() {
                                 errorMobile = "";
                               });
-
-                              if (value.length < 10) {
-                                setState(() {
-                                  errorMobile =
-                                  "Mobile number contains 10 digits";
-                                });
-                              }
                             }
                           },
                         ),
@@ -285,14 +240,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   (errorMobile != ''
                       ? Padding(
-                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                    child: Text(
-                      errorMobile,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  )
+                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                          child: Text(
+                            errorMobile,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
                       : Container()),
-
                   Padding(
                     padding: EdgeInsets.only(
                         left: 35, top: 15, right: 35, bottom: 10),
@@ -333,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (value.length < 6) {
                               setState(() {
                                 errorPass =
-                                "Password must contain atleast 6 characters";
+                                    "Password must contain atleast 6 characters";
                               });
                             } else {
                               setState(() {
@@ -347,34 +301,33 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   (errorPass != ''
                       ? Padding(
-                    padding: const EdgeInsets.only(left: 85.0),
-                    child: Text(
-                      errorPass,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  )
+                          padding: const EdgeInsets.only(left: 85.0),
+                          child: Text(
+                            errorPass,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
                       : Container()),
                   (errorMsg != ''
                       ? Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      errorMsg,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.red, fontSize: 13),
-                    ),
-                  )
+                          alignment: Alignment.center,
+                          child: Text(
+                            errorMsg,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.red, fontSize: 13),
+                          ),
+                        )
                       : Container()),
                   (circularProgress
                       ? Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Center(
-                        child: CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
-                        )),
-                  )
+                          padding: EdgeInsets.only(top: 20),
+                          child: Center(
+                              child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                                Color.fromARGB(0xff, 0x88, 0x02, 0x0b)),
+                          )),
+                        )
                       : _button()),
-
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 0),
@@ -388,15 +341,14 @@ class _LoginPageState extends State<LoginPage> {
                             TextSpan(
                               text: 'Forgot Password',
                               recognizer: new TapGestureRecognizer()
-                                ..onTap = () =>
-                                {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ForgetPassword()),
-                                  )
-                                },
+                                ..onTap = () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ForgetPassword()),
+                                      )
+                                    },
                               style: GoogleFonts.sourceSansPro(
                                   color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                   fontSize: 15),
@@ -419,15 +371,14 @@ class _LoginPageState extends State<LoginPage> {
                             TextSpan(
                               text: 'Register',
                               recognizer: new TapGestureRecognizer()
-                                ..onTap = () =>
-                                {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RegisterPage()),
-                                  )
-                                },
+                                ..onTap = () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegisterPage()),
+                                      )
+                                    },
                               style: GoogleFonts.sourceSansPro(
                                   color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                   fontSize: 15),
@@ -446,40 +397,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   getPhoneNumbers() async {
-    final PermissionStatus permissionStatus = await
-
-    _getPermission();
+    final PermissionStatus permissionStatus = await _getPermission();
 
     if (permissionStatus == PermissionStatus.granted) {
-
-    getContacts();
+      getContacts();
     }
-//    } else {
-//      //If permissions have been denied show standard cupertino alert dialog
-////      showDialog(
-////          context: context,
-////          builder: (BuildContext context) =>
-////              CupertinoAlertDialog(
-////                title: Text('Permissions error'),
-////                content: Text('Please enable contacts access '
-////                    'permission in system settings'),
-////                actions: <Widget>[
-////                  CupertinoDialogAction(
-////                    child: Text('OK'),
-////                    onPressed: () => Navigator.of(context).pop(),
-////                  )
-////                ],
-////              ));
-//    }
   }
 
   Future<void> getContacts() async {
-    //Make sure we already have permissions for contacts when we get to this
-    //page, so we can just retrieve it
     final Iterable<Contact> contacts = await ContactsService.getContacts();
-    print("Contact"+contacts.elementAt(30).displayName);
   }
 
   Future<PermissionStatus> _getPermission() async {
@@ -487,7 +414,7 @@ class _LoginPageState extends State<LoginPage> {
     if (permission != PermissionStatus.granted &&
         permission != PermissionStatus.denied) {
       final Map<Permission, PermissionStatus> permissionStatus =
-      await [Permission.contacts].request();
+          await [Permission.contacts].request();
       return permissionStatus[Permission.contacts] ??
           PermissionStatus.undetermined;
     } else {

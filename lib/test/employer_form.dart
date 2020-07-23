@@ -1,16 +1,12 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/Mail/sms_.dart';
 import 'package:kaamkhoj/fragments/payment.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
-import 'package:kaamkhoj/loginresgiter/data.dart';
 import 'package:kaamkhoj/pincode/pincode.dart';
-import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:email_validator/email_validator.dart';
@@ -23,7 +19,6 @@ class EmployerForm extends StatelessWidget {
   EmployerForm(String work, String phoneNo) {
     this.work = work;
     this.phoneNo = phoneNo;
-    print("Employer Form" + phoneNo);
   }
 
   @override
@@ -63,19 +58,13 @@ class RadioButtonWidget extends State {
 
   bool circularProgress = false;
 
-  final TextEditingController _typeAheadController = TextEditingController();
-  String _selectedCity;
   final databaseReference = Firestore.instance;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String areaName;
-
-  var cityName;
+  String areaName = "", cityName = "";
 
   RadioButtonWidget(String work, String phoneNo) {
     this.work = work;
     this.phoneNo = phoneNo;
-    print(phoneNo);
   }
 
   void createRecord() async {
@@ -91,8 +80,6 @@ class RadioButtonWidget extends State {
         .get();
 
     if (snapShot == null || !snapShot.exists) {
-      print("Collection Not exisit");
-
       await databaseReference
           .collection("data")
           .document(phoneNo)
@@ -106,6 +93,8 @@ class RadioButtonWidget extends State {
         'Email': email,
         'Gender': radioItemGender,
         'Date': formattedDate,
+        'area': areaName,
+        'city': cityName,
       });
     } else {
       QuerySnapshot querySnapshot = await Firestore.instance
@@ -114,7 +103,6 @@ class RadioButtonWidget extends State {
           .collection("Employer")
           .getDocuments();
       var list = querySnapshot.documents;
-      print(list.length);
 
       await databaseReference
           .collection("data")
@@ -128,11 +116,13 @@ class RadioButtonWidget extends State {
         'City': city,
         'Email': email,
         'Gender': radioItemGender,
-        'Date': formattedDate
+        'Date': formattedDate,
+        'area': areaName,
+        'city': cityName
       });
     }
-//    getMail(phoneNo);
-//    makeSmsRequest(phoneNo);
+    getMail(phoneNo);
+    makeSmsRequest(phoneNo);
     addStringToSF(email);
 
     Navigator.push(
@@ -161,15 +151,16 @@ class RadioButtonWidget extends State {
           radioItemHrs,
           radioItemReligion,
           work,
-          city,
+          cityName,
+          areaName,
           email,
           radioItemGender);
     });
   }
 
   bool valid() {
-    this._formKey.currentState.save();
-    if (email == '') {
+    if (email == '' || (code == "")) {
+
       setState(() {
         circularProgress = false;
       });
@@ -179,10 +170,17 @@ class RadioButtonWidget extends State {
           errorEmail = errorblank;
         });
       }
+
+      if (code == "") {
+        setState(() {
+          errorCode = errorblank;
+        });
+      }
+
       Toast.show("Please fill all the fields", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
-      if (errorEmail == "") {
+      if (errorEmail == "" && errorCode == "") {
         return true;
       } else {
         Toast.show("Please fill all the fields correctly", context,
@@ -263,8 +261,6 @@ class RadioButtonWidget extends State {
                                     });
                                   }
                                 },
-                                // validator: (email)=>EmailValidator.validate(email)? null:"Invalid email address",
-                                // onSaved: (email)=> _email = email,
                               ),
                             ),
                           ),
@@ -316,15 +312,22 @@ class RadioButtonWidget extends State {
                                     setState(() {
                                       errorCode = "";
                                     });
-                                    print(value);
                                     getCityName(value).then((value1) {
                                       var arr = value1.split('+');
-                                      print(value1);
-
-                                      setState(() {
-                                        cityName = arr[1];
-                                        areaName = arr[0];
-                                      });
+                                      if (arr[1] ==
+                                          "Please Enter a Valid Pincode") {
+                                        setState(() {
+                                          errorCode =
+                                              "Please Enter a Valid Pincode";
+                                          cityName = "";
+                                          areaName = "";
+                                        });
+                                      } else {
+                                        setState(() {
+                                          cityName = arr[1];
+                                          areaName = arr[0];
+                                        });
+                                      }
                                     });
                                   }
                                 },
@@ -628,27 +631,26 @@ class RadioButtonWidget extends State {
                 if (valid()) {
                   check_internet().then((intenet) {
                     if (intenet != null && intenet) {
-                      if (radioItemHrs == '' || radioItemReligion == '') {
+                      if (radioItemHrs == '' ||
+                          radioItemReligion == '' ||
+                          radioItemGender == '') {
                         Toast.show("Please fill all the fields", context,
                             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                       } else {
-                        this._formKey.currentState.save();
                         setState(() {
                           circularProgress = true;
                         });
-                        if (city != '') {
-                          print(radioItemHrs);
-                          print(radioItemReligion);
+//                        if (code != '') {
                           createRecord();
-                        } else {
-                          setState(() {
-                            errorCity = "Please fill this field";
-                            circularProgress = false;
-                          });
-                          Toast.show("Please fill all the fields", context,
-                              duration: Toast.LENGTH_LONG,
-                              gravity: Toast.BOTTOM);
-                        }
+//                        } else {
+//                          setState(() {
+//                            errorCode = "Please fill this field";
+//                            circularProgress = false;
+//                          });
+//                          Toast.show("Please fill all the fields", context,
+//                              duration: Toast.LENGTH_LONG,
+//                              gravity: Toast.BOTTOM);
+//                        }
                       }
                     } else {
                       Toast.show(

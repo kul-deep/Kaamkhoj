@@ -22,7 +22,7 @@ class PartnerUsPage extends StatefulWidget {
 }
 
 class _PartnerUsPageState extends State<PartnerUsPage> {
-  String phoneNo = "", name = "", email = "", city = "", code = "";
+  String phoneNo = "", name = "", email = "", city = "abc", code = "";
   final databaseReference = Firestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -56,8 +56,10 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
       'Number': phoneNo,
       'Name': name,
       'email': email,
-      'city': city,
       'code': code,
+      'pincode': code,
+      'area': areaName,
+      'city': cityName,
     });
 
     getMail(phoneNo1);
@@ -74,19 +76,20 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
         databaseReference.collection("data").document(phoneNo1);
     documentReference.get().then((datasnapshot) {
       sendMail(email, datasnapshot.data['Name'].toString());
-      sendMailPartnerUsAdmin(datasnapshot.data['Name'].toString(), phoneNo1,
-          datasnapshot.data['city'].toString(), phoneNo, name, email, city);
+      sendMailPartnerUsAdmin(
+          datasnapshot.data['Name'].toString(),
+          phoneNo1,
+          datasnapshot.data['city'].toString(),
+          phoneNo,
+          name,
+          email,
+          cityName,
+          areaName);
     });
   }
 
   void valid() {
-    this._formKey.currentState.save();
-    if ((name == "") ||
-        (email == "") ||
-        (phoneNo == "") ||
-        (city == "") ||
-        (code == "")) {
-      print(name + city + code + email + phoneNo);
+    if ((name == "") || (email == "") || (phoneNo == "") || (code == "")) {
       setState(() {
         circularProgress = false;
       });
@@ -106,11 +109,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
           errorMobile = errorblank;
         });
       }
-      if (city == "") {
-        setState(() {
-          errorCity = errorblank;
-        });
-      }
       if (code == "") {
         setState(() {
           errorCode = errorblank;
@@ -122,7 +120,6 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
       if (errorName == "" &&
           errorEmail == "" &&
           errorMobile == "" &&
-          errorCity == "" &&
           errorCode == "") {
         getStringValuesSF();
       } else {
@@ -397,15 +394,20 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
                             setState(() {
                               errorCode = "";
                             });
-                            print(value);
                             getCityName(value).then((value1) {
                               var arr = value1.split('+');
-                              print(value1);
-
-                              setState(() {
-                                cityName = arr[1];
-                                areaName = arr[0];
-                              });
+                              if (arr[1] == "Please Enter a Valid Pincode") {
+                                setState(() {
+                                  errorCode = "Please Enter a Valid Pincode";
+                                  cityName = "";
+                                  areaName = "";
+                                });
+                              } else {
+                                setState(() {
+                                  cityName = arr[1];
+                                  areaName = arr[0];
+                                });
+                              }
                             });
                           }
                         },

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
-import 'package:kaamkhoj/test2.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,8 +29,8 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-        home: PartnerUsPage()),
-    // home: token == null ? MyApp("Login") : MyApp("Navigator")),
+//        home: PartnerUsPage()),
+     home: token == null ? MyApp("Login") : MyApp("Navigator")),
   );
 }
 

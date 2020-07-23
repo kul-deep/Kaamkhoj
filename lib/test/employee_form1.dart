@@ -1,10 +1,8 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/Mail/sms_.dart';
-import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 import 'package:kaamkhoj/internetconnection/checkInternetConnection.dart';
 import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
@@ -70,7 +68,7 @@ class RadioButtonWidget extends State {
       'Hrs': radioItemHrs,
       'Religion': radioItemReligion,
       'Work': work,
-      'Date': formattedDate
+      'Date': formattedDate,
 
     });
     getMail(phoneNo);
@@ -92,6 +90,8 @@ class RadioButtonWidget extends State {
           datasnapshot.data['Gender'].toString(),
           phoneNo1,
           datasnapshot.data['city'].toString(),
+          datasnapshot.data['area'].toString(),
+
           radioItemHrs,
           radioItemReligion,
           work);

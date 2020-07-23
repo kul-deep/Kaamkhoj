@@ -31,7 +31,7 @@ void sendMail(String tomail,String name) {
 }
 
 
-void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agencyPhoneNo,String agencyName,String agencyEmail,String agencyCity) {
+void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agencyPhoneNo,String agencyName,String agencyEmail,String agencyCity,String areaName) {
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
     ..username = 'akhati12345@gmail.com'
@@ -52,7 +52,7 @@ void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agency
     ..subject = 'Partner Us Details'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
     ..text = '<h2>Hello Admin,</h2><p>This is the data of agency who has applied for PartnerUs:</p><p> Name: $name </p><p> City: $city </p><p> Phone Number: $phoneNo </p>'
-    ..html = '<h2>Hello Admin,</h2><p>This is the data of agency who has applied for PartnerUs:</p><p>User Name: $name </p><p>User City: $city </p><p>User Phone Number: $phoneNo </p><p>Agency Name: $agencyName </p><p>Agency City: $agencyCity </p><p>Agency Email: $agencyEmail </p><p>Agency Phone Number: $agencyPhoneNo </p>';
+    ..html = '<h2>Hello Admin,</h2><p>This is the data of agency who has applied for PartnerUs:</p><p>User Name: $name </p><p>User City: $city </p><p>User Phone Number: $phoneNo </p><p>Agency Name: $agencyName </p><p>Agency City: $agencyCity </p><p>Agency Area: $areaName </p><p>Agency Email: $agencyEmail </p><p>Agency Phone Number: $agencyPhoneNo </p>';
 
   // Email it.
   emailTransport.send(envelope)
@@ -61,7 +61,7 @@ void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agency
 }
 
 
-void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,String city,String radioItemHrs,String radioItemReligion,String work,String employerCity,String employerEmail,String radioItemGender) {
+void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,String city,String area,String radioItemHrs,String radioItemReligion,String work,String employerCity,String employerEmail,String radioItemGender) {
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
     ..username = 'akhati12345@gmail.com'
@@ -82,7 +82,7 @@ void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,
     ..subject = 'Employer Details'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
     ..text = '<h2>Hello Admin,</h2><p>This is the data of user who has applied for Employer:</p><p> Name: $name </p><p> City: $city </p><p> Email: $employerEmail </p><p> Phone Number: $phoneNo </p>'
-    ..html = '<h2>Hello Admin,</h2><p>This is the data of user who has filled Employer Form(Who want a employee):</p><p>User Name: $name </p><p>User Phone Number: $phoneNo </p><p>User Age: $age </p><p>User Gender: $gender </p><p>User City: $city </p><p>User Email: $employerEmail </p><p>Religion: $radioItemReligion </p><p>Work Required: $work </p><p>Gender Required: $radioItemGender </p><p>Hours Rquired: $radioItemHrs </p><p>Employer City: $employerCity </p>';
+    ..html = '<h2>Hello Admin,</h2><p>This is the data of user who has filled Employer Form(Who want a employee):</p><p>User Name: $name </p><p>User Phone Number: $phoneNo </p><p>User Age: $age </p><p>User Gender: $gender </p><p>User City: $city </p><p>User Area: $area </p><p>User Email: $employerEmail </p><p>Religion: $radioItemReligion </p><p>Work Required: $work </p><p>Gender Required: $radioItemGender </p><p>Hours Rquired: $radioItemHrs </p><p>Employer City: $employerCity </p>';
 
   // Email it.
   emailTransport.send(envelope)
@@ -92,7 +92,7 @@ void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,
 
 
 
-void sendMailEmployeeAdmin(String name,String gender,String age, String phoneNo,String city,String radioItemHrs,String radioItemReligion,String work) {
+void sendMailEmployeeAdmin(String name,String gender,String age, String phoneNo,String city,String area,String radioItemHrs,String radioItemReligion,String work) {
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
     ..username = 'akhati12345@gmail.com'
@@ -113,7 +113,7 @@ void sendMailEmployeeAdmin(String name,String gender,String age, String phoneNo,
      ..subject = 'Employee Details'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
   ..text = '<h2>Hello Admin,</h2><p>This is the data of user who has applied for Employee:</p><p> Name: $name </p><p> City: $city </p> <p> Phone Number: $phoneNo </p>'
-  ..html = '<h2>Hello Admin,</h2><p>This is the data of user who has filled Employee Form(Who want a job):</p><p>User Name: $name </p><p>User Phone Number: $phoneNo </p><p>User Age: $age </p><p>User Gender: $gender </p><p>User City: $city </p><p>Religion: $radioItemReligion </p><p>Work Required: $work </p><p>Hours Rquired: $radioItemHrs </p>';
+  ..html = '<h2>Hello Admin,</h2><p>This is the data of user who has filled Employee Form(Who want a job):</p><p>User Name: $name </p><p>User Phone Number: $phoneNo </p><p>User Age: $age </p><p>User Gender: $gender </p><p>User City: $city </p><p>User Area: $area </p><p>Religion: $radioItemReligion </p><p>Work Required: $work </p><p>Hours Rquired: $radioItemHrs </p>';
 
   // Email it.
   emailTransport.send(envelope)

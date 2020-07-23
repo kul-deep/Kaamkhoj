@@ -93,9 +93,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool circularProgressReg = false;
 
-  String areaName;
+  String areaName = "";
 
-  String cityName;
+  String cityName = "";
 
   void _startTimer() {
     _counter = 30;
@@ -292,7 +292,9 @@ class _RegisterPageState extends State<RegisterPage> {
       'Name': name,
       'Gender': radioItemGender,
       'password': password,
-      'city': city,
+      'pincode': code,
+      'area': areaName,
+      'city': cityName,
     });
     addStringToSF();
   }
@@ -361,8 +363,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void valid() {
-    this._formKey.currentState.save();
-    print(radioItemGender);
     if ((name == "") ||
         (radioItemGender == "") ||
         (age == "") ||
@@ -681,7 +681,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       new Container(
-                        margin: EdgeInsets.only(left: 20),
+                        margin: EdgeInsets.only(left: 50),
                         child: new Row(
                           children: <Widget>[
                             new Radio(
@@ -832,15 +832,22 @@ class _RegisterPageState extends State<RegisterPage> {
                                   setState(() {
                                     errorCode = "";
                                   });
-                                  print(value);
                                   getCityName(value).then((value1) {
                                     var arr = value1.split('+');
-                                    print(value1);
-
-                                    setState(() {
-                                      cityName = arr[1];
-                                      areaName = arr[0];
-                                    });
+                                    if (arr[1] ==
+                                        "Please Enter a Valid Pincode") {
+                                      setState(() {
+                                        errorCode =
+                                            "Please Enter a Valid Pincode";
+                                        cityName = "";
+                                        areaName = "";
+                                      });
+                                    } else {
+                                      setState(() {
+                                        cityName = arr[1];
+                                        areaName = arr[0];
+                                      });
+                                    }
                                   });
                                 }
                               },
