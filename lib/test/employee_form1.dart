@@ -8,7 +8,6 @@ import 'package:kaamkhoj/test/thankyouform.dart';
 import 'package:toast/toast.dart';
 import 'package:intl/intl.dart';
 
-
 class EmployeeForm extends StatelessWidget {
   String work;
   String phoneNo;
@@ -55,7 +54,6 @@ class RadioButtonWidget extends State {
   void createRecord() async {
     final databaseReference = Firestore.instance;
 
-
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss EEE d MMM yyyy').format(now);
 
@@ -69,7 +67,6 @@ class RadioButtonWidget extends State {
       'Religion': radioItemReligion,
       'Work': work,
       'Date': formattedDate,
-
     });
     getMail(phoneNo);
     makeSmsRequest(phoneNo);
@@ -91,7 +88,6 @@ class RadioButtonWidget extends State {
           phoneNo1,
           datasnapshot.data['city'].toString(),
           datasnapshot.data['area'].toString(),
-
           radioItemHrs,
           radioItemReligion,
           work);
@@ -128,7 +124,7 @@ class RadioButtonWidget extends State {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          'Select Hours',
+                          'How many hours can you work?',
                           style: font1,
                         ),
                       ),
@@ -207,7 +203,7 @@ class RadioButtonWidget extends State {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          'Select Religion',
+                          'Select your Religion',
                           style: font1,
                         ),
                       ),

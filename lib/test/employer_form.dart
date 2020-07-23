@@ -160,7 +160,6 @@ class RadioButtonWidget extends State {
 
   bool valid() {
     if (email == '' || (code == "")) {
-
       setState(() {
         circularProgress = false;
       });
@@ -217,154 +216,10 @@ class RadioButtonWidget extends State {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Center(
-                            child: Container(
-                              height: 55,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                    hintStyle: GoogleFonts.poppins(
-                                        color: Color.fromARGB(
-                                            0xff, 0x1d, 0x22, 0x26),
-                                        fontSize: 14),
-                                    focusedBorder: new OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(10.0),
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: Colors.white70,
-                                        )),
-                                    enabledBorder: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(10.0),
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white70,
-                                    prefixIcon: Icon(Icons.email),
-                                    hintText: 'Email ID'),
-                                onChanged: (value) {
-                                  this.email = value.trim();
-                                  // valid();
-                                  if (EmailValidator.validate(this.email)) {
-                                    setState(() {
-                                      errorEmail = "";
-                                    });
-                                  } else {
-                                    setState(() {
-                                      errorEmail = "Invalid Email Address";
-                                    });
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 35, top: 15, right: 35, bottom: 10),
-                          child: Center(
-                            child: Container(
-                              height: 55,
-                              child: TextField(
-                                maxLength: 6,
-                                inputFormatters: <TextInputFormatter>[
-                                  WhitelistingTextInputFormatter.digitsOnly,
-                                ],
-                                keyboardType: TextInputType.numberWithOptions(),
-                                decoration: InputDecoration(
-                                    counterText: "",
-                                    hintStyle: GoogleFonts.poppins(
-                                        color: Color.fromARGB(
-                                            0xff, 0x1d, 0x22, 0x26),
-                                        fontSize: 14),
-                                    focusedBorder: new OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(10.0),
-                                        ),
-                                        borderSide: BorderSide(
-                                          color: Colors.white70,
-                                        )),
-                                    enabledBorder: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(10.0),
-                                      ),
-                                      borderSide: BorderSide(
-                                        color: Colors.white70,
-                                      ),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white70,
-                                    prefixIcon: Icon(Icons.my_location),
-                                    hintText: 'Pin Code'),
-                                onChanged: (value) {
-                                  this.code = value;
-                                  if (value.length < 6) {
-                                    setState(() {
-                                      errorCode = "Enter 6 digit pin code";
-                                    });
-                                  } else {
-                                    setState(() {
-                                      errorCode = "";
-                                    });
-                                    getCityName(value).then((value1) {
-                                      var arr = value1.split('+');
-                                      if (arr[1] ==
-                                          "Please Enter a Valid Pincode") {
-                                        setState(() {
-                                          errorCode =
-                                              "Please Enter a Valid Pincode";
-                                          cityName = "";
-                                          areaName = "";
-                                        });
-                                      } else {
-                                        setState(() {
-                                          cityName = arr[1];
-                                          areaName = arr[0];
-                                        });
-                                      }
-                                    });
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                        (errorCode != ''
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                                child: Text(
-                                  errorCode,
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              )
-                            : Container()),
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: 85, top: 10, right: 35, bottom: 10),
-                            child: Text(
-                              "Area : " + areaName,
-                              style: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 16),
-                            )),
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: 85, right: 35, bottom: 10),
-                            child: Text(
-                              "City : " + cityName,
-                              style: GoogleFonts.poppins(
-                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
-                                  fontSize: 16),
-                            )),
                         Container(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
-                            'Gender',
+                            'Select Employee Gender',
                             style: font1,
                           ),
                         ),
@@ -400,6 +255,29 @@ class RadioButtonWidget extends State {
                                 },
                               ),
                               new Text("Female", style: font2),
+                            ],
+                          ),
+                        ),
+                        new Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio(
+                                activeColor:
+                                    Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                groupValue: radioItemGender,
+                                value: 'Any',
+                                onChanged: (val) {
+                                  setState(() {
+                                    radioItemGender = val;
+                                  });
+                                },
+                              ),
+                              new Container(
+                                  margin: EdgeInsets.fromLTRB(1, 0, 10, 0),
+                                  constraints: BoxConstraints(
+                                      minWidth: 100, maxWidth: 100),
+                                  child: new Text("Any", style: font2)),
                             ],
                           ),
                         ),
@@ -485,7 +363,7 @@ class RadioButtonWidget extends State {
                         Container(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
-                            'Select Religion',
+                            'Select Employee Religion',
                             style: font1,
                           ),
                         ),
@@ -586,17 +464,160 @@ class RadioButtonWidget extends State {
                                 activeColor:
                                     Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
                                 groupValue: radioItemReligion,
-                                value: 'Others',
+                                value: 'Any',
                                 onChanged: (val) {
                                   setState(() {
                                     radioItemReligion = val;
                                   });
                                 },
                               ),
-                              new Text("Others", style: font2),
+                              new Text("Any", style: font2),
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Center(
+                            child: Container(
+                              height: 55,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Color.fromARGB(
+                                            0xff, 0x1d, 0x22, 0x26),
+                                        fontSize: 14),
+                                    focusedBorder: new OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.white70,
+                                        )),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white70,
+                                    prefixIcon: Icon(Icons.email),
+                                    hintText: 'Email ID'),
+                                onChanged: (value) {
+                                  this.email = value.trim();
+                                  // valid();
+                                  if (EmailValidator.validate(this.email)) {
+                                    setState(() {
+                                      errorEmail = "";
+                                    });
+                                  } else {
+                                    setState(() {
+                                      errorEmail = "Invalid Email Address";
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 15, bottom: 10),
+                          child: Center(
+                            child: Container(
+                              height: 55,
+                              child: TextField(
+                                maxLength: 6,
+                                inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly,
+                                ],
+                                keyboardType: TextInputType.numberWithOptions(),
+                                decoration: InputDecoration(
+                                    counterText: "",
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Color.fromARGB(
+                                            0xff, 0x1d, 0x22, 0x26),
+                                        fontSize: 14),
+                                    focusedBorder: new OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(10.0),
+                                        ),
+                                        borderSide: BorderSide(
+                                          color: Colors.white70,
+                                        )),
+                                    enabledBorder: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white70,
+                                    prefixIcon: Icon(Icons.my_location),
+                                    hintText: 'Pin Code'),
+                                onChanged: (value) {
+                                  this.code = value;
+                                  if (value.length < 6) {
+                                    setState(() {
+                                      errorCode = "Enter 6 digit pin code";
+                                    });
+                                  } else {
+                                    setState(() {
+                                      errorCode = "";
+                                    });
+                                    getCityName(value).then((value1) {
+                                      var arr = value1.split('+');
+                                      if (arr[1] ==
+                                          "Please Enter a Valid Pincode") {
+                                        setState(() {
+                                          errorCode =
+                                              "Please Enter a Valid Pincode";
+                                          cityName = "";
+                                          areaName = "";
+                                        });
+                                      } else {
+                                        setState(() {
+                                          cityName = arr[1];
+                                          areaName = arr[0];
+                                        });
+                                      }
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        (errorCode != ''
+                            ? Padding(
+                                padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                                child: Text(
+                                  errorCode,
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              )
+                            : Container()),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 55, top: 10, right: 35, bottom: 10),
+                            child: Text(
+                              "Area : " + areaName,
+                              style: GoogleFonts.poppins(
+                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                  fontSize: 16),
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 55, right: 35, bottom: 10),
+                            child: Text(
+                              "City : " + cityName,
+                              style: GoogleFonts.poppins(
+                                  color: Color.fromARGB(0xff, 0x1d, 0x22, 0x26),
+                                  fontSize: 16),
+                            )),
                         SizedBox(
                           height: 10,
                         ),
@@ -640,7 +661,7 @@ class RadioButtonWidget extends State {
                           circularProgress = true;
                         });
 //                        if (code != '') {
-                          createRecord();
+                        createRecord();
 //                        } else {
 //                          setState(() {
 //                            errorCode = "Please fill this field";
