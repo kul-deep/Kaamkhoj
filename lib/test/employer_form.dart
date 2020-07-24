@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -61,6 +63,9 @@ class RadioButtonWidget extends State {
   final databaseReference = Firestore.instance;
 
   String areaName = "", cityName = "";
+
+  int _counter;
+  Timer _timer;
 
   RadioButtonWidget(String work, String phoneNo) {
     this.work = work;
@@ -186,6 +191,29 @@ class RadioButtonWidget extends State {
       }
     }
     return false;
+  }
+
+  _startTimer() {
+    _counter = 02;
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_counter > 0) {
+          _counter--;
+        } else {
+          _timer.cancel();
+          if (errorCode == "") {
+            createRecord();
+          } else {
+            setState(() {
+              circularProgress = false;
+            });
+          }
+        }
+      });
+    });
   }
 
   Widget build(BuildContext context) {
@@ -660,17 +688,7 @@ class RadioButtonWidget extends State {
                         setState(() {
                           circularProgress = true;
                         });
-//                        if (code != '') {
-                        createRecord();
-//                        } else {
-//                          setState(() {
-//                            errorCode = "Please fill this field";
-//                            circularProgress = false;
-//                          });
-//                          Toast.show("Please fill all the fields", context,
-//                              duration: Toast.LENGTH_LONG,
-//                              gravity: Toast.BOTTOM);
-//                        }
+                        _startTimer();
                       }
                     } else {
                       Toast.show(

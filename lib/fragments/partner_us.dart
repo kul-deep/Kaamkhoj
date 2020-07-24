@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,8 @@ class PartnerUsPage extends StatefulWidget {
 }
 
 class _PartnerUsPageState extends State<PartnerUsPage> {
-  String phoneNo = "", name = "", email = "", city = "abc", code = "";
+  String phoneNo = "", name = "", email = "", code = "";
   final databaseReference = Firestore.instance;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String errorName = '';
   String errorEmail = '';
@@ -34,8 +35,10 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
   String smsOTP, type;
   String verificationId;
   String errorMsg = '';
-  final TextEditingController _typeAheadController = TextEditingController();
-  String _selectedCity;
+
+  int _counter;
+  Timer _timer;
+
 
   bool circularProgress = false;
 
@@ -121,7 +124,8 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
           errorEmail == "" &&
           errorMobile == "" &&
           errorCode == "") {
-        getStringValuesSF();
+        _startTimer();
+
       } else {
         setState(() {
           circularProgress = false;
@@ -130,6 +134,24 @@ class _PartnerUsPageState extends State<PartnerUsPage> {
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       }
     }
+  }
+
+
+  _startTimer() {
+    _counter = 02;
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_counter > 0) {
+          _counter--;
+        } else {
+          _timer.cancel();
+          getStringValuesSF();
+        }
+      });
+    });
   }
 
   @override

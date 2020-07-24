@@ -80,6 +80,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String verificationId;
   String errorMessage = '';
 
+
+  int _counter1;
+  Timer _timer1;
+
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   //--------------------------OTP Handle Methods----------------//
@@ -289,16 +293,17 @@ class _RegisterPageState extends State<RegisterPage> {
       'area': areaName,
       'city': cityName,
     });
-    addStringToSF();
+//    addStringToSF();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   addStringToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('Login', phoneNo);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => NavigatorPage()),
-    );
+
   }
 
   signIn(smsotp) async {
@@ -398,7 +403,9 @@ class _RegisterPageState extends State<RegisterPage> {
           errorMobile == "" &&
           errorPass == "" &&
           errorCode == "") {
-        verify();
+        _startTimer1();
+
+//        verify();
       } else {
         setState(() {
           circularProgressReg = false;
@@ -407,6 +414,29 @@ class _RegisterPageState extends State<RegisterPage> {
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       }
     }
+  }
+
+  _startTimer1() {
+    _counter1 = 02;
+    if (_timer1 != null) {
+      _timer1.cancel();
+    }
+    _timer1 = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_counter1 > 0) {
+          _counter1--;
+        } else {
+          _timer1.cancel();
+          if (errorCode == "") {
+            verify();
+          } else {
+            setState(() {
+              circularProgress = false;
+            });
+          }
+        }
+      });
+    });
   }
 
   Future<bool> _onBackPressed() {

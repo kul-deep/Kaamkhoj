@@ -215,13 +215,10 @@ void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId
 
 void sendMailPaymentCust(String name, String phoneNo,String city,String orderId, String amt,String date,File file1,String tomail) {
 
-//  print(emailData.name);
   var options = new GmailSmtpOptions()
     ..username = 'Customercarekaamkhoj@gmail.com'
     ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
-
-  // How you use and store passwords is up to you. Beware of storing passwords in plain.
 
   // Create our email transport.
   var emailTransport = new SmtpTransport(options);
