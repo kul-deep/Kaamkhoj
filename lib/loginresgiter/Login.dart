@@ -96,7 +96,6 @@ class _LoginPageState extends State<LoginPage> {
 
         Toast.show("User does not exist", context,
             duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-        print("No such user");
       }
     });
   }

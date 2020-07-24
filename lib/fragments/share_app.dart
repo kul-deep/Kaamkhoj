@@ -18,7 +18,6 @@ class ShareAppState extends State<ShareAppPage> {
   }
 
   _launchURL() async {
-    print("Done");
     // const url = 'http://www.instagram.com/kaamkhoj/'; //Working
     //  const url = 'https://www.youtube.com/channel/UCrDumaP5bEcs4keGj_hvaXg'; //Working
 //   const url = 'https://www.linkedin.com/in/kaamkhoj/'; //working
@@ -50,7 +49,7 @@ class ShareAppState extends State<ShareAppPage> {
             height: 40,
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             child: Padding(
-              padding: const EdgeInsets.only(left:16.0,right: 16.0),
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: ButtonTheme(
                 height: 40,
                 minWidth: MediaQuery.of(context).size.width,
@@ -83,16 +82,14 @@ class ShareAppState extends State<ShareAppPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                Padding(
-                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                child: Text(
-                  'KaamKhoj',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.sourceSansPro(
-                      color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold
-                  ))),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                        child: Text('KaamKhoj',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.sourceSansPro(
+                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold))),
                     Container(
                         width: MediaQuery.of(context).size.width,
                         height: 275,
@@ -109,10 +106,9 @@ class ShareAppState extends State<ShareAppPage> {
                             'Thank You For Sharing This Application',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.sourceSansPro(
-                              color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold
-                            ),
+                                color: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

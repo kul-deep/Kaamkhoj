@@ -34,7 +34,6 @@ class HomeFragment extends StatelessWidget {
 
 //    Navigator.of(context).pop(true);
 //    return Future.value(false);
-    print("Inside");
     return Future.value(true);
   }
 

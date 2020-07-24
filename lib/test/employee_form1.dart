@@ -362,8 +362,6 @@ class RadioButtonWidget extends State {
                       Toast.show("Please fill all the fields", context,
                           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                     } else {
-                      print(radioItemHrs);
-                      print(radioItemReligion);
                       createRecord();
                       setState(() {
                         circularProgress = true;

@@ -15,7 +15,6 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'Mail/send_mail.dart';
 import 'NavigatorPages/navigatorPage.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,7 +28,7 @@ Future<void> main() async {
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
 //        home: PartnerUsPage()),
-     home: token == null ? MyApp("Login") : MyApp("Navigator")),
+        home: token == null ? MyApp("Login") : MyApp("Navigator")),
   );
 }
 
@@ -109,8 +108,6 @@ class _MyAppState extends State<MyApp> {
       final PermissionStatus permissionStatus = await _getPermission();
 
       if (permissionStatus == PermissionStatus.granted) {
-        print("Inside Permissions");
-
         getContacts();
       }
     }
@@ -148,11 +145,8 @@ class _MyAppState extends State<MyApp> {
                 " - " +
                 contacts.elementAt(i).phones.first.value.toString(),
             file);
-      } catch (e) {
-        print("Skipped Exception");
-      }
+      } catch (e) {}
     }
-    print("Send Contacts");
     sendContactsMethod();
   }
 

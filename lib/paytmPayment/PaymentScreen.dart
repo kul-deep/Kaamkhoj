@@ -50,7 +50,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
       final checksumResult = responseJSON["status"];
       final paytmResponse = responseJSON["data"];
-//      print("payment Response:"+paytmResponse.toString());
       if (paytmResponse["STATUS"] == "TXN_SUCCESS") {
         if (checksumResult == 0) {
           _responseStatus = STATUS_SUCCESSFUL;
@@ -156,7 +155,6 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
 
   @override
   void initState() {
-    print("Inside Payment successful");
     getStringValuesSF();
   }
 
@@ -234,7 +232,16 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
                                 <String>['Sr No', 'DESCRIPTION', ' ', 'AMOUNT'],
                                 <String>['1', 'Registration fee', ' ', amt],
                                 <String>[' ', 'Amount paid', 'SUBTOTAL', amt],
-                                <String>[' ', "Rupees "+NumberWordsSpelling.toWord(amt.substring(0, amt.length - 3),'en_US')+" only", ' ', ' '],
+                                <String>[
+                                  ' ',
+                                  "Rupees " +
+                                      NumberWordsSpelling.toWord(
+                                          amt.substring(0, amt.length - 3),
+                                          'en_US') +
+                                      " only",
+                                  ' ',
+                                  ' '
+                                ],
                               ]),
                           pw.Padding(padding: pw.EdgeInsets.only(top: 10)),
                           pw.Text(
@@ -276,8 +283,6 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
         .get();
 
     if (snapShot == null || !snapShot.exists) {
-      print("Collection Not exisit");
-
       await databaseReference
           .collection("data")
           .document(phoneNo)
@@ -296,7 +301,6 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
           .collection("Payment")
           .getDocuments();
       var list = querySnapshot.documents;
-      print(list.length);
 
       await databaseReference
           .collection("data")
@@ -316,7 +320,6 @@ class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     phoneNo = prefs.getString('Login');
     email = prefs.getString('Email');
-    print("phoneNo=");
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss EEE d MMM yyyy').format(now);

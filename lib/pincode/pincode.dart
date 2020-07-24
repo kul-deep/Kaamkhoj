@@ -35,7 +35,6 @@ Future<String> getCityName(String pincode) async {
       } else {
         region = postoffice[0]['Block'];
       }
-      print(postoffice[i]['Name'] + "+" + region);
       return postoffice[i]['Name'] + "+" + region;
     }
   }

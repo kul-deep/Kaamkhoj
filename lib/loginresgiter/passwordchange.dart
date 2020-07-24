@@ -64,7 +64,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         backgroundColor: Color(0xfff7e9e9),
         resizeToAvoidBottomPadding: false,
 //      resizeToAvoidBottomInset: ,
@@ -80,7 +80,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                     fit: BoxFit.fill,
                     image: AssetImage("assets/images/kaamkhoj_logo.png")),
               ),
-              ),
+            ),
             Padding(
               padding: EdgeInsets.only(left: 35, top: 20, right: 35, bottom: 5),
               child: Center(
@@ -211,7 +211,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                 height: 40,
                 minWidth: 290,
                 child: Align(
-                    alignment: Alignment.center,
+                  alignment: Alignment.center,
                   child: RaisedButton(
                       onPressed: () {
                         valid();
@@ -235,73 +235,4 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
       ),
     );
   }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      resizeToAvoidBottomPadding: false,
-////      resizeToAvoidBottomInset: ,
-//      body: Center(
-//        child: Column(
-//          mainAxisAlignment: MainAxisAlignment.center,
-//          children: <Widget>[
-//            Padding(
-//              padding: EdgeInsets.all(10),
-//              child: TextField(
-//                decoration: InputDecoration(
-//                    hintText: 'Password (minimum 6 digits)'),
-//                onChanged: (value) {
-//                  this.password = value;
-//                },
-//              ),
-//            ),
-//            (errorMessage != ''
-//                ? Text(
-//              errorMessage,
-//              style: TextStyle(color: Colors.red),
-//            )
-//                : Container()),
-//            SizedBox(
-//              height: 10,
-//            ),
-//
-//            Padding(
-//              padding: EdgeInsets.all(10),
-//              child: TextField(
-//                decoration: InputDecoration(
-//                    hintText: 'Confirm Password'),
-//                onChanged: (value) {
-//                  this.confirm_password = value;
-//                },
-//              ),
-//            ),
-//            SizedBox(
-//              height: 10,
-//            ),
-//            RaisedButton(
-//              onPressed: () {
-////                verifyPhone();
-//              if(password==confirm_password){
-//                errorMessage="";
-//                UpdateRecord();
-//
-//              }
-//              else{
-//                print("Not Matching");
-//                setState(() {
-//                errorMessage = "Password Not Matching";
-//                });
-//
-//              }
-//              },
-//              child: Text('Verify'),
-//              textColor: Colors.white,
-//              elevation: 7,
-//              color: Colors.blue,
-//            )
-//          ],
-//        ),
-//      ),
-//    );
-//  }
 }

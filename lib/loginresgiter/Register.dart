@@ -260,8 +260,6 @@ class _RegisterPageState extends State<RegisterPage> {
           // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
           timeout: const Duration(seconds: 30),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
-            print(phoneAuthCredential);
-
             _auth
                 .signInWithCredential(phoneAuthCredential)
                 .then((AuthResult result) {
@@ -269,15 +267,10 @@ class _RegisterPageState extends State<RegisterPage> {
 //              Navigator.pushReplacement(context, MaterialPageRoute(
 //                  builder: (context) => NavigatorPage()
 //              ));
-            }).catchError((e) {
-              print(e);
-            });
+            }).catchError((e) {});
           },
-          verificationFailed: (AuthException exceptio) {
-            print('${exceptio.message}');
-          });
+          verificationFailed: (AuthException exceptio) {});
     } catch (e) {
-      print(e.toString());
       setState(() {
         circularProgressReg = false;
         errorMsg = e.code;
@@ -315,17 +308,14 @@ class _RegisterPageState extends State<RegisterPage> {
         smsCode: smsotp,
       );
 
-      print("inside");
       final FirebaseUser user =
           (await _auth.signInWithCredential(credential)).user;
       final FirebaseUser currentUser = await _auth.currentUser();
 
       assert(user.uid == currentUser.uid);
-      print("Yes");
       createRecord();
     } catch (e) {
       String error1 = "";
-      print("error" + e.toString());
       switch (e.code) {
         case "ERROR_INVALID_VERIFICATION_CODE":
           error1 = "Invalid Otp";
@@ -344,13 +334,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   verify() async {
-    print("inside" + phoneNo);
-
     final snapShot =
         await Firestore.instance.collection('data').document(phoneNo).get();
 
     if (snapShot == null || !snapShot.exists) {
-      print("Verify Phone");
       verifyPhone();
     } else {
       setState(() {
@@ -423,9 +410,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<bool> _onBackPressed() {
-    print(otp);
     if (otp != "0") {
-      print("inside");
       setState(() {
         otp = "0";
       });
@@ -1111,8 +1096,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     _pin.forEach((item) {
                       concatenate.write(item);
                     });
-
-                    print(concatenate);
 
                     if (concatenate.length == 6) {
                       signIn(concatenate.toString());

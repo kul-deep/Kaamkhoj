@@ -11,11 +11,7 @@ class ChooseYourWork extends StatefulWidget {
 
   ChooseYourWork(String type) {
     this.type = type;
-//    this.phoneNo="+919594976005";
-//    print("Choose Your Work"+phoneNo);
   }
-
-//  ChooseYourWork() : super();
 
   @override
   ChooseYourWorkState createState() => ChooseYourWorkState(type);
@@ -70,10 +66,13 @@ Widget _buildTitle(String type) {
       child: Column(
         children: [
           (type == "Employer"
-              ? Text('Do you want an Employee? \nSelect one of the following',
-                  style: font1,textAlign: TextAlign.center,)
+              ? Text(
+                  'Do you want an Employee? \nSelect one of the following',
+                  style: font1,
+                  textAlign: TextAlign.center,
+                )
               : Text('Do you need any job? \nSelect one of the following',
-                  style: font1,textAlign: TextAlign.center)),
+                  style: font1, textAlign: TextAlign.center)),
         ],
       ));
 }

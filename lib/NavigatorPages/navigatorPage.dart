@@ -120,7 +120,6 @@ class NavigatorPageState extends State<NavigatorPage> {
 
   _onSelectItem(int index) {
     setState(() {
-      print(index);
       _selectedDrawerIndex = index;
       if (index == 14) {
         logot_select = true;

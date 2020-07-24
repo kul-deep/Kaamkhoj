@@ -197,8 +197,6 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
   //---------------------------------------//
 
   checkExist() async {
-    print("inside" + phoneNo);
-
     final snapShot =
         await Firestore.instance.collection('data').document(phoneNo).get();
 
@@ -210,7 +208,6 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
       Toast.show("User Doesn't Exist", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
     } else {
-      print("Verify Phone");
       verifyPhone();
     }
   }
@@ -258,8 +255,6 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
                   concatenate.write(item);
                 });
 
-                print(concatenate);
-
                 if (concatenate.length == 6) {
                   signIn(concatenate.toString());
                   setState(() {
@@ -291,7 +286,7 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
       this.verificationId = verId;
       setState(() {
         otp = "1";
-        circularProgressValid=false;
+        circularProgressValid = false;
         c = Colors.grey[700];
         _startTimer();
       });
@@ -309,8 +304,6 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
           // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
           timeout: const Duration(seconds: 30),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
-            print(phoneAuthCredential);
-
             _auth
                 .signInWithCredential(phoneAuthCredential)
                 .then((AuthResult result) {
@@ -318,15 +311,10 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => PasswordChangePage(phoneNo)));
-            }).catchError((e) {
-              print(e);
-            });
+            }).catchError((e) {});
           },
-          verificationFailed: (AuthException exceptio) {
-            print('${exceptio.message}');
-          });
+          verificationFailed: (AuthException exceptio) {});
     } catch (e) {
-      print(e.toString());
       setState(() {
         circularProgressValid = false;
         errorMobile = e.code;
@@ -340,20 +328,17 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
         verificationId: verificationId,
         smsCode: smsotp1,
       );
-      print("inside");
       final FirebaseUser user =
           (await _auth.signInWithCredential(credential)).user;
       final FirebaseUser currentUser = await _auth.currentUser();
 
       assert(user.uid == currentUser.uid);
-      print("Yes");
       _timer.cancel();
 
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => PasswordChangePage(phoneNo)));
     } catch (e) {
       String error1 = "";
-      print("error" + e.toString());
       switch (e.code) {
         case "ERROR_INVALID_VERIFICATION_CODE":
           error1 = "Invalid Otp";
@@ -372,9 +357,7 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
   }
 
   Future<bool> _onBackPressed() {
-    print(otp);
     if (otp != "0") {
-      print("inside");
       setState(() {
         otp = "0";
       });
@@ -478,9 +461,12 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
                     (circularProgressValid
                         ? Padding(
                             padding: EdgeInsets.only(top: 20),
-                            child: Center(child: CircularProgressIndicator( valueColor: new AlwaysStoppedAnimation<Color>(
-                                Color.fromARGB(
-                                    0xff, 0x88, 0x02, 0x0b)))),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Color.fromARGB(
+                                                0xff, 0x88, 0x02, 0x0b)))),
                           )
                         : _buttonValid()),
                   ],
@@ -543,7 +529,6 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
                                 if (resendotp == 1) {
                                   resendotp = 0;
                                   verifyPhone();
-                                  print("Resend");
                                 }
                               },
                               child: new Text(
@@ -577,9 +562,12 @@ class _ForgetPasswordPageState extends State<ForgetPassword> {
                     (circularProgress
                         ? Padding(
                             padding: EdgeInsets.only(top: 20),
-                            child: Center(child: CircularProgressIndicator( valueColor: new AlwaysStoppedAnimation<Color>(
-                                Color.fromARGB(
-                                    0xff, 0x88, 0x02, 0x0b)))),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Color.fromARGB(
+                                                0xff, 0x88, 0x02, 0x0b)))),
                           )
                         : _button()),
                   ],

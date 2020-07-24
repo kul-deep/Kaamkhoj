@@ -13,11 +13,7 @@ class ChooseYourWorkEmployer extends StatefulWidget {
 
   ChooseYourWorkEmployer(String type) {
     this.type = type;
-//    this.phoneNo="+919594976005";
-//    print("Choose Your Work"+phoneNo);
   }
-
-//  ChooseYourWork() : super();
 
   @override
   ChooseYourWorkState createState() => ChooseYourWorkState(type);
@@ -72,16 +68,18 @@ Widget _buildTitle(String type) {
       child: Column(
         children: [
           (type == "Employer"
-              ? Text('Do you want an Employee? \nSelect one of the following',
-            style: font1,textAlign: TextAlign.center,)
+              ? Text(
+                  'Do you want an Employee? \nSelect one of the following',
+                  style: font1,
+                  textAlign: TextAlign.center,
+                )
               : Text('Do you need any job? \nSelect one of the following',
-              style: font1,textAlign: TextAlign.center)),
+                  style: font1, textAlign: TextAlign.center)),
         ],
       ));
 }
 
 class ChooseYourWorkState extends State<ChooseYourWorkEmployer> {
-
   List<User> users;
   User selectedUser;
   int selectedRadio;
@@ -105,8 +103,6 @@ class ChooseYourWorkState extends State<ChooseYourWorkEmployer> {
     selectedRadioTile = 0;
     users = User.getUsers();
   }
-
-
 
   getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -143,7 +139,6 @@ class ChooseYourWorkState extends State<ChooseYourWorkEmployer> {
           groupValue: selectedUser,
           title: Text(user.firstName, style: font2),
           onChanged: (currentUser) {
-            print("Current User ${currentUser.firstName}");
             setSelectedUser(currentUser);
           },
           selected: selectedUser == user,
@@ -201,18 +196,18 @@ class ChooseYourWorkState extends State<ChooseYourWorkEmployer> {
                 child: Row(children: <Widget>[
                   (errorMsg != ''
                       ? Padding(
-                    padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
-                    child: Text(
-                      errorMsg,
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  )
+                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 0),
+                          child: Text(
+                            errorMsg,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
                       : Container()),
                   (circularProgress
                       ? Center(
-                      child: CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              Color.fromARGB(0xff, 0x88, 0x02, 0x0b))))
+                          child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Color.fromARGB(0xff, 0x88, 0x02, 0x0b))))
                       : _button()),
                 ]))),
       ),

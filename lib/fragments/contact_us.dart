@@ -132,7 +132,6 @@ class ContactUsPage extends StatelessWidget {
             ]));
   }
 
-
   launchWhatsapp() async {
     await launch(
 //               "https://api.whatsapp.com/send?phone=+917977763205?text=Helo"),
@@ -140,7 +139,7 @@ class ContactUsPage extends StatelessWidget {
   }
 
   _launchURLEmail() async {
-    String url="mailto:customercare@kaamkhoj.co.in?subject=&body=";
+    String url = "mailto:customercare@kaamkhoj.co.in?subject=&body=";
 
     if (await canLaunch(url)) {
       await launch(url);
@@ -151,7 +150,6 @@ class ContactUsPage extends StatelessWidget {
 
   _launchURL(String urltype) async {
     String url;
-    print("Done");
     if (urltype == "facebook")
       url = 'http://facebook.com/kaamkhoj';
     else if (urltype == "twitter")

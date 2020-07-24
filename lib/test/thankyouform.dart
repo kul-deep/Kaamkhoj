@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kaamkhoj/Mail/send_mail.dart';
 import 'package:kaamkhoj/NavigatorPages/navigatorPage.dart';
 
-
 class ThankyouPage extends StatefulWidget {
   String phoneNo;
 
@@ -18,8 +17,6 @@ class ThankyouPage extends StatefulWidget {
   @override
   ThankyouPageState createState() => new ThankyouPageState(phoneNo);
 }
-
-
 
 class ThankyouPageState extends State<ThankyouPage> {
   int _counter;
@@ -69,16 +66,6 @@ class ThankyouPageState extends State<ThankyouPage> {
       payload: 'No_Sound',
     );
   }
-
-//  void getMail() {
-//    DocumentReference documentReference =
-//        databaseReference.collection("data").document(phoneNo);
-//    documentReference.get().then((datasnapshot) {
-//      print(phoneNo);
-////      sendMail(datasnapshot.data['email'].toString(),datasnapshot.data['Name'].toString());
-////      sendMailAdmin(datasnapshot.data['Name'].toString(),phoneNo,datasnapshot.data['email'].toString(), datasnapshot.data['city'].toString());
-//    });
-//  }
 
   _startTimer() {
     _counter = 10;
