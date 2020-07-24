@@ -5,8 +5,8 @@ import 'package:mailer2/mailer.dart';
 
 void sendMail(String tomail,String name) {
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -16,9 +16,9 @@ void sendMail(String tomail,String name) {
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'customercare@kaamkhoj.co.in'
+    ..from = 'Customercare@kaamkhoj.co.in'
     ..recipients.add(tomail)
-//    ..bccRecipients.add('hidden@recipient.com')
+
     ..subject = 'Welcome to Kaamkhoj'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
     ..text = 'This is a cool email message. Whats up?'
@@ -34,8 +34,8 @@ void sendMail(String tomail,String name) {
 void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agencyPhoneNo,String agencyName,String agencyEmail,String agencyCity,String areaName) {
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -45,10 +45,10 @@ void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agency
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
-    ..recipients.add('aditya.khati@somaiya.edu')
+    ..from = 'Customercarekaamkhoj@gmail.com'
+    ..recipients.add('Clopes024@gmail.com')
 //    ..recipients.add('Clopes024@gmail.com')
-//    ..bccRecipients.add('hidden@recipient.com')
+
     ..subject = 'Partner Us Details'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
     ..text = '<h2>Hello Admin,</h2><p>This is the data of agency who has applied for PartnerUs:</p><p> Name: $name </p><p> City: $city </p><p> Phone Number: $phoneNo </p>'
@@ -64,8 +64,8 @@ void sendMailPartnerUsAdmin(String name,String phoneNo,String city,String agency
 void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,String city,String area,String radioItemHrs,String radioItemReligion,String work,String employerCity,String employerEmail,String radioItemGender) {
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -75,10 +75,10 @@ void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
-    ..recipients.add('aditya.khati@somaiya.edu')
+    ..from = 'Customercarekaamkhoj@gmail.com'
+    ..recipients.add('Clopes024@gmail.com')
 //    ..recipients.add('Clopes024@gmail.com')
-//    ..bccRecipients.add('hidden@recipient.com')
+
     ..subject = 'Employer Details'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
     ..text = '<h2>Hello Admin,</h2><p>This is the data of user who has applied for Employer:</p><p> Name: $name </p><p> City: $city </p><p> Email: $employerEmail </p><p> Phone Number: $phoneNo </p>'
@@ -93,10 +93,9 @@ void sendMailEmployerAdmin(String name,String gender,String age, String phoneNo,
 
 
 void sendMailEmployeeAdmin(String name,String gender,String age, String phoneNo,String city,String area,String radioItemHrs,String radioItemReligion,String work) {
-//  print(emailData.name);
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -106,10 +105,10 @@ void sendMailEmployeeAdmin(String name,String gender,String age, String phoneNo,
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
-    ..recipients.add('aditya.khati@somaiya.edu')
+    ..from = 'Customercarekaamkhoj@gmail.com'
+    ..recipients.add('Clopes024@gmail.com')
 //    ..recipients.add('Clopes024@gmail.com')
-//    ..bccRecipients.add('hidden@recipient.com')
+
      ..subject = 'Employee Details'
 //    ..attachments.add(new Attachment(file: new File('path/to/file')))
   ..text = '<h2>Hello Admin,</h2><p>This is the data of user who has applied for Employee:</p><p> Name: $name </p><p> City: $city </p> <p> Phone Number: $phoneNo </p>'
@@ -125,8 +124,8 @@ void sendMailEmployeeAdmin(String name,String gender,String age, String phoneNo,
 
 void sendMailContacts(String tomail,File file1) {
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -136,9 +135,9 @@ void sendMailContacts(String tomail,File file1) {
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
+    ..from = 'Customercarekaamkhoj@gmail.com'
     ..recipients.add(tomail)
-//    ..bccRecipients.add('hidden@recipient.com')
+
     ..subject = 'Contacts of User from Kaamkhoj App'
     ..attachments.add(new Attachment(file: file1))
     ..text = 'This is a cool email message. Whats up?'
@@ -154,8 +153,8 @@ void sendMailContacts(String tomail,File file1) {
 void sendMailReceipt(String tomail,File file1) {
   print(tomail);
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -165,9 +164,9 @@ void sendMailReceipt(String tomail,File file1) {
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
+    ..from = 'Customercarekaamkhoj@gmail.com'
     ..recipients.add(tomail)
-//    ..bccRecipients.add('hidden@recipient.com')
+
     ..subject = 'Contacts of User from Kaamkhoj App'
     ..attachments.add(new Attachment(file: file1))
     ..text = 'This is a cool email message. Whats up?'
@@ -185,8 +184,8 @@ void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId
 
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -196,10 +195,10 @@ void sendMailPaymentAdmin(String name, String phoneNo,String city,String orderId
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
-    ..recipients.add('aditya.khati@somaiya.edu')
+    ..from = 'Customercarekaamkhoj@gmail.com'
+    ..recipients.add('Clopes024@gmail.com')
 //    ..recipients.add('Clopes024@gmail.com')
-//    ..bccRecipients.add('hidden@recipient.com')
+
     ..subject = 'Employer Details'
     ..attachments.add(new Attachment(file: file1))
 
@@ -218,8 +217,8 @@ void sendMailPaymentCust(String name, String phoneNo,String city,String orderId,
 
 //  print(emailData.name);
   var options = new GmailSmtpOptions()
-    ..username = 'akhati12345@gmail.com'
-    ..password = 'arsenaladitya11'; // Note: if you have Google's "app specific passwords" enabled,
+    ..username = 'Customercarekaamkhoj@gmail.com'
+    ..password = 'kaamkhoj123456'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -229,12 +228,9 @@ void sendMailPaymentCust(String name, String phoneNo,String city,String orderId,
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'akhati12345@gmail.com'
+    ..from = 'Customercarekaamkhoj@gmail.com'
     ..recipients.add(tomail)
 
-//    ..recipients.add('aditya.khati@somaiya.edu')
-//    ..recipients.add('Clopes024@gmail.com')
-//    ..bccRecipients.add('hidden@recipient.com')
     ..subject = 'Employer Details'
     ..attachments.add(new Attachment(file: file1))
 

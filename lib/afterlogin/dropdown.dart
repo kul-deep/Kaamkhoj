@@ -138,7 +138,6 @@ class ChooseYourWorkState extends State<ChooseYourWork> {
           groupValue: selectedUser,
           title: Text(user.firstName, style: font2),
           onChanged: (currentUser) {
-            print("Current User ${currentUser.firstName}");
             setSelectedUser(currentUser);
           },
           selected: selectedUser == user,

@@ -143,7 +143,6 @@ class PaymentSuccessfulScreen extends StatefulWidget {
 }
 
 class PaymentSuccessfulScreenState extends State<PaymentSuccessfulScreen> {
-//class PaymentSuccessfulScreen extends StatelessWidget {
   String phoneNo;
   String email;
   String orderId, amt;
